@@ -1,4 +1,4 @@
-# SmartShelf – Điều Hành Kệ Hàng & Hỗ Trợ Mua Sắm
+# SmartShelf – Điều hành kệ hàng & hỗ trợ mua sắm
 
 > **Học phần:** PHÁT TRIỂN ỨNG DỤNG WEB CƠ BẢN – CSE122  
 > **Đề tài:** BTL-10 – Lĩnh vực Bán lẻ / RetailTech  
@@ -8,16 +8,16 @@
 
 ---
 
-## 1. Ngữ Cảnh
+## 1. Ngữ cảnh
 Trong các siêu thị và chuỗi bán lẻ quy mô lớn, khách hàng thường gặp khó khăn khi tìm kiếm vị trí món đồ cần mua giữa hàng ngàn sản phẩm, đồng thời thất vọng khi đến nơi thì kệ đã hết sạch hàng. Ở chiều ngược lại, nhân viên kiểm kê kệ chủ yếu bằng mắt thường, phát hiện kệ trống chậm trễ khiến cửa hàng mất doanh thu, và ban quản lý khó nắm bắt tình trạng lệch kho hoặc thất thoát giữa số liệu máy tính và số lượng thực tế trên kệ.
 
-## 2. Phát Biểu Vấn Đề
+## 2. Phát biểu vấn đề
 - **P1.** Khách mất nhiều thời gian đi lòng vòng tìm kiếm sản phẩm trong siêu thị.
 - **P2.** Kệ hết hàng phát hiện muộn trong giờ cao điểm mua sắm.
 - **P3.** Nhân viên thiếu danh sách ưu tiên bổ sung hàng từ kho lên kệ dựa trên sức mua thực tế.
 - **P4.** Quản lý khó nhìn thấy bức tranh tổng thể theo từng khu vực và phát hiện sai số kiểm đếm.
 
-## 3. Mục Tiêu Dự Án
+## 3. Mục tiêu dự án
 - **O1.** Chuyển hóa bài toán thực tế thành sản phẩm Web Frontend hoàn chỉnh với hành trình người dùng rõ ràng.
 - **O2.** Xây dựng đầy đủ 4 vai trò độc lập với tổng cộng **14 màn hình** nghiệp vụ liên kết chặt chẽ.
 - **O3.** Thao tác CRUD thực chất, vòng đời dữ liệu rõ ràng, lưu trữ bền vững qua `localStorage` và Mock Database JSON.
@@ -27,7 +27,7 @@ Trong các siêu thị và chuỗi bán lẻ quy mô lớn, khách hàng thườ
 
 ---
 
-## 4. Các Vai Trò Trong Hệ Thống
+## 4. Các vai trò trong hệ thống
 | Vai trò | Phụ trách chính | Nhiệm vụ cốt lõi |
 |---|---|---|
 | **Khách mua sắm (Shopper)** | Trần Trọng Hoàng Anh (SV1) | Tìm kiếm hàng, xem sơ đồ vị trí kệ & tầng, nhận gợi ý sản phẩm thay thế bằng AI |
@@ -37,28 +37,28 @@ Trong các siêu thị và chuỗi bán lẻ quy mô lớn, khách hàng thườ
 
 ---
 
-## 5. Luồng Người Dùng Tổng Quát (User Journey)
+## 5. Luồng người dùng tổng quát (User Journey)
 ```text
 Cổng hệ thống (index.html) / Đăng nhập phân quyền (login.html)
   │
-  ├── [Khách Mua Sắm] ──> Tìm kiếm sản phẩm ──> Xem bản đồ vị trí Kệ - Tầng ──> Hết hàng? ──> AI-2 Gợi ý thay thế ──> Thêm vào giỏ
+  ├── [Khách mua sắm] ──> Tìm kiếm sản phẩm ──> Xem sơ đồ vị trí kệ - tầng ──> Hết hàng? ──> AI-2 Gợi ý thay thế ──> Thêm vào giỏ
   │
-  ├── [Nhân Viên Kệ]  ──> Giám sát Zone View ──> Kiểm kê kệ thực tế ──> Phát hiện lệch kho? ──> AI-3 Cảnh báo bất thường ──> Nhận Task bổ sung hàng AI-1 ──> Xếp lên kệ
+  ├── [Nhân viên kệ]  ──> Giám sát khu vực ──> Kiểm kê kệ thực tế ──> Phát hiện lệch kho? ──> AI-3 Cảnh báo bất thường ──> Nhận việc bổ sung hàng AI-1 ──> Xếp lên kệ
   │
-  ├── [Quản Lý]       ──> Store Dashboard ──> Điều phối Kanban 4 cột ──> Báo cáo chẩn đoán thất thoát AI-3 ──> Khóa tồn kho / Lệnh tái kiểm kê
+  ├── [Quản lý]       ──> Bảng điều hành ──> Điều phối Kanban 4 cột ──> Báo cáo chẩn đoán thất thoát AI-3 ──> Khóa tồn kho / Lệnh tái kiểm kê
   │
-  └── [Quản Trị Viên] ──> CRUD Danh mục sản phẩm ──> CRUD Cấu hình Kệ & Zone ──> Quản lý phân quyền tài khoản
+  └── [Quản trị viên] ──> CRUD Danh mục sản phẩm ──> CRUD Cấu hình kệ & khu vực ──> Quản lý phân quyền tài khoản
 ```
 
 ---
 
-## 6. Bảng Kiểm Kê Màn Hình (Screen Inventory)
+## 6. Bảng kiểm kê màn hình (Screen Inventory)
 Xem chi tiết tại [docs/screen-inventory.md](docs/screen-inventory.md).
 Tổng số: **14 màn hình** (Vượt chuẩn quy định tối thiểu 12 màn hình của đề tài).
 
 ---
 
-## 7. Ba Tính Năng Trí Tuệ Nhân Tạo (AI Features)
+## 7. Ba tính năng Trí tuệ nhân tạo (AI Features)
 Mỗi tính năng tuân thủ nghiêm ngặt chu trình:  
 `Người dùng nhập → Kiểm tra hợp lệ → AI xử lý (Skeleton / Loading) → Kết quả AI → Vì sao có kết quả này? (Explainable AI) → Người dùng phê duyệt (Chấp nhận / Sửa / Từ chối / Tạo lại) → Lưu vào trạng thái ứng dụng`.
 
@@ -71,14 +71,14 @@ Mỗi tính năng tuân thủ nghiêm ngặt chu trình:
 
 ---
 
-## 8. Công Nghệ Áp Dụng
+## 8. Công nghệ áp dụng
 - **Frontend:** HTML5 Semantic, CSS3 (CSS Variables, Flexbox, CSS Grid), JavaScript ES6+.
 - **Responsive:** Tối ưu hóa mượt mà trên Desktop, Tablet (1024px) và Mobile (768px) với [css/responsive.css](css/responsive.css).
 - **Lưu trữ dữ liệu:** Seed dữ liệu ban đầu từ [assets/data/mock-db.json](assets/data/mock-db.json) và đồng bộ liên tục vào `localStorage` qua module [js/api.js](js/api.js).
 
 ---
 
-## 9. Thành Viên Nhóm & Phân Công Nhiệm Vụ (Lát Cắt Dọc)
+## 9. Thành viên nhóm & phân công nhiệm vụ (Lát cắt dọc)
 Chi tiết tại [docs/team-assignment.md](docs/team-assignment.md):
 - **Trần Trọng Hoàng Anh (SV1 - Nhóm trưởng - MSV: 2551170859):**  
   Phụ trách luồng Khách mua sắm (Shopper), Cổng điều hướng, Đăng nhập, Design Tokens CSS chung, và tính năng **AI-2 Product Alternative AI**. (5 video OBS: `SV1-00` đến `SV1-05`).
@@ -89,7 +89,7 @@ Chi tiết tại [docs/team-assignment.md](docs/team-assignment.md):
 
 ---
 
-## 10. Quy Trình Git & Quản Lý Mã Nguồn
+## 10. Quy trình Git & quản lý mã nguồn
 - **Tên Repository:** `cse122-smartshelf-team05`
 - **Chiến lược nhánh:**
   - `main`: Nhánh sản phẩm ổn định, phát hành cuối cùng.
@@ -99,7 +99,7 @@ Chi tiết tại [docs/team-assignment.md](docs/team-assignment.md):
 
 ---
 
-## 11. Hướng Dẫn Cài Đặt & Chạy Thử Demo
+## 11. Hướng dẫn cài đặt & chạy thử demo
 Hệ thống được thiết kế dạng Web tĩnh thuần túy không phụ thuộc framework nặng, rất dễ chạy thử:
 1. Tải hoặc sao chép mã nguồn về máy tính.
 2. Mở tệp `index.html` trực tiếp bằng trình duyệt Google Chrome, Edge hoặc Firefox (hoặc sử dụng extension **Live Server** trong VS Code).
@@ -107,7 +107,7 @@ Hệ thống được thiết kế dạng Web tĩnh thuần túy không phụ th
 
 ---
 
-## 12. Tài Liệu Kèm Theo & Minh Chứng Quá Trình
+## 12. Tài liệu kèm theo & minh chứng quá trình
 - [docs/project-proposal.md](docs/project-proposal.md) – Báo cáo đề tài chi tiết.
 - [docs/screen-inventory.md](docs/screen-inventory.md) – Bảng kiểm kê màn hình chuẩn phụ lục B.
 - [docs/roles-and-features.md](docs/roles-and-features.md) – Phân tích 4 vai trò theo 10 câu hỏi chuẩn.
