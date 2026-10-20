@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiểm Kê Kệ Hàng & AI Phân Tích Bất Thường - SmartShelf</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="../index.html" class="brand-logo">
+        <div class="logo-icon" style="background: linear-gradient(135deg, #0f766e, #14b8a6);">SS</div>
+        <div>
+          <span>SmartShelf</span>
+          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Nhân Viên Kệ Hàng (SV2: Quang Long)</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="associate-zone-view.html" class="nav-link">📋 Điều Hành Khu Vực</a>
+        <a href="associate-shelf-check.html" class="nav-link active">🔍 Kiểm Tra Kệ Hàng</a>
+        <a href="associate-restock-task.html" class="nav-link">📦 Bổ Sung Kệ (AI-1)</a>
+      </nav>
+
+      <div class="header-actions">
+        <select id="globalRoleSwitcher" class="role-switcher-select">
+          <option value="shopper">🛒 Khách hàng</option>
+          <option value="associate" selected>📋 Nhân viên</option>
+          <option value="manager">📊 Quản lý</option>
+          <option value="admin">⚙️ Quản trị</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">Trang chủ</a> &gt; <span>Nhân viên</span> &gt; <span>Kiểm tra kệ</span>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">
+          <span>🔍 Phiếu Kiểm Tra Kệ & AI Shelf Anomaly Insight</span>
+          <span class="ai-badge">AI Feature 3</span>
+        </h1>
+        <p class="page-subtitle">Nhập số lượng đếm thực tế tại kệ để đối soát với hệ thống và kích hoạt AI phát hiện bất thường.</p>
+      </div>
+    </div>
+
+    <div class="grid-3" style="align-items: start;">
+      <!-- LEFT: AUDIT FORM (2 COLS) -->
+      <div style="grid-column: span 2;">
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <div class="card-header">
+            <h2 class="card-title">1. Chọn Kệ Cần Kiểm Kê</h2>
+            <span class="badge badge-normal" id="auditShelfStatusBadge">Sẵn sàng</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="shelfSelect">Kệ hàng cần kiểm tra</label>
+              <select id="shelfSelect" class="form-control">
+                <!-- Populated via JS -->
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label">Nhân viên thực hiện kiểm kê</label>
+              <input type="text" id="checkerNameInput" class="form-control" value="Nguyễn Quang Long (SV2)" readonly style="background-color: #f1f5f9;">
+            </div>
+          </div>
+
+          <!-- Product Physical Count Table -->
+          <div style="margin-top: 1rem;">
+            <label class="form-label">2. Đối Soát Số Lượng Hàng Thực Tế Trên Kệ</label>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Sản Phẩm</th>
+                    <th>Tồn Hệ Thống</th>
+                    <th>Đếm Thực Tế Tại Kệ</th>
+                    <th>Chênh Lệch</th>
+                  </tr>
+                </thead>
+                <tbody id="auditProductsTbody">
+                  <!-- Dynamic items -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label" for="auditNoteInput">Ghi chú quan sát tại hiện trường</label>
+            <input type="text" id="auditNoteInput" class="form-control" placeholder="Ví dụ: Hàng xếp lộn xộn, khách để nhầm vị trí...">
+          </div>
+
+          <!-- AI Trigger Alert Box -->
+          <div id="aiAnomalyAlertBox" class="ai-panel" style="display: none; margin-top: 1rem;">
+            <div class="ai-header">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="ai-badge">⚠️ AI PHÁT HIỆN BẤT THƯỜNG</span>
+                <span id="aiAnomalyLevelBadge" class="badge badge-empty">Nghiêm trọng</span>
+              </div>
+            </div>
+            <p id="aiDiagnosisText" style="font-size: 0.85rem; color: #4b5563; margin-bottom: 0.5rem;"></p>
+            <div class="ai-reason-box">
+              <strong>Hành động đề xuất từ AI:</strong>
+              <ul id="aiActionsList" style="padding-left: 1.2rem; margin-top: 0.25rem;"></ul>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1rem;">
+            <button type="button" id="scanAnomalyAiBtn" class="btn btn-ai btn-sm">
+              ✨ Chạy AI Chẩn Đoán Sai Lệch
+            </button>
+            <button type="button" id="saveCheckBtn" class="btn btn-primary">
+              💾 Lưu Biên Bản Kiểm Kê
+            </button>
+          </div>
+        </div>
+
+        <!-- RECENT AUDITS TABLE -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Lịch Sử Kiểm Kê Gần Nhất</h2>
+            <span class="badge badge-normal" id="auditHistoryCount">3 biên bản</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Mã Phiếu</th>
+                  <th>Kệ Hàng</th>
+                  <th>Hệ Thống / Thực Tế</th>
+                  <th>Chênh Lệch</th>
+                  <th>Trạng Thái</th>
+                  <th>Thời Gian</th>
+                </tr>
+              </thead>
+              <tbody id="auditHistoryTbody">
+                <!-- Render from shelfChecks -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: SUMMARY GUIDE CARD (1 COL) -->
+      <div>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">📖 Quy Chuẩn Kiểm Kê</h2>
+          </div>
+          <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
+            <p style="margin-bottom: 0.75rem;">
+              <strong>Quy trình thực hiện:</strong><br>
+              1. Đến tận vị trí kệ được phân công.<br>
+              2. Đếm số lượng thực tế từng tầng.<br>
+              3. Nhập số lượng vào bảng đối chiếu.<br>
+              4. Nếu chênh lệch &gt; 15%, hệ thống tự động kích hoạt <strong>AI Shelf Anomaly Insight</strong> để phân tích nguyên nhân.<br>
+              5. Bấm <em>Lưu Biên Bản</em> để đồng bộ vào cơ sở dữ liệu.
+            </p>
+            <div style="background: #f8fafc; padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <span style="font-weight: 700; color: var(--danger);">Lưu ý quan trọng:</span>
+              Kệ có phát hiện sai lệch nghiêm trọng sẽ lập tức được gắn nhãn <code>BẤT THƯỜNG</code> và chuyển thông báo đến Dashboard Quản lý (SV3).
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div>SmartShelf - Module Kiểm Kê & Shelf Anomaly Insight (Phụ trách bởi: SV2 Nguyễn Quang Long)</div>
+      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+    </div>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    let activeShelfProducts = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      populateShelfDropdown();
+      renderAuditHistory();
+
+      // Check param
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramShelf = urlParams.get('shelf');
+      if (paramShelf) {
+        document.getElementById('shelfSelect').value = paramShelf;
+      }
+      loadShelfProducts();
+
+      document.getElementById('shelfSelect').addEventListener('change', loadShelfProducts);
+      document.getElementById('scanAnomalyAiBtn').addEventListener('click', triggerAiDiagnosis);
+      document.getElementById('saveCheckBtn').addEventListener('click', handleSaveCheck);
+    });
+
+    function populateShelfDropdown() {
+      const select = document.getElementById('shelfSelect');
+      const shelves = getShelves();
+      select.innerHTML = shelves.map(s => `
+        <option value="${s.id}">[${s.zoneCode}] ${s.code} - Sức chứa ${s.currentCount}/${s.maxCapacity} sp (${s.status.toUpperCase()})</option>
+      `).join('');
+    }
+
+    function loadShelfProducts() {
+      const shelfId = document.getElementById('shelfSelect').value;
+      const shelf = getShelfById(shelfId);
+      const all = getProducts();
+      activeShelfProducts = all.filter(p => p.shelfId === shelf.id || p.shelfId === shelf.code);
+
+      const tbody = document.getElementById('auditProductsTbody');
+      document.getElementById('aiAnomalyAlertBox').style.display = 'none';
+
+      if (activeShelfProducts.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:1.5rem; color:var(--text-muted);">Kệ này hiện chưa được gán sản phẩm nào.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = activeShelfProducts.map(p => {
+        // Mock default physical count (if anomaly shelf like B02, mock lower)
+        let defaultActual = p.stockQty;
+        if (shelf.id === 'SH-B02' || shelf.code === 'Kệ B02') {
+          defaultActual = Math.max(0, p.stockQty - 15);
+        }
+
+        return `
+          <tr data-prod-id="${p.id}">
+            <td>
+              <strong>${p.name}</strong>
+              <div style="font-size:0.75rem; color:var(--text-muted);">${p.sku} · ${p.shelfLevel || 'Tầng 2'}</div>
+            </td>
+            <td>
+              <span class="expected-stock-val" style="font-weight:700; font-size:1rem;">${p.stockQty}</span> sp
+            </td>
+            <td>
+              <input type="number" class="form-control actual-stock-input" value="${defaultActual}" min="0" max="200" style="width: 100px;" oninput="recalcDiscrepancy(this)">
+            </td>
+            <td>
+              <span class="diff-badge badge ${defaultActual - p.stockQty === 0 ? 'badge-normal' : 'badge-empty'}">
+                ${defaultActual - p.stockQty > 0 ? '+' : ''}${defaultActual - p.stockQty} sp
+              </span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function recalcDiscrepancy(input) {
+      const row = input.closest('tr');
+      const expected = parseInt(row.querySelector('.expected-stock-val').textContent);
+      const actual = parseInt(input.value) || 0;
+      const diff = actual - expected;
+
+      const badge = row.querySelector('.diff-badge');
+      badge.textContent = `${diff > 0 ? '+' : ''}${diff} sp`;
+      badge.className = `diff-badge badge ${diff === 0 ? 'badge-normal' : (diff < -5 ? 'badge-empty' : 'badge-low')}`;
+    }
+
+    async function triggerAiDiagnosis() {
+      const shelfId = document.getElementById('shelfSelect').value;
+      const box = document.getElementById('aiAnomalyAlertBox');
+
+      showToast('Đang kết nối AI-3: Shelf Anomaly Insight...', 'ai');
+
+      try {
+        const res = await runShelfAnomalyInsight(shelfId);
+        document.getElementById('aiAnomalyLevelBadge').textContent = res.anomalyLevel;
+        document.getElementById('aiDiagnosisText').innerHTML = `<strong>Chẩn đoán:</strong> ${res.diagnosis}`;
+
+        const actionsUl = document.getElementById('aiActionsList');
+        actionsUl.innerHTML = res.recommendedActions.map(act => `<li>${act}</li>`).join('');
+
+        box.style.display = 'block';
+        showToast('AI đã hoàn tất phân tích bất thường của kệ!', 'ai');
+      } catch (err) {
+        showToast('Lỗi AI: ' + err.message, 'error');
+      }
+    }
+
+    function handleSaveCheck() {
+      const shelfId = document.getElementById('shelfSelect').value;
+      const shelf = getShelfById(shelfId);
+      const checkerName = document.getElementById('checkerNameInput').value;
+      const note = document.getElementById('auditNoteInput').value;
+
+      // Compute total system vs actual
+      let totalSys = 0;
+      let totalAct = 0;
+      document.querySelectorAll('#auditProductsTbody tr').forEach(row => {
+        const exp = parseInt(row.querySelector('.expected-stock-val')?.textContent || 0);
+        const act = parseInt(row.querySelector('.actual-stock-input')?.value || 0);
+        totalSys += exp;
+        totalAct += act;
+      });
+
+      const discrepancy = totalAct - totalSys;
+      const status = Math.abs(discrepancy) >= 10 ? 'anomaly' : (totalAct <= 5 ? 'low' : 'normal');
+
+      const checkRecord = {
+        shelfId: shelf.id,
+        shelfCode: shelf.code,
+        zoneCode: shelf.zoneCode,
+        checkerName: checkerName,
+        systemStock: totalSys,
+        actualStock: totalAct,
+        discrepancy: discrepancy,
+        status: status,
+        note: note || (status === 'anomaly' ? 'Phát hiện sai số kiểm đếm cao' : 'Kiểm kê định kỳ bình thường')
+      };
+
+      addShelfCheck(checkRecord);
+      updateShelf(shelf.id, { currentCount: totalAct, lastChecked: new Date().toISOString().substring(0, 16).replace('T', ' ') });
+
+      showToast(`Đã lưu biên bản kiểm kê cho ${shelf.code}!`, 'success');
+      renderAuditHistory();
+    }
+
+    function renderAuditHistory() {
+      const checks = getShelfChecks();
+      const tbody = document.getElementById('auditHistoryTbody');
+      document.getElementById('auditHistoryCount').textContent = `${checks.length} biên bản`;
+
+      tbody.innerHTML = checks.map(c => {
+        let badgeHtml = '<span class="badge badge-normal">Khớp số liệu</span>';
+        if (c.status === 'anomaly') badgeHtml = '<span class="badge badge-anomaly">Bất thường (-20)</span>';
+        else if (c.status === 'empty') badgeHtml = '<span class="badge badge-empty">Kệ rỗng</span>';
+
+        return `
+          <tr>
+            <td><strong>${c.id}</strong></td>
+            <td><strong>${c.shelfCode}</strong></td>
+            <td>${c.systemStock} / <strong>${c.actualStock}</strong> sp</td>
+            <td>
+              <span style="font-weight:700; color: ${c.discrepancy < 0 ? 'var(--danger)' : 'var(--success)'};">
+                ${c.discrepancy > 0 ? '+' : ''}${c.discrepancy}
+              </span>
+            </td>
+            <td>${badgeHtml}</td>
+            <td style="font-size:0.75rem; color:var(--text-muted);">${c.checkedAt || 'Vừa xong'}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

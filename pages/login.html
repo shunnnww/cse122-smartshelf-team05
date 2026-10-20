@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng Nhập Phân Quyền - SmartShelf</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body style="background-color: var(--bg-page); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem;">
+
+  <div class="card" style="max-width: 440px; width: 100%; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <div class="brand-logo" style="justify-content: center; margin-bottom: 0.5rem;">
+        <div class="logo-icon">SS</div>
+        <span>SmartShelf</span>
+      </div>
+      <h1 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Đăng Nhập Cổng Điều Hành</h1>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">Chọn tài khoản để bắt đầu trải nghiệm</p>
+    </div>
+
+    <!-- Quick Role Pickers for Demo -->
+    <div style="margin-bottom: 1.25rem; background: var(--bg-page); padding: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+      <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">
+        ⚡ Bấm Chọn Nhanh Tài Khoản Demo:
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('hoanganh', 'shopper')" style="font-size: 0.75rem; justify-content: flex-start;">
+          👤 Hoàng Anh (SV1)
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('quanglong', 'associate')" style="font-size: 0.75rem; justify-content: flex-start;">
+          👤 Quang Long (SV2)
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('vanhan', 'manager')" style="font-size: 0.75rem; justify-content: flex-start;">
+          👤 Văn Hân (SV3)
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('admin', 'admin')" style="font-size: 0.75rem; justify-content: flex-start;">
+          ⚙️ Quản Trị Viên
+        </button>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <form id="loginForm" novalidate>
+      <div class="form-group">
+        <label class="form-label" for="usernameInput">Tên đăng nhập</label>
+        <input type="text" id="usernameInput" class="form-control" placeholder="Nhập tên đăng nhập..." required value="hoanganh">
+        <div class="invalid-feedback">Vui lòng nhập tên tài khoản hợp lệ.</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="passwordInput">Mật khẩu</label>
+        <input type="password" id="passwordInput" class="form-control" placeholder="••••••••" required value="123456">
+        <div class="invalid-feedback">Mật khẩu không được để trống (tối thiểu 6 ký tự).</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="targetRoleSelect">Vai trò đăng nhập</label>
+        <select id="targetRoleSelect" class="form-control">
+          <option value="shopper">Khách mua sắm (Shopper)</option>
+          <option value="associate">Nhân viên kệ hàng (Store Associate)</option>
+          <option value="manager">Quản lý cửa hàng (Store Manager)</option>
+          <option value="admin">Quản trị viên (Admin)</option>
+        </select>
+      </div>
+
+      <button type="submit" id="loginBtn" class="btn btn-primary" style="width: 100%; padding: 0.65rem; font-weight: 700; margin-top: 0.5rem;">
+        Đăng Nhập Vào Hệ Thống
+      </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.25rem; font-size: 0.82rem;">
+      <a href="../index.html" style="color: var(--text-muted);">&larr; Quay lại trang chủ SmartShelf</a>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    function quickFill(user, role) {
+      document.getElementById('usernameInput').value = user;
+      document.getElementById('passwordInput').value = '123456';
+      document.getElementById('targetRoleSelect').value = role;
+      document.getElementById('usernameInput').classList.remove('is-invalid');
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const userInput = document.getElementById('usernameInput');
+      const passInput = document.getElementById('passwordInput');
+      const role = document.getElementById('targetRoleSelect').value;
+      const btn = document.getElementById('loginBtn');
+
+      let isValid = true;
+      if (!userInput.value.trim()) {
+        userInput.classList.add('is-invalid');
+        isValid = false;
+      } else {
+        userInput.classList.remove('is-invalid');
+      }
+
+      if (!passInput.value || passInput.value.length < 4) {
+        passInput.classList.add('is-invalid');
+        isValid = false;
+      } else {
+        passInput.classList.remove('is-invalid');
+      }
+
+      if (!isValid) return;
+
+      btn.disabled = true;
+      btn.innerHTML = 'Đang xác thực...';
+
+      setTimeout(() => {
+        const dbUsers = getUsers();
+        const matched = dbUsers.find(u => u.username.toLowerCase() === userInput.value.trim().toLowerCase()) || {
+          id: 'USR-TEMP',
+          username: userInput.value.trim(),
+          fullName: userInput.value.trim(),
+          role: role,
+          badge: role.toUpperCase()
+        };
+        matched.role = role;
+        setCurrentUser(matched);
+
+        showToast('Đăng nhập thành công! Đang chuyển hướng...', 'success');
+
+        setTimeout(() => {
+          if (role === 'shopper') window.location.href = 'shopper-product-search.html';
+          else if (role === 'associate') window.location.href = 'associate-zone-view.html';
+          else if (role === 'manager') window.location.href = 'manager-store-dashboard.html';
+          else window.location.href = 'admin-product-management.html';
+        }, 500);
+      }, 500);
+    });
+  </script>
+</body>
+</html>

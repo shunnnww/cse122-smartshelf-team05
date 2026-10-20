@@ -1,0 +1,24 @@
+===================================================================
+SMARTSHELF (BTL-10) - THIẾT KẾ GIAO DIỆN FIGMA & CANVA
+Nhóm 5 - Lớp 67KTPM1 - ĐH Thủy Lợi
+===================================================================
+
+1. LIÊN KẾT BẢN THIẾT KẾ CHÍNH THỨC (FIGMA / CANVA):
+- Figma Project URL: https://www.figma.com/file/smartshelf-retailtech-team05/SmartShelf-UI-Design-System
+- Canva Presentation URL: https://www.canva.com/design/smartshelf-demo-presentation
+
+2. HỆ THỐNG MÀU SẮC CHỦ ĐẠO (DESIGN TOKENS):
+- Primary Blue: #1e40af (Blue 800) - Tông màu quản lý & độ tin cậy
+- Secondary Teal: #0f766e (Teal 700) - Tông màu bán lẻ hiện đại
+- AI Accent Violet: #7c3aed (Violet 600) - Tông màu nhận diện các tính năng AI
+- Success Green: #16a34a (Trạng thái kệ đầy đủ / Khớp số liệu)
+- Warning Orange: #f59e0b (Trạng thái kệ sắp hết hàng)
+- Danger Red: #dc2626 (Trạng thái kệ rỗng 100%)
+- Anomaly Pink: #db2777 (Cảnh báo sai lệch kiểm kê đột biến)
+
+3. CÁC THÀNH PHẦN MÔ PHỎNG ĐÃ THIẾT KẾ:
+- Sơ đồ mặt bằng 4 Zone (Zone A Đồ uống, Zone B Thực phẩm khô, Zone C Bánh kẹo, Zone D Hóa mỹ phẩm)
+- Khung dây (Wireframes) cho Desktop & Mobile
+- Thẻ sản phẩm kèm vị trí Kệ - Tầng
+- Bảng Kanban 4 cột kéo thả điều phối hàng hóa
+- Panel tương tác AI 6 bước (Input -> Validate -> Loading -> Result -> Explain -> User Action)

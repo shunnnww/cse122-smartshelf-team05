@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bản Đồ Kệ Hàng & Chỉ Đường Mua Sắm - SmartShelf</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    .store-floor-layout {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .zone-block {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.15rem;
+      margin-bottom: 1.25rem;
+    }
+    .active-shelf-target {
+      border: 2px solid var(--primary) !important;
+      background: #eff6ff !important;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="../index.html" class="brand-logo">
+        <div class="logo-icon">SS</div>
+        <div>
+          <span>SmartShelf</span>
+          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Khách Mua Sắm (SV1: Hoàng Anh)</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="shopper-product-search.html" class="nav-link">🔍 Tìm Kiếm Hàng</a>
+        <a href="shopper-product-location.html" class="nav-link active">📍 Bản Đồ Kệ Hàng</a>
+        <a href="shopper-product-alternatives.html" class="nav-link">✨ Gợi Ý Thay Thế (AI)</a>
+      </nav>
+
+      <div class="header-actions">
+        <select id="globalRoleSwitcher" class="role-switcher-select">
+          <option value="shopper" selected>🛒 Khách hàng</option>
+          <option value="associate">📋 Nhân viên</option>
+          <option value="manager">📊 Quản lý</option>
+          <option value="admin">⚙️ Quản trị</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">Trang chủ</a> &gt; <span>Khách mua sắm</span> &gt; <span>Định vị kệ hàng</span>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">
+          <span>📍 Bản Đồ Kệ Hàng Siêu Thị & Chỉ Dẫn Đường Đi</span>
+        </h1>
+        <p class="page-subtitle">Bấm vào bất kỳ kệ nào trên sơ đồ để xem các mặt hàng đang có và hướng dẫn đường đi.</p>
+      </div>
+      <div style="font-size: 0.8rem; display: flex; gap: 0.5rem; align-items: center;">
+        <span class="badge badge-normal">● Đủ hàng</span>
+        <span class="badge badge-low">● Sắp hết</span>
+        <span class="badge badge-empty">● Trống kệ</span>
+      </div>
+    </div>
+
+    <div class="grid-3" style="align-items: start;">
+      
+      <!-- STORE MAP & SHELVES (2 COLS) -->
+      <div style="grid-column: span 2;">
+        
+        <div class="store-floor-layout">
+          
+          <!-- Zone A -->
+          <div class="zone-block">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <div>
+                <strong style="color: var(--text-main); font-size: 0.95rem;">ZONE-A: Khu Đồ Uống & Nước Giải Khát</strong>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Tầng 1 · Dãy bên phải lối vào chính</div>
+              </div>
+              <span class="badge badge-normal">4 Kệ</span>
+            </div>
+            <div class="shelf-visual-grid" id="zoneAShelves"></div>
+          </div>
+
+          <!-- Zone B -->
+          <div class="zone-block">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <div>
+                <strong style="color: var(--text-main); font-size: 0.95rem;">ZONE-B: Khu Thực Phẩm Khô & Gia Vị</strong>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Tầng 1 · Hành lang trung tâm</div>
+              </div>
+              <span class="badge badge-normal">4 Kệ</span>
+            </div>
+            <div class="shelf-visual-grid" id="zoneBShelves"></div>
+          </div>
+
+          <!-- Zone C & D (Tầng 2) -->
+          <div class="zone-block" style="margin-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <div>
+                <strong style="color: var(--text-main); font-size: 0.95rem;">ZONE-C & D: Khu Bánh Kẹo, Snack & Hóa Mỹ Phẩm</strong>
+                <div style="font-size: 0.78rem; color: var(--text-muted);">Tầng 2 · Đi thang cuốn lên</div>
+              </div>
+              <span class="badge badge-normal">6 Kệ</span>
+            </div>
+            <div class="shelf-visual-grid" id="zoneCDShelves"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SHELF DETAILS & ROUTE INSTRUCTIONS (1 COL) -->
+      <div>
+        <div class="card" id="shelfDetailCard">
+          <div class="card-header">
+            <h2 class="card-title" id="shelfDetailTitle">📍 Thông Tin Kệ Hàng</h2>
+            <span id="shelfDetailBadge" class="badge badge-normal">Đã chọn</span>
+          </div>
+
+          <div id="shelfDetailContent">
+            <div class="state-box" style="padding: 1.5rem 1rem;">
+              <div class="state-icon">👈🗺️</div>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                Bấm vào một khối kệ trên sơ đồ để xem sản phẩm và lộ trình di chuyển tối ưu.
+              </p>
+            </div>
+          </div>
+
+          <!-- Navigation Guide Box -->
+          <div id="routeGuideBox" style="display: none; margin-top: 1rem; background: #eff6ff; border-left: 3px solid var(--primary); padding: 0.85rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;">
+            <div style="font-weight: 700; color: var(--primary); font-size: 0.82rem; margin-bottom: 0.25rem; text-transform: uppercase;">
+              🧭 Chỉ dẫn đường đi:
+            </div>
+            <div id="routeGuideText" style="font-size: 0.85rem; color: #1e3a8a; line-height: 1.45;"></div>
+          </div>
+
+          <!-- Action for customer: Report Empty Shelf -->
+          <div id="shelfActionsBox" style="display: none; margin-top: 1rem; border-top: 1px solid var(--border-light); padding-top: 0.85rem;">
+            <button class="btn btn-secondary btn-sm" style="width: 100%; font-size: 0.82rem;" onclick="handleReportEmptyShelf()">
+              📢 Báo nhân viên kệ này đang vơi hàng
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div>SmartShelf - Định Vị Kệ Hàng (Phụ trách bởi: SV1 Trần Trọng Hoàng Anh)</div>
+      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+    </div>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    let activeShelfId = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetShelf = urlParams.get('shelf');
+
+      renderShelfGrid();
+
+      if (targetShelf) {
+        selectShelf(targetShelf);
+      } else {
+        // default select A02
+        selectShelf('SH-A02');
+      }
+    });
+
+    function renderShelfGrid() {
+      const shelves = getShelves();
+
+      const zoneA = shelves.filter(s => s.zoneCode === 'ZONE-A');
+      const zoneB = shelves.filter(s => s.zoneCode === 'ZONE-B');
+      const zoneCD = shelves.filter(s => s.zoneCode === 'ZONE-C' || s.zoneCode === 'ZONE-D');
+
+      document.getElementById('zoneAShelves').innerHTML = renderShelfListHtml(zoneA);
+      document.getElementById('zoneBShelves').innerHTML = renderShelfListHtml(zoneB);
+      document.getElementById('zoneCDShelves').innerHTML = renderShelfListHtml(zoneCD);
+    }
+
+    function renderShelfListHtml(list) {
+      return list.map(s => {
+        let statusClass = 'status-normal';
+        let statusBadge = '<span class="badge badge-normal">Đủ</span>';
+        let barColor = 'var(--success)';
+
+        if (s.status === 'low') {
+          statusClass = 'status-low';
+          statusBadge = '<span class="badge badge-low">Vơi</span>';
+          barColor = 'var(--warning)';
+        } else if (s.status === 'empty') {
+          statusClass = 'status-empty';
+          statusBadge = '<span class="badge badge-empty">Trống</span>';
+          barColor = 'var(--danger)';
+        } else if (s.status === 'anomaly') {
+          statusClass = 'status-anomaly';
+          statusBadge = '<span class="badge badge-anomaly">Lệch</span>';
+          barColor = '#db2777';
+        }
+
+        const pct = Math.round((s.currentCount / s.maxCapacity) * 100);
+
+        return `
+          <div class="shelf-tile ${statusClass} ${activeShelfId === s.id ? 'active-shelf-target' : ''}" 
+               id="shelf-tile-${s.id}" 
+               onclick="selectShelf('${s.id}')">
+            <div class="shelf-tile-header">
+              <strong style="color: var(--text-main); font-size: 0.9rem;">${s.code}</strong>
+              ${statusBadge}
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${s.levelCount} Tầng · ${s.currentCount}/${s.maxCapacity} sp</div>
+            <div class="shelf-progress-bar">
+              <div class="shelf-progress-fill" style="width: ${pct}%; background-color: ${barColor};"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectShelf(shelfId) {
+      activeShelfId = shelfId;
+      renderShelfGrid();
+
+      const shelf = getShelfById(shelfId);
+      if (!shelf) return;
+
+      document.getElementById('shelfDetailTitle').textContent = `Chi tiết ${shelf.code}`;
+      
+      let badgeHtml = '<span class="badge badge-normal">Đủ hàng</span>';
+      if (shelf.status === 'low') badgeHtml = '<span class="badge badge-low">Sắp hết hàng</span>';
+      else if (shelf.status === 'empty') badgeHtml = '<span class="badge badge-empty">Trống kệ 100%</span>';
+      else if (shelf.status === 'anomaly') badgeHtml = '<span class="badge badge-anomaly">Cảnh báo sai lệch</span>';
+      document.getElementById('shelfDetailBadge').innerHTML = badgeHtml;
+
+      const allProds = getProducts();
+      const prodsOnShelf = allProds.filter(p => p.shelfId === shelf.id || p.shelfId === shelf.code);
+
+      let contentHtml = `
+        <div style="margin-bottom: 0.75rem;">
+          <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.2rem;">
+            <strong>Khu vực:</strong> ${shelf.zoneCode}
+          </div>
+          <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+            <strong>Kiểm kê lần cuối:</strong> ${shelf.lastChecked || 'Gần đây'}
+          </div>
+          <hr style="border: 0; border-top: 1px solid var(--border-light); margin: 0.6rem 0;">
+          <div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-main);">
+            Hàng hóa trên kệ (${prodsOnShelf.length} loại):
+          </div>
+      `;
+
+      if (prodsOnShelf.length === 0) {
+        contentHtml += `<div class="state-box" style="padding: 1rem;"><small>Chưa có sản phẩm nào trên kệ này.</small></div>`;
+      } else {
+        contentHtml += `<div style="display: flex; flex-direction: column; gap: 0.45rem;">`;
+        prodsOnShelf.forEach(p => {
+          contentHtml += `
+            <div style="background: var(--bg-page); padding: 0.6rem 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-main);">${p.name}</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">${p.shelfLevel || 'Tầng 2'} · Còn: <strong>${p.stockQty}</strong> sp</div>
+              </div>
+              <div>
+                ${p.stockQty <= 0 ? 
+                  `<a href="shopper-product-alternatives.html?id=${p.id}" class="btn btn-ai btn-sm" style="font-size: 0.7rem; padding: 2px 8px;">Gợi ý AI</a>` :
+                  `<span style="color: var(--primary); font-weight: 800; font-size: 0.85rem;">${p.price.toLocaleString()}đ</span>`
+                }
+              </div>
+            </div>
+          `;
+        });
+        contentHtml += `</div>`;
+      }
+
+      contentHtml += `</div>`;
+      document.getElementById('shelfDetailContent').innerHTML = contentHtml;
+
+      const routeBox = document.getElementById('routeGuideBox');
+      const routeText = document.getElementById('routeGuideText');
+      routeBox.style.display = 'block';
+
+      if (shelf.zoneCode === 'ZONE-A') {
+        routeText.innerHTML = `Từ <strong>Cửa chính Tầng 1</strong> &rarr; Đi thẳng 10m &rarr; Rẽ vào <strong>Lối Đồ Uống (Zone A)</strong> &rarr; Tìm <strong>${shelf.code}</strong> ở dãy tay phải.`;
+      } else if (shelf.zoneCode === 'ZONE-B') {
+        routeText.innerHTML = `Từ <strong>Cửa chính Tầng 1</strong> &rarr; Đi qua quầy thu ngân &rarr; Hành lang thực phẩm &rarr; <strong>${shelf.code}</strong> ở hàng giữa.`;
+      } else {
+        routeText.innerHTML = `Từ Tầng 1 &rarr; Đi <strong>Thang cuốn lên Tầng 2</strong> &rarr; Rẽ trái sang khu bánh kẹo/mỹ phẩm &rarr; Nhìn biển treo tìm <strong>${shelf.code}</strong>.`;
+      }
+
+      document.getElementById('shelfActionsBox').style.display = 'block';
+    }
+
+    function handleReportEmptyShelf() {
+      if (!activeShelfId) return;
+      const shelf = getShelfById(activeShelfId);
+      showToast(`Đã gửi thông báo thiếu hàng tại ${shelf.code} tới nhân viên trực ca!`, 'success');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tìm Kiếm Sản Phẩm & Định Vị Kệ Hàng - SmartShelf</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="../index.html" class="brand-logo">
+        <div class="logo-icon">SS</div>
+        <div>
+          <span>SmartShelf</span>
+          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Khách Mua Sắm (SV1: Hoàng Anh)</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="shopper-product-search.html" class="nav-link active">🔍 Tìm Kiếm Hàng</a>
+        <a href="shopper-product-location.html" class="nav-link">📍 Bản Đồ Kệ Hàng</a>
+        <a href="shopper-product-alternatives.html" class="nav-link">✨ Gợi Ý Thay Thế (AI)</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn btn-secondary btn-sm" id="cartBtn" title="Xem giỏ hàng">
+          🛒 Giỏ hàng: <strong id="cartCount" style="color: var(--primary);">0</strong> món
+        </button>
+        <select id="globalRoleSwitcher" class="role-switcher-select">
+          <option value="shopper" selected>🛒 Khách hàng</option>
+          <option value="associate">📋 Nhân viên</option>
+          <option value="manager">📊 Quản lý</option>
+          <option value="admin">⚙️ Quản trị</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="../index.html">Trang chủ</a> &gt; <span>Khách mua sắm</span> &gt; <span>Tìm kiếm sản phẩm</span>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">
+          <span>🔍 Tìm Kiếm Hàng Hóa & Vị Trí Trên Kệ</span>
+        </h1>
+        <p class="page-subtitle">Biết chính xác món hàng bạn cần đang nằm ở Kệ nào, Tầng mấy trước khi di chuyển.</p>
+      </div>
+      <div>
+        <a href="shopper-product-location.html" class="btn btn-secondary btn-sm">🗺️ Xem Sơ Đồ Cửa Hàng</a>
+      </div>
+    </div>
+
+    <!-- CLEAN FILTER BAR -->
+    <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
+      <div style="display: grid; grid-template-columns: 2fr 1.2fr 1.2fr auto; gap: 0.75rem; align-items: flex-end;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="searchInput">Tìm theo tên hoặc mã hàng</label>
+          <input type="text" id="searchInput" class="form-control" placeholder="Ví dụ: Coca, Mì Omachi, Snack Lay's...">
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="categoryFilter">Ngành hàng</label>
+          <select id="categoryFilter" class="form-control">
+            <option value="ALL">Tất cả ngành hàng</option>
+            <option value="Đồ Uống">Đồ Uống</option>
+            <option value="Thực Phẩm">Thực Phẩm</option>
+            <option value="Snack">Snack & Bánh Kẹo</option>
+            <option value="Gia Vị">Gia Vị</option>
+            <option value="Hóa Mỹ Phẩm">Hóa Mỹ Phẩm</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="stockFilter">Tình trạng kệ</label>
+          <select id="stockFilter" class="form-control">
+            <option value="ALL">Tất cả trạng thái</option>
+            <option value="IN_STOCK">Còn hàng tại kệ</option>
+            <option value="EMPTY">Tạm hết hàng (Có AI gợi ý)</option>
+          </select>
+        </div>
+        <button id="resetFiltersBtn" class="btn btn-secondary" style="height: 38px;">Làm mới</button>
+      </div>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div id="productGrid" class="grid-3">
+      <!-- Dynamic render -->
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" class="state-box" style="display: none;">
+      <div class="state-icon">🔎📦</div>
+      <h3 class="state-title">Không tìm thấy sản phẩm phù hợp</h3>
+      <p class="state-desc">Hãy thử thay đổi từ khóa tìm kiếm hoặc bấm nút bên dưới để xem lại tất cả sản phẩm.</p>
+      <button class="btn btn-primary btn-sm" onclick="resetFilters()">Xem tất cả sản phẩm</button>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div>SmartShelf - Khách Mua Sắm (Phụ trách bởi: SV1 Trần Trọng Hoàng Anh)</div>
+      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+    </div>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+      updateCartBadge();
+
+      document.getElementById('searchInput').addEventListener('input', renderProducts);
+      document.getElementById('categoryFilter').addEventListener('change', renderProducts);
+      document.getElementById('stockFilter').addEventListener('change', renderProducts);
+      document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
+    });
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('categoryFilter').value = 'ALL';
+      document.getElementById('stockFilter').value = 'ALL';
+      renderProducts();
+    }
+
+    function renderProducts() {
+      const container = document.getElementById('productGrid');
+      const emptyBox = document.getElementById('emptyState');
+      const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+      const cat = document.getElementById('categoryFilter').value;
+      const stock = document.getElementById('stockFilter').value;
+
+      let list = getProducts();
+
+      // Filters
+      if (keyword) {
+        list = list.filter(p => 
+          p.name.toLowerCase().includes(keyword) || 
+          p.sku.toLowerCase().includes(keyword) ||
+          (p.tags && p.tags.some(t => t.toLowerCase().includes(keyword)))
+        );
+      }
+      if (cat !== 'ALL') {
+        list = list.filter(p => p.category.includes(cat) || cat.includes(p.category));
+      }
+      if (stock === 'IN_STOCK') {
+        list = list.filter(p => p.stockQty > 0);
+      } else if (stock === 'EMPTY') {
+        list = list.filter(p => p.stockQty <= 0);
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = '';
+        emptyBox.style.display = 'block';
+        return;
+      }
+
+      emptyBox.style.display = 'none';
+      container.innerHTML = list.map(p => {
+        const isOutOfStock = p.stockQty <= 0;
+        let badgeHtml = '';
+        if (isOutOfStock) {
+          badgeHtml = '<span class="badge badge-empty">Hết Hàng Trên Kệ</span>';
+        } else if (p.stockQty <= p.minQty) {
+          badgeHtml = `<span class="badge badge-low">Còn ít (${p.stockQty} sp)</span>`;
+        } else {
+          badgeHtml = `<span class="badge badge-normal">Sẵn hàng (${p.stockQty} sp)</span>`;
+        }
+
+        return `
+          <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 1.25rem;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">${p.category}</span>
+                ${badgeHtml}
+              </div>
+              
+              <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem; color: var(--text-main); line-height: 1.35; min-height: 2.7rem;">
+                ${p.name}
+              </h3>
+              
+              <div style="font-size: 1.2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.75rem;">
+                ${p.price.toLocaleString()}đ
+              </div>
+
+              <!-- Shelf Location Highlight -->
+              <div style="background-color: #f8fafc; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1rem; border: 1px solid var(--border); border-left: 3px solid var(--primary);">
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Vị Trí Kệ Hàng:</div>
+                <div style="font-weight: 700; font-size: 0.92rem; color: var(--text-main); margin-top: 1px;">
+                  📍 ${p.shelfId} &nbsp;·&nbsp; ${p.shelfLevel || 'Tầng 2'} (${p.zoneCode || 'ZONE-A'})
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+              ${isOutOfStock ? `
+                <a href="shopper-product-alternatives.html?id=${p.id}" class="btn btn-ai" style="width: 100%;">
+                  ✨ Gợi Ý Thay Thế Bằng AI
+                </a>
+                <a href="shopper-product-location.html?shelf=${p.shelfId}" class="btn btn-secondary btn-sm" style="width: 100%;">
+                  📍 Xem Vị Trí Kệ Trống
+                </a>
+              ` : `
+                <div style="display: flex; gap: 0.5rem;">
+                  <button class="btn btn-primary" style="flex: 1;" onclick="handleAddToCart('${p.id}')">
+                    + Thêm Vào Giỏ
+                  </button>
+                  <a href="shopper-product-location.html?shelf=${p.shelfId}&prod=${p.id}" class="btn btn-secondary" title="Dẫn đường tới kệ">
+                    📍 Chỉ Đường
+                  </a>
+                </div>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function handleAddToCart(productId) {
+      addToCart(productId, 1);
+      updateCartBadge();
+      showToast('Đã thêm sản phẩm vào giỏ hàng!', 'success');
+    }
+
+    function updateCartBadge() {
+      const cart = getCart();
+      const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+      document.getElementById('cartCount').textContent = count;
+    }
+  </script>
+</body>
+</html>

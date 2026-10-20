@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Điều Khiển Quản Lý Cửa Hàng - SmartShelf</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="../index.html" class="brand-logo">
+        <div class="logo-icon" style="background: linear-gradient(135deg, #d97706, #f59e0b);">SS</div>
+        <div>
+          <span>SmartShelf</span>
+          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Quản Lý Cửa Hàng (SV3: Văn Hân)</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="manager-store-dashboard.html" class="nav-link active">📊 Dashboard Điều Hành</a>
+        <a href="manager-restock-board.html" class="nav-link">📋 Kanban Nhiệm Vụ</a>
+        <a href="manager-retail-insights.html" class="nav-link">✨ Phân Tích & AI Insight</a>
+        <a href="admin-product-management.html" class="nav-link">⚙️ Quản Trị Hệ Thống</a>
+      </nav>
+
+      <div class="header-actions">
+        <select id="globalRoleSwitcher" class="role-switcher-select">
+          <option value="shopper">🛒 Khách hàng</option>
+          <option value="associate">📋 Nhân viên</option>
+          <option value="manager" selected>📊 Quản lý</option>
+          <option value="admin">⚙️ Quản trị</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">Trang chủ</a> &gt; <span>Quản lý cửa hàng</span> &gt; <span>Dashboard</span>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">
+          <span>📊 Bảng Điều Khiển Quản Lý Vận Hành Kệ Hàng</span>
+        </h1>
+        <p class="page-subtitle">Theo dõi tổng thể tỷ lệ lấp đầy kệ, cảnh báo cạn hàng và điều phối nhân sự.</p>
+      </div>
+      <div style="display: flex; gap: 0.5rem;">
+        <a href="manager-restock-board.html" class="btn btn-primary btn-sm">📋 Điều Phối Kanban</a>
+        <a href="manager-retail-insights.html" class="btn btn-ai btn-sm">✨ Xem AI Anomaly Insight</a>
+      </div>
+    </div>
+
+    <!-- 4 KPI CARDS -->
+    <div class="grid-4" style="margin-bottom: 1.5rem;">
+      <div class="card" style="padding: 1.15rem;">
+        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Doanh Thu Ước Tính Hôm Nay</div>
+        <div style="font-size: 1.75rem; font-weight: 800; color: var(--primary); margin: 2px 0;">14.850.000đ</div>
+        <div style="font-size: 0.75rem; color: var(--success); font-weight: 700;">↑ 12.5% so với hôm qua</div>
+      </div>
+
+      <div class="card" style="padding: 1.15rem;">
+        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Tỷ Lệ Sẵn Sàng Của Kệ</div>
+        <div style="font-size: 1.75rem; font-weight: 800; color: var(--success); margin: 2px 0;">82.4%</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted);">Mục tiêu tiêu chuẩn &ge; 80%</div>
+      </div>
+
+      <div class="card" style="padding: 1.15rem;">
+        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Kệ Cần Xếp Hàng Gấp</div>
+        <div style="font-size: 1.75rem; font-weight: 800; color: var(--danger); margin: 2px 0;">2 Kệ Rỗng</div>
+        <div style="font-size: 0.75rem; color: var(--danger); font-weight: 700;">Kệ A03 & Kệ C03</div>
+      </div>
+
+      <div class="card" style="padding: 1.15rem;">
+        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Cảnh Báo Lệch Kho</div>
+        <div style="font-size: 1.75rem; font-weight: 800; color: #db2777; margin: 2px 0;">1 Điểm Nóng</div>
+        <div style="font-size: 0.75rem; color: #db2777; font-weight: 700;">Kệ B02 lệch -20 sp</div>
+      </div>
+    </div>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <div class="grid-3" style="align-items: start;">
+      <!-- LEFT: ZONE HEALTH (2 COLS) -->
+      <div style="grid-column: span 2;">
+        
+        <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
+          <div class="card-header" style="margin-bottom: 0.75rem;">
+            <h2 class="card-title">Mức Độ Đầy Hàng Theo 4 Khu Vực</h2>
+            <span class="badge badge-normal">Cập nhật trực tiếp</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.85rem;" id="zoneHealthBars"></div>
+        </div>
+
+        <!-- URGENT ALERTS TABLE -->
+        <div class="card" style="padding: 1.25rem;">
+          <div class="card-header" style="margin-bottom: 0.75rem;">
+            <h2 class="card-title">Điểm Nóng Cần Xử Lý Ngay</h2>
+            <span class="badge badge-empty">3 Sự cố ưu tiên</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Vị Trí Kệ</th>
+                  <th>Sự Cố</th>
+                  <th>Mức Độ</th>
+                  <th>Phụ Trách</th>
+                  <th style="text-align: right;">Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong style="color: var(--danger);">Kệ A03 (Đồ Uống)</strong></td>
+                  <td>Cạn 100% Coca-Cola Zero</td>
+                  <td><span class="badge badge-empty">Rất Cao</span></td>
+                  <td>Nguyễn Quang Long (SV2)</td>
+                  <td style="text-align: right;">
+                    <a href="manager-restock-board.html" class="btn btn-primary btn-sm">Xem Kanban</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--danger);">Kệ C03 (Snack Tầng 2)</strong></td>
+                  <td>Trống hàng Snack Lay's</td>
+                  <td><span class="badge badge-empty">Rất Cao</span></td>
+                  <td>Nguyễn Quang Long (SV2)</td>
+                  <td style="text-align: right;">
+                    <a href="manager-restock-board.html" class="btn btn-primary btn-sm">Xem Kanban</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong style="color: #db2777;">Kệ B02 (Thực Phẩm)</strong></td>
+                  <td>Lệch kiểm kê -20 gói Omachi</td>
+                  <td><span class="badge badge-anomaly">Bất thường</span></td>
+                  <td>Trần Trọng Hoàng Anh (SV1)</td>
+                  <td style="text-align: right;">
+                    <a href="manager-retail-insights.html" class="btn btn-ai btn-sm">AI Chẩn Đoán</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: STAFF & AI SUMMARY (1 COL) -->
+      <div>
+        <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
+          <div class="card-header" style="margin-bottom: 0.75rem;">
+            <h2 class="card-title">Nhân Sự Ca Trực</h2>
+            <span class="badge badge-normal">3 Thành viên</span>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+            <div style="background: var(--bg-page); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+              <div style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">Trần Trọng Hoàng Anh (SV1)</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Khách hàng & Gợi ý thay thế AI</div>
+            </div>
+
+            <div style="background: var(--bg-page); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+              <div style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">Nguyễn Quang Long (SV2)</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Kiểm kê & Bổ sung hàng cấp bách</div>
+            </div>
+
+            <div style="background: var(--bg-page); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+              <div style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">Nguyễn Văn Hân (SV3)</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Điều phối ca & Quản lý thất thoát</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ai-panel" style="padding: 1.15rem;">
+          <div class="ai-header" style="margin-bottom: 0.5rem;">
+            <span class="ai-badge">TÓM TẮT TỪ AI VẬN HÀNH</span>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-body); line-height: 1.45;">
+            Sức mua tại Zone A đang tăng nhanh hơn 35% so với mức trung bình. Đề xuất chuẩn bị sẵn 5 thùng Coca-Cola và Pepsi tại kho đệm trước giờ cao điểm trưa.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div>SmartShelf - Module Quản Lý Cửa Hàng (Phụ trách bởi: SV3 Nguyễn Văn Hân)</div>
+      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+    </div>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderZoneHealth();
+    });
+
+    function renderZoneHealth() {
+      const zones = getZones();
+      const shelves = getShelves();
+      const container = document.getElementById('zoneHealthBars');
+
+      container.innerHTML = zones.map(z => {
+        const zoneShelves = shelves.filter(s => s.zoneCode === z.code || s.zoneId === z.id);
+        const totalCapacity = zoneShelves.reduce((acc, s) => acc + s.maxCapacity, 0) || 100;
+        const totalCurrent = zoneShelves.reduce((acc, s) => acc + s.currentCount, 0);
+        const pct = Math.round((totalCurrent / totalCapacity) * 100);
+
+        let barCol = 'var(--success)';
+        if (pct < 50) barCol = 'var(--danger)';
+        else if (pct < 75) barCol = 'var(--warning)';
+
+        return `
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.2rem;">
+              <strong>${z.name}</strong>
+              <span style="font-weight: 700; color: ${barCol};">${totalCurrent}/${totalCapacity} sp (${pct}%)</span>
+            </div>
+            <div class="shelf-progress-bar">
+              <div class="shelf-progress-fill" style="width: ${pct}%; background-color: ${barCol};"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

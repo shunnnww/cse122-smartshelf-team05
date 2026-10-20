@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Trị Danh Mục Hàng Hóa - SmartShelf</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="../index.html" class="brand-logo">
+        <div class="logo-icon" style="background: linear-gradient(135deg, #6b21a8, #9333ea);">SS</div>
+        <div>
+          <span>SmartShelf</span>
+          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Quản Trị Master (SV3: Văn Hân)</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="admin-product-management.html" class="nav-link active">📦 Quản Lý Sản Phẩm</a>
+        <a href="admin-zone-management.html" class="nav-link">🏬 Quản Lý Khu Vực & Kệ</a>
+        <a href="admin-user-management.html" class="nav-link">👥 Quản Lý Người Dùng</a>
+        <a href="manager-store-dashboard.html" class="nav-link">📊 Về Dashboard</a>
+      </nav>
+
+      <div class="header-actions">
+        <select id="globalRoleSwitcher" class="role-switcher-select">
+          <option value="shopper">🛒 Khách hàng</option>
+          <option value="associate">📋 Nhân viên</option>
+          <option value="manager">📊 Quản lý</option>
+          <option value="admin" selected>⚙️ Quản trị</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">Trang chủ</a> &gt; <span>Quản trị viên</span> &gt; <span>Quản lý sản phẩm</span>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">
+          <span>📦 Quản Lý Danh Mục & Định Vị Kệ Hàng</span>
+          <span class="badge badge-normal" id="totalProdsBadge">15 sản phẩm</span>
+        </h1>
+        <p class="page-subtitle">Thực hiện đầy đủ nghiệp vụ Tạo, Đọc, Cập nhật và Xóa/Lưu trữ (CRUD) hàng hóa trong hệ thống siêu thị.</p>
+      </div>
+      <div>
+        <button class="btn btn-primary" onclick="openProductModal()">+ Thêm Sản Phẩm Mới</button>
+      </div>
+    </div>
+
+    <!-- SEARCH & FILTER -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.75rem;">
+        <input type="text" id="adminSearchInput" class="form-control" placeholder="Tìm theo tên hoặc mã SKU...">
+        <select id="adminCatFilter" class="form-control">
+          <option value="ALL">Tất cả ngành hàng</option>
+          <option value="Đồ Uống">Đồ Uống</option>
+          <option value="Thực Phẩm">Thực Phẩm</option>
+          <option value="Snack">Snack & Bánh Kẹo</option>
+          <option value="Gia Vị">Gia Vị</option>
+          <option value="Hóa Mỹ Phẩm">Hóa Mỹ Phẩm</option>
+        </select>
+        <select id="adminShelfFilter" class="form-control">
+          <option value="ALL">Tất cả kệ hàng</option>
+          <option value="SH-A01">Kệ A01</option>
+          <option value="SH-A02">Kệ A02</option>
+          <option value="SH-A03">Kệ A03</option>
+          <option value="SH-B01">Kệ B01</option>
+          <option value="SH-B02">Kệ B02</option>
+          <option value="SH-C01">Kệ C01</option>
+          <option value="SH-C03">Kệ C03</option>
+          <option value="SH-D01">Kệ D01</option>
+          <option value="SH-D02">Kệ D02</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- PRODUCTS CRUD TABLE -->
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Mã SKU</th>
+              <th>Tên Sản Phẩm</th>
+              <th>Ngành Hàng</th>
+              <th>Đơn Giá</th>
+              <th>Vị Trí Kệ</th>
+              <th>Tồn Kho</th>
+              <th>Trạng Thái</th>
+              <th style="text-align: right;">Thao Tác</th>
+            </tr>
+          </thead>
+          <tbody id="adminProductsTbody">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MODAL ADD/EDIT PRODUCT -->
+    <div id="productModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
+      <div class="card" style="max-width: 600px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto;">
+        <div class="card-header">
+          <h2 class="card-title" id="productModalTitle">Thêm Sản Phẩm Mới</h2>
+          <button class="btn btn-secondary btn-sm" onclick="closeProductModal()">✕</button>
+        </div>
+
+        <form id="productCrudForm" novalidate>
+          <input type="hidden" id="editProdId">
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label" for="prodNameInput">Tên sản phẩm *</label>
+              <input type="text" id="prodNameInput" class="form-control" required placeholder="Nhập tên sản phẩm...">
+              <div class="invalid-feedback">Vui lòng nhập tên sản phẩm.</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodSkuInput">Mã SKU *</label>
+              <input type="text" id="prodSkuInput" class="form-control" required placeholder="VD: DK-COCA-320">
+              <div class="invalid-feedback">Vui lòng nhập mã SKU.</div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label" for="prodCategorySelect">Ngành hàng</label>
+              <select id="prodCategorySelect" class="form-control">
+                <option value="Đồ Uống">Đồ Uống</option>
+                <option value="Thực Phẩm">Thực Phẩm</option>
+                <option value="Snack">Snack</option>
+                <option value="Bánh Kẹo">Bánh Kẹo</option>
+                <option value="Gia Vị">Gia Vị</option>
+                <option value="Hóa Mỹ Phẩm">Hóa Mỹ Phẩm</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodPriceInput">Đơn giá (VNĐ) *</label>
+              <input type="number" id="prodPriceInput" class="form-control" value="10000" min="500" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label" for="prodShelfSelect">Gán vào Kệ Hàng</label>
+              <select id="prodShelfSelect" class="form-control">
+                <option value="SH-A01">Kệ A01 (Đồ Uống)</option>
+                <option value="SH-A02">Kệ A02 (Đồ Uống)</option>
+                <option value="SH-A03">Kệ A03 (Đồ Uống)</option>
+                <option value="SH-A04">Kệ A04 (Đồ Uống)</option>
+                <option value="SH-B01">Kệ B01 (Thực Phẩm Khô)</option>
+                <option value="SH-B02">Kệ B02 (Thực Phẩm Khô)</option>
+                <option value="SH-B03">Kệ B03 (Gia Vị)</option>
+                <option value="SH-C01">Kệ C01 (Snack Tầng 2)</option>
+                <option value="SH-C02">Kệ C02 (Bánh Kẹo Tầng 2)</option>
+                <option value="SH-C03">Kệ C03 (Snack Tầng 2)</option>
+                <option value="SH-D01">Kệ D01 (Mỹ Phẩm Tầng 2)</option>
+                <option value="SH-D02">Kệ D02 (Mỹ Phẩm Tầng 2)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodShelfLevel">Tầng kệ</label>
+              <select id="prodShelfLevel" class="form-control">
+                <option value="Tầng 1">Tầng 1 (Đáy)</option>
+                <option value="Tầng 2" selected>Tầng 2 (Tầm ngực)</option>
+                <option value="Tầng 3">Tầng 3 (Tầm mắt)</option>
+                <option value="Tầng 4">Tầng 4 (Đỉnh)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <div class="form-group">
+              <label class="form-label" for="prodStockInput">Số lượng tồn kho</label>
+              <input type="number" id="prodStockInput" class="form-control" value="25" min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodMinInput">Ngưỡng tối thiểu</label>
+              <input type="number" id="prodMinInput" class="form-control" value="20" min="5">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prodVelocityInput">Tốc độ bán (sp/ngày)</label>
+              <input type="number" id="prodVelocityInput" class="form-control" value="25" min="1">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="prodDescInput">Mô tả sản phẩm</label>
+            <textarea id="prodDescInput" class="form-control" rows="2" placeholder="Ghi chú chi tiết sản phẩm..."></textarea>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1.5rem;">
+            <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Hủy</button>
+            <button type="submit" class="btn btn-primary" id="saveProdBtn">Lưu Dữ Liệu</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div>SmartShelf - Quản Trị Danh Mục Hàng Hóa (Phụ trách bởi: SV3 Nguyễn Văn Hân)</div>
+      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+    </div>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAdminProducts();
+
+      document.getElementById('adminSearchInput').addEventListener('input', renderAdminProducts);
+      document.getElementById('adminCatFilter').addEventListener('change', renderAdminProducts);
+      document.getElementById('adminShelfFilter').addEventListener('change', renderAdminProducts);
+      document.getElementById('productCrudForm').addEventListener('submit', handleSaveProduct);
+    });
+
+    function renderAdminProducts() {
+      const prods = getProducts();
+      const keyword = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+      const cat = document.getElementById('adminCatFilter').value;
+      const shelf = document.getElementById('adminShelfFilter').value;
+
+      let list = prods;
+      if (keyword) {
+        list = list.filter(p => p.name.toLowerCase().includes(keyword) || p.sku.toLowerCase().includes(keyword));
+      }
+      if (cat !== 'ALL') {
+        list = list.filter(p => p.category.includes(cat));
+      }
+      if (shelf !== 'ALL') {
+        list = list.filter(p => p.shelfId === shelf);
+      }
+
+      document.getElementById('totalProdsBadge').textContent = `${list.length} sản phẩm`;
+
+      const tbody = document.getElementById('adminProductsTbody');
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:var(--text-muted);">Không có sản phẩm nào phù hợp.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(p => {
+        let badgeHtml = '<span class="badge badge-normal">Bình thường</span>';
+        if (p.stockQty <= 0) badgeHtml = '<span class="badge badge-empty">Hết Hàng</span>';
+        else if (p.stockQty <= p.minQty) badgeHtml = '<span class="badge badge-low">Sắp Hết</span>';
+
+        return `
+          <tr>
+            <td><code>${p.sku}</code></td>
+            <td>
+              <strong style="color:var(--text-main); font-size:0.95rem;">${p.name}</strong>
+            </td>
+            <td>${p.category}</td>
+            <td><strong>${p.price.toLocaleString()}đ</strong></td>
+            <td>
+              <strong style="color:var(--primary);">${p.shelfId}</strong> · ${p.shelfLevel || 'Tầng 2'}
+            </td>
+            <td><strong>${p.stockQty}</strong> / Min ${p.minQty}</td>
+            <td>${badgeHtml}</td>
+            <td style="text-align: right;">
+              <div style="display: inline-flex; gap: 0.3rem;">
+                <button class="btn btn-secondary btn-sm" onclick="editProduct('${p.id}')">✏️ Sửa</button>
+                <button class="btn btn-secondary btn-sm" style="color:var(--danger);" onclick="deleteProductItem('${p.id}')">🗑️ Xóa</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openProductModal() {
+      document.getElementById('editProdId').value = '';
+      document.getElementById('productModalTitle').textContent = 'Thêm Sản Phẩm Mới Vào Kệ';
+      document.getElementById('productCrudForm').reset();
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').style.display = 'none';
+    }
+
+    function editProduct(id) {
+      const p = getProductById(id);
+      if (!p) return;
+
+      document.getElementById('editProdId').value = p.id;
+      document.getElementById('productModalTitle').textContent = `Chỉnh Sửa Sản Phẩm: ${p.sku}`;
+      document.getElementById('prodNameInput').value = p.name;
+      document.getElementById('prodSkuInput').value = p.sku;
+      document.getElementById('prodCategorySelect').value = p.category;
+      document.getElementById('prodPriceInput').value = p.price;
+      document.getElementById('prodShelfSelect').value = p.shelfId;
+      document.getElementById('prodShelfLevel').value = p.shelfLevel || 'Tầng 2';
+      document.getElementById('prodStockInput').value = p.stockQty;
+      document.getElementById('prodMinInput').value = p.minQty;
+      document.getElementById('prodVelocityInput').value = p.salesVelocity || 20;
+      document.getElementById('prodDescInput').value = p.description || '';
+
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function handleSaveProduct(e) {
+      e.preventDefault();
+      const editId = document.getElementById('editProdId').value;
+      const name = document.getElementById('prodNameInput').value.trim();
+      const sku = document.getElementById('prodSkuInput').value.trim();
+
+      if (!name || !sku) {
+        showToast('Vui lòng điền đầy đủ Tên và Mã SKU!', 'error');
+        return;
+      }
+
+      const payload = {
+        name: name,
+        sku: sku,
+        category: document.getElementById('prodCategorySelect').value,
+        price: parseInt(document.getElementById('prodPriceInput').value) || 10000,
+        shelfId: document.getElementById('prodShelfSelect').value,
+        shelfLevel: document.getElementById('prodShelfLevel').value,
+        stockQty: parseInt(document.getElementById('prodStockInput').value) || 0,
+        minQty: parseInt(document.getElementById('prodMinInput').value) || 20,
+        salesVelocity: parseInt(document.getElementById('prodVelocityInput').value) || 20,
+        description: document.getElementById('prodDescInput').value.trim()
+      };
+
+      if (editId) {
+        updateProduct(editId, payload);
+        showToast('Đã cập nhật thông tin sản phẩm!', 'success');
+      } else {
+        addProduct(payload);
+        showToast('Đã thêm mới sản phẩm thành công!', 'success');
+      }
+
+      closeProductModal();
+      renderAdminProducts();
+    }
+
+    function deleteProductItem(id) {
+      const p = getProductById(id);
+      if (confirm(`Bạn có chắc chắn muốn xóa/lưu trữ sản phẩm: ${p.name}?`)) {
+        deleteProduct(id);
+        showToast(`Đã xóa sản phẩm ${p.sku}!`, 'info');
+        renderAdminProducts();
+      }
+    }
+  </script>
+</body>
+</html>

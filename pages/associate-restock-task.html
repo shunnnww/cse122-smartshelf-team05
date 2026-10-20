@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-1: Nhiệm Vụ Bổ Sung Kệ Hàng - SmartShelf</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="../index.html" class="brand-logo">
+        <div class="logo-icon" style="background: linear-gradient(135deg, #0f766e, #14b8a6);">SS</div>
+        <div>
+          <span>SmartShelf</span>
+          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Nhân Viên Kệ Hàng (SV2: Quang Long)</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="associate-zone-view.html" class="nav-link">📋 Điều Hành Khu Vực</a>
+        <a href="associate-shelf-check.html" class="nav-link">🔍 Kiểm Tra Kệ Hàng</a>
+        <a href="associate-restock-task.html" class="nav-link active">📦 Bổ Sung Kệ (AI-1)</a>
+      </nav>
+
+      <div class="header-actions">
+        <select id="globalRoleSwitcher" class="role-switcher-select">
+          <option value="shopper">🛒 Khách hàng</option>
+          <option value="associate" selected>📋 Nhân viên</option>
+          <option value="manager">📊 Quản lý</option>
+          <option value="admin">⚙️ Quản trị</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">Trang chủ</a> &gt; <span>Nhân viên</span> &gt; <span>Nhiệm vụ bổ sung</span>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">
+          <span>📦 Restock Priority AI – Điều Phối Bổ Sung Kệ Cấp Bách</span>
+          <span class="ai-badge">AI Feature 1</span>
+        </h1>
+        <p class="page-subtitle">Mô hình AI tự động tính toán tốc độ bán và lượng hàng tồn để đề xuất thứ tự ưu tiên bổ sung hàng lên kệ.</p>
+      </div>
+      <div style="display: flex; gap: 0.5rem;">
+        <button id="runAiPriorityBtn" class="btn btn-ai btn-sm">✨ Chạy AI Xếp Hạng Ưu Tiên</button>
+        <button id="simulateAiErrorBtn" class="btn btn-secondary btn-sm">🧪 Thử Trạng Thái Lỗi AI</button>
+      </div>
+    </div>
+
+    <!-- AI PROCESSING SKELETON / LOADING -->
+    <div id="aiPriorityLoadingBox" class="state-box" style="display: none; background: #faf5ff; border-color: var(--accent-ai-border);">
+      <div class="loading-spinner" style="border-top-color: var(--accent-ai);"></div>
+      <h3 class="state-title" style="color: var(--accent-ai);">AI Đang Phân Tích Dữ Liệu Tồn Kho & Tốc Độ Tiêu Thụ...</h3>
+      <p class="state-desc">Áp dụng thuật toán Multi-factor Dynamic Depletion & Velocity Model để tính điểm khẩn cấp cho từng kệ hàng.</p>
+    </div>
+
+    <!-- AI FAILURE / INSUFFICIENT DATA BOX -->
+    <div id="aiPriorityErrorBox" class="state-box" style="display: none; background: var(--danger-bg); border-color: #fca5a5;">
+      <div class="state-icon">⚠️🤖</div>
+      <h3 class="state-title" style="color: var(--danger);">Không Thể Xếp Hạng Bằng AI Lúc Này</h3>
+      <p class="state-desc" id="aiPriorityErrorMessage">
+        Dữ liệu bán hàng thời gian thực bị gián đoạn hoặc không đủ để tính toán độ tin cậy.
+      </p>
+      <div style="display: flex; gap: 0.5rem; justify-content: center;">
+        <button class="btn btn-secondary btn-sm" onclick="triggerAiPriority(false)">🔄 Thử Lại</button>
+        <button class="btn btn-primary btn-sm" onclick="document.getElementById('manualTaskModal').style.display='block'">✍️ Tạo Nhiệm Vụ Thủ Công</button>
+      </div>
+    </div>
+
+    <!-- AI PRIORITY SUGGESTIONS PANEL -->
+    <div id="aiPriorityPanel" class="ai-panel" style="display: none;">
+      <div class="ai-header">
+        <div>
+          <span class="ai-badge">DANH SÁCH ĐỀ XUẤT XẾP HẠNG BỞI AI</span>
+          <span style="font-size: 0.85rem; color: var(--text-muted); margin-left: 0.5rem;">
+            Độ chính xác thuật toán: <strong style="color: var(--success);">96.4%</strong>
+          </span>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-secondary btn-sm" onclick="document.getElementById('aiPriorityPanel').style.display='none'">Ẩn đề xuất</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table" style="background: white; border-radius: var(--radius-sm); overflow: hidden;">
+          <thead>
+            <tr>
+              <th>Điểm AI</th>
+              <th>Mức Độ</th>
+              <th>Mặt Hàng & Kệ</th>
+              <th>Hiện Có / Ngưỡng</th>
+              <th>Lý Do Đề Xuất (Explainable AI)</th>
+              <th style="text-align: right;">Hành Động Phê Duyệt</th>
+            </tr>
+          </thead>
+          <tbody id="aiPriorityTbody">
+            <!-- Dynamic AI ranked rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ACTIVE TASKS LIST -->
+    <div class="card" style="margin-top: 1.5rem;">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">Hàng Đợi Nhiệm Vụ Bổ Sung Kệ Của Nhân Viên</h2>
+          <p class="page-subtitle">Các công việc đã được duyệt và đang triển khai thực tế tại kho & kệ siêu thị.</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <select id="taskStatusFilter" class="form-control" style="width: auto; padding: 0.35rem 0.75rem;">
+            <option value="ALL">Tất cả trạng thái</option>
+            <option value="pending">Chờ xử lý</option>
+            <option value="in-progress">Đang thực hiện</option>
+            <option value="completed">Đã hoàn thành</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Mã Task</th>
+              <th>Kệ Hàng</th>
+              <th>Sản Phẩm</th>
+              <th>SL Cần Lấy</th>
+              <th>Mức Ưu Tiên</th>
+              <th>Trạng Thái</th>
+              <th>Người Phụ Trách</th>
+              <th style="text-align: right;">Cập Nhật Tiến Độ</th>
+            </tr>
+          </thead>
+          <tbody id="tasksTableBody">
+            <!-- Dynamic active tasks -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div>SmartShelf - Module Bổ Sung Kệ & Restock Priority AI (Phụ trách bởi: SV2 Nguyễn Quang Long)</div>
+      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+    </div>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTasksTable();
+      triggerAiPriority(false); // auto-load recommendations
+
+      document.getElementById('runAiPriorityBtn').addEventListener('click', () => triggerAiPriority(false));
+      document.getElementById('simulateAiErrorBtn').addEventListener('click', () => triggerAiPriority(true));
+      document.getElementById('taskStatusFilter').addEventListener('change', renderTasksTable);
+    });
+
+    async function triggerAiPriority(forceError = false) {
+      const loading = document.getElementById('aiPriorityLoadingBox');
+      const panel = document.getElementById('aiPriorityPanel');
+      const errBox = document.getElementById('aiPriorityErrorBox');
+
+      panel.style.display = 'none';
+      errBox.style.display = 'none';
+      loading.style.display = 'block';
+
+      try {
+        const res = await runRestockPriorityAI(forceError);
+        loading.style.display = 'none';
+
+        if (res.status === 'empty' || res.items.length === 0) {
+          showToast('Tất cả kệ đều đang đủ hàng!', 'info');
+          return;
+        }
+
+        renderAiPriorityRows(res.items);
+        panel.style.display = 'block';
+        showToast('AI đã hoàn tất xếp hạng ưu tiên bổ sung kệ!', 'ai');
+
+      } catch (err) {
+        loading.style.display = 'none';
+        errBox.style.display = 'block';
+        document.getElementById('aiPriorityErrorMessage').textContent = err.message || 'Mô phỏng lỗi AI kích hoạt.';
+        showToast('Đã kích hoạt trạng thái AI thất bại / không chắc chắn.', 'error');
+      }
+    }
+
+    function renderAiPriorityRows(items) {
+      const tbody = document.getElementById('aiPriorityTbody');
+      tbody.innerHTML = items.map(item => {
+        let badgeCol = 'var(--primary)';
+        if (item.score >= 85) badgeCol = 'var(--danger)';
+        else if (item.score >= 70) badgeCol = '#d97706';
+
+        return `
+          <tr>
+            <td>
+              <span style="display: inline-block; width: 36px; height: 36px; line-height: 36px; text-align: center; border-radius: 50%; background: ${badgeCol}; color: white; font-weight: 800; font-size: 0.9rem;">
+                ${item.score}
+              </span>
+            </td>
+            <td>
+              <span class="badge ${item.score >= 85 ? 'badge-empty' : 'badge-low'}">${item.urgency}</span>
+            </td>
+            <td>
+              <strong style="color: var(--text-main); font-size: 0.95rem;">${item.productName}</strong>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Vị trí: <strong>${item.shelfId}</strong></div>
+            </td>
+            <td>
+              <strong style="color: ${item.stockQty === 0 ? 'var(--danger)' : '#d97706'};">${item.stockQty}</strong> / Min ${item.minQty}
+            </td>
+            <td style="font-size: 0.85rem; color: #4b5563; max-width: 320px;">
+              ${item.reason}
+            </td>
+            <td style="text-align: right;">
+              <button class="btn btn-ai btn-sm" onclick="acceptAiRestockItem('${item.shelfId}', '${item.productId}', '${item.productName.replace(/'/g, "\\'")}', ${item.suggestedQty}, '${item.urgency}', ${item.score}, '${item.reason.replace(/'/g, "\\'')}')">
+                ✅ Chấp Nhận & Tạo Task
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function acceptAiRestockItem(shelfId, prodId, prodName, qty, urgency, score, reason) {
+      const newTask = {
+        shelfId: shelfId,
+        shelfCode: shelfId,
+        productId: prodId,
+        productName: prodName,
+        requestedQty: qty,
+        priority: urgency,
+        aiPriorityScore: score,
+        aiReason: reason,
+        status: 'pending',
+        assignedTo: 'Nguyễn Quang Long (SV2)'
+      };
+
+      addRestockTask(newTask);
+      showToast(`Đã tạo nhiệm vụ bổ sung cho ${prodName} từ gợi ý AI!`, 'success');
+      renderTasksTable();
+    }
+
+    function renderTasksTable() {
+      const tasks = getRestockTasks();
+      const filter = document.getElementById('taskStatusFilter').value;
+      const tbody = document.getElementById('tasksTableBody');
+
+      let list = tasks;
+      if (filter !== 'ALL') {
+        list = list.filter(t => t.status === filter);
+      }
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:var(--text-muted);">Không có nhiệm vụ nào trong trạng thái này.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(t => {
+        let statusBadge = '<span class="badge badge-pending">Chờ xử lý</span>';
+        if (t.status === 'in-progress') statusBadge = '<span class="badge badge-in-progress">Đang lấy hàng</span>';
+        else if (t.status === 'completed') statusBadge = '<span class="badge badge-completed">Đã hoàn tất</span>';
+
+        return `
+          <tr>
+            <td><strong>${t.id}</strong></td>
+            <td><strong style="color: var(--primary);">${t.shelfCode || t.shelfId}</strong></td>
+            <td>
+              <strong>${t.productName}</strong>
+              ${t.aiPriorityScore ? `<div style="font-size:0.7rem; color:var(--accent-ai);">Điểm AI: ${t.aiPriorityScore}</div>` : ''}
+            </td>
+            <td><strong>${t.requestedQty}</strong> sp</td>
+            <td><span class="badge ${t.priority === 'Cao' || t.priority === 'Rất Cao' ? 'badge-empty' : 'badge-low'}">${t.priority}</span></td>
+            <td>${statusBadge}</td>
+            <td style="font-size: 0.85rem;">${t.assignedTo || 'Chưa gán'}</td>
+            <td style="text-align: right;">
+              <div style="display: inline-flex; gap: 0.4rem;">
+                ${t.status === 'pending' ? `
+                  <button class="btn btn-secondary btn-sm" onclick="advanceTaskStatus('${t.id}', 'in-progress')">
+                    ▶️ Bắt đầu
+                  </button>
+                ` : ''}
+                ${t.status === 'in-progress' ? `
+                  <button class="btn btn-success btn-sm" onclick="advanceTaskStatus('${t.id}', 'completed')">
+                    ✅ Đã xếp lên kệ
+                  </button>
+                ` : ''}
+                ${t.status === 'completed' ? `
+                  <span style="font-size:0.8rem; color:var(--success); font-weight:600;">✓ Hoàn thành</span>
+                ` : `
+                  <button class="btn btn-secondary btn-sm" style="color:var(--danger);" onclick="handleDeleteTask('${t.id}')" title="Hủy task">
+                    🗑️
+                  </button>
+                `}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function advanceTaskStatus(taskId, nextStatus) {
+      const task = getRestockTasks().find(t => t.id === taskId);
+      if (!task) return;
+
+      updateRestockTask(taskId, { status: nextStatus });
+
+      if (nextStatus === 'completed') {
+        // Auto replenish shelf in database
+        const prod = getProductById(task.productId);
+        if (prod) {
+          const newQty = prod.stockQty + task.requestedQty;
+          updateProduct(prod.id, { stockQty: newQty });
+        }
+        const shelf = getShelfById(task.shelfId);
+        if (shelf) {
+          const newCurrent = Math.min(shelf.maxCapacity, shelf.currentCount + task.requestedQty);
+          updateShelf(shelf.id, { currentCount: newCurrent, status: 'normal' });
+        }
+        showToast(`Đã hoàn thành xếp hàng lên ${task.shelfCode}! Tồn kho và kệ đã được tự động cập nhật.`, 'success');
+      } else {
+        showToast(`Nhiệm vụ ${taskId} đã chuyển sang trạng thái: ${nextStatus}`, 'info');
+      }
+
+      renderTasksTable();
+    }
+
+    function handleDeleteTask(taskId) {
+      if (confirm(`Bạn có chắc chắn muốn hủy nhiệm vụ ${taskId}?`)) {
+        deleteRestockTask(taskId);
+        showToast(`Đã hủy nhiệm vụ ${taskId}!`, 'info');
+        renderTasksTable();
+      }
+    }
+  </script>
+</body>
+</html>

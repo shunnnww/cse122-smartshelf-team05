@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Trị Người Dùng & Phân Quyền - SmartShelf</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="../index.html" class="brand-logo">
+        <div class="logo-icon" style="background: linear-gradient(135deg, #6b21a8, #9333ea);">SS</div>
+        <div>
+          <span>SmartShelf</span>
+          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Quản Trị Master (SV3: Văn Hân)</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="admin-product-management.html" class="nav-link">📦 Quản Lý Sản Phẩm</a>
+        <a href="admin-zone-management.html" class="nav-link">🏬 Quản Lý Khu Vực & Kệ</a>
+        <a href="admin-user-management.html" class="nav-link active">👥 Quản Lý Người Dùng</a>
+        <a href="manager-store-dashboard.html" class="nav-link">📊 Về Dashboard</a>
+      </nav>
+
+      <div class="header-actions">
+        <select id="globalRoleSwitcher" class="role-switcher-select">
+          <option value="shopper">🛒 Khách hàng</option>
+          <option value="associate">📋 Nhân viên</option>
+          <option value="manager">📊 Quản lý</option>
+          <option value="admin" selected>⚙️ Quản trị</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">Trang chủ</a> &gt; <span>Quản trị viên</span> &gt; <span>Quản lý người dùng</span>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">
+          <span>👥 Quản Lý Tài Khoản & Phân Quyền Hệ Thống</span>
+        </h1>
+        <p class="page-subtitle">Quản lý danh sách thành viên, phân quyền theo 4 vai trò chính: Shopper, Staff, Manager và Admin.</p>
+      </div>
+      <div>
+        <button class="btn btn-primary" onclick="openAddUserModal()">+ Thêm Người Dùng Mới</button>
+      </div>
+    </div>
+
+    <!-- USERS TABLE -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Danh Sách Tài Khoản Trong Hệ Thống</h2>
+        <span class="badge badge-normal" id="usersCountBadge">4 người dùng</span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Mã ID</th>
+              <th>Họ và Tên</th>
+              <th>Tên Đăng Nhập</th>
+              <th>Vai Trò (Role)</th>
+              <th>Email Liên Hệ</th>
+              <th>Ghi Chú Nhóm BTL</th>
+              <th style="text-align: right;">Thao Tác</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MODAL ADD USER -->
+    <div id="userModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
+      <div class="card" style="max-width: 500px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg);">
+        <div class="card-header">
+          <h2 class="card-title">Thêm Người Dùng Mới</h2>
+          <button class="btn btn-secondary btn-sm" onclick="closeUserModal()">✕</button>
+        </div>
+
+        <form id="userForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="userNameInput">Họ và Tên *</label>
+            <input type="text" id="userNameInput" class="form-control" required placeholder="Nhập họ và tên...">
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label" for="userLoginInput">Tên đăng nhập *</label>
+              <input type="text" id="userLoginInput" class="form-control" required placeholder="username...">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="userRoleSelect">Vai trò phân quyền</label>
+              <select id="userRoleSelect" class="form-control">
+                <option value="customer">Khách mua sắm (Shopper)</option>
+                <option value="staff">Nhân viên kệ hàng (Staff)</option>
+                <option value="manager">Quản lý cửa hàng (Manager)</option>
+                <option value="admin">Quản trị viên (Admin)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="userEmailInput">Email liên hệ</label>
+            <input type="email" id="userEmailInput" class="form-control" placeholder="ten@tlu.edu.vn">
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1.5rem;">
+            <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Hủy</button>
+            <button type="submit" class="btn btn-primary">Lưu Người Dùng</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div>SmartShelf - Quản Trị Người Dùng & Phân Quyền (Phụ trách bởi: SV3 Nguyễn Văn Hân)</div>
+      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+    </div>
+  </footer>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderUsers();
+      document.getElementById('userForm').addEventListener('submit', handleAddUser);
+    });
+
+    function renderUsers() {
+      const users = getUsers();
+      const tbody = document.getElementById('usersTableBody');
+      document.getElementById('usersCountBadge').textContent = `${users.length} tài khoản`;
+
+      tbody.innerHTML = users.map(u => {
+        let roleBadge = '<span class="role-badge-tag role-shopper">Shopper</span>';
+        if (u.role === 'staff') roleBadge = '<span class="role-badge-tag role-associate">Staff</span>';
+        else if (u.role === 'manager') roleBadge = '<span class="role-badge-tag role-manager">Manager</span>';
+        else if (u.role === 'admin') roleBadge = '<span class="role-badge-tag role-admin">Admin</span>';
+
+        return `
+          <tr>
+            <td><code>${u.id}</code></td>
+            <td><strong style="color:var(--text-main); font-size:0.95rem;">${u.fullName}</strong></td>
+            <td><code>${u.username}</code></td>
+            <td>${roleBadge}</td>
+            <td>${u.email || 'Chưa cập nhật'}</td>
+            <td><span class="badge badge-normal">${u.badge || 'Tài khoản thường'}</span></td>
+            <td style="text-align: right;">
+              <div style="display: inline-flex; gap: 0.3rem;">
+                <button class="btn btn-secondary btn-sm" onclick="showToast('Đã cấp lại mật khẩu mặc định 123456 cho ${u.username}!', 'info')">
+                  🔑 Reset MK
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openAddUserModal() {
+      document.getElementById('userForm').reset();
+      document.getElementById('userModal').style.display = 'flex';
+    }
+
+    function closeUserModal() {
+      document.getElementById('userModal').style.display = 'none';
+    }
+
+    function handleAddUser(e) {
+      e.preventDefault();
+      const name = document.getElementById('userNameInput').value.trim();
+      const login = document.getElementById('userLoginInput').value.trim();
+      const role = document.getElementById('userRoleSelect').value;
+      const email = document.getElementById('userEmailInput').value.trim();
+
+      if (!name || !login) {
+        showToast('Vui lòng điền đầy đủ Họ tên và Tên đăng nhập!', 'error');
+        return;
+      }
+
+      addUser({
+        fullName: name,
+        username: login,
+        role: role,
+        email: email || `${login}@smartshelf.vn`,
+        badge: 'Thành viên mới'
+      });
+
+      showToast(`Đã thêm mới tài khoản ${login} thành công!`, 'success');
+      closeUserModal();
+      renderUsers();
+    }
+  </script>
+</body>
+</html>
