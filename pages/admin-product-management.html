@@ -16,13 +16,13 @@
         <div class="logo-icon" style="background: linear-gradient(135deg, #6b21a8, #9333ea);">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Quản Trị Master (SV3: Văn Hân)</span>
+          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Quản Trị Master (SV3: Văn Hân)</span>
         </div>
       </a>
 
       <nav class="main-nav">
         <a href="admin-product-management.html" class="nav-link active">📦 Quản Lý Sản Phẩm</a>
-        <a href="admin-zone-management.html" class="nav-link">🏬 Quản Lý Khu Vực & Kệ</a>
+        <a href="admin-zone-management.html" class="nav-link">🏬 Khu Vực & Kệ</a>
         <a href="admin-user-management.html" class="nav-link">👥 Quản Lý Người Dùng</a>
         <a href="manager-store-dashboard.html" class="nav-link">📊 Về Dashboard</a>
       </nav>
@@ -46,18 +46,17 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">
-          <span>📦 Quản Lý Danh Mục & Định Vị Kệ Hàng</span>
-          <span class="badge badge-normal" id="totalProdsBadge">15 sản phẩm</span>
+          <span>📦 Quản Lý Danh Mục & Định Vị Hàng Hóa</span>
         </h1>
-        <p class="page-subtitle">Thực hiện đầy đủ nghiệp vụ Tạo, Đọc, Cập nhật và Xóa/Lưu trữ (CRUD) hàng hóa trong hệ thống siêu thị.</p>
+        <p class="page-subtitle">Thực hiện đầy đủ nghiệp vụ Thêm, Sửa, Xóa và Gán sản phẩm vào từng Kệ - Tầng trong siêu thị.</p>
       </div>
       <div>
         <button class="btn btn-primary" onclick="openProductModal()">+ Thêm Sản Phẩm Mới</button>
       </div>
     </div>
 
-    <!-- SEARCH & FILTER -->
-    <div class="card" style="margin-bottom: 1.5rem;">
+    <!-- FILTER BAR -->
+    <div class="card" style="margin-bottom: 1.5rem; padding: 1.15rem;">
       <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.75rem;">
         <input type="text" id="adminSearchInput" class="form-control" placeholder="Tìm theo tên hoặc mã SKU...">
         <select id="adminCatFilter" class="form-control">
@@ -70,21 +69,26 @@
         </select>
         <select id="adminShelfFilter" class="form-control">
           <option value="ALL">Tất cả kệ hàng</option>
-          <option value="SH-A01">Kệ A01</option>
-          <option value="SH-A02">Kệ A02</option>
-          <option value="SH-A03">Kệ A03</option>
-          <option value="SH-B01">Kệ B01</option>
-          <option value="SH-B02">Kệ B02</option>
-          <option value="SH-C01">Kệ C01</option>
-          <option value="SH-C03">Kệ C03</option>
-          <option value="SH-D01">Kệ D01</option>
-          <option value="SH-D02">Kệ D02</option>
+          <option value="Kệ A01">Kệ A01 (Đồ Uống)</option>
+          <option value="Kệ A02">Kệ A02 (Đồ Uống)</option>
+          <option value="Kệ A03">Kệ A03 (Đồ Uống)</option>
+          <option value="Kệ B01">Kệ B01 (Thực Phẩm)</option>
+          <option value="Kệ B02">Kệ B02 (Thực Phẩm)</option>
+          <option value="Kệ C01">Kệ C01 (Snack Tầng 2)</option>
+          <option value="Kệ C03">Kệ C03 (Snack Tầng 2)</option>
+          <option value="Kệ D01">Kệ D01 (Mỹ Phẩm Tầng 2)</option>
+          <option value="Kệ D02">Kệ D02 (Mỹ Phẩm Tầng 2)</option>
         </select>
       </div>
     </div>
 
     <!-- PRODUCTS CRUD TABLE -->
-    <div class="card">
+    <div class="card" style="padding: 1.25rem;">
+      <div class="card-header" style="margin-bottom: 0.75rem;">
+        <h2 class="card-title">Danh Sách Hàng Hóa Trên Kệ</h2>
+        <span class="badge badge-normal" id="totalProdsBadge">15 sản phẩm</span>
+      </div>
+
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -99,16 +103,14 @@
               <th style="text-align: right;">Thao Tác</th>
             </tr>
           </thead>
-          <tbody id="adminProductsTbody">
-            <!-- Dynamic rows -->
-          </tbody>
+          <tbody id="adminProductsTbody"></tbody>
         </table>
       </div>
     </div>
 
     <!-- MODAL ADD/EDIT PRODUCT -->
     <div id="productModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
-      <div class="card" style="max-width: 600px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto;">
+      <div class="card" style="max-width: 580px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto;">
         <div class="card-header">
           <h2 class="card-title" id="productModalTitle">Thêm Sản Phẩm Mới</h2>
           <button class="btn btn-secondary btn-sm" onclick="closeProductModal()">✕</button>
@@ -152,18 +154,18 @@
             <div class="form-group">
               <label class="form-label" for="prodShelfSelect">Gán vào Kệ Hàng</label>
               <select id="prodShelfSelect" class="form-control">
-                <option value="SH-A01">Kệ A01 (Đồ Uống)</option>
-                <option value="SH-A02">Kệ A02 (Đồ Uống)</option>
-                <option value="SH-A03">Kệ A03 (Đồ Uống)</option>
-                <option value="SH-A04">Kệ A04 (Đồ Uống)</option>
-                <option value="SH-B01">Kệ B01 (Thực Phẩm Khô)</option>
-                <option value="SH-B02">Kệ B02 (Thực Phẩm Khô)</option>
-                <option value="SH-B03">Kệ B03 (Gia Vị)</option>
-                <option value="SH-C01">Kệ C01 (Snack Tầng 2)</option>
-                <option value="SH-C02">Kệ C02 (Bánh Kẹo Tầng 2)</option>
-                <option value="SH-C03">Kệ C03 (Snack Tầng 2)</option>
-                <option value="SH-D01">Kệ D01 (Mỹ Phẩm Tầng 2)</option>
-                <option value="SH-D02">Kệ D02 (Mỹ Phẩm Tầng 2)</option>
+                <option value="Kệ A01">Kệ A01 (Khu vực A - Đồ Uống)</option>
+                <option value="Kệ A02">Kệ A02 (Khu vực A - Đồ Uống)</option>
+                <option value="Kệ A03">Kệ A03 (Khu vực A - Đồ Uống)</option>
+                <option value="Kệ A04">Kệ A04 (Khu vực A - Đồ Uống)</option>
+                <option value="Kệ B01">Kệ B01 (Khu vực B - Thực Phẩm)</option>
+                <option value="Kệ B02">Kệ B02 (Khu vực B - Thực Phẩm)</option>
+                <option value="Kệ B03">Kệ B03 (Khu vực B - Gia Vị)</option>
+                <option value="Kệ C01">Kệ C01 (Khu vực C - Snack)</option>
+                <option value="Kệ C02">Kệ C02 (Khu vực C - Bánh Kẹo)</option>
+                <option value="Kệ C03">Kệ C03 (Khu vực C - Snack)</option>
+                <option value="Kệ D01">Kệ D01 (Khu vực D - Mỹ Phẩm)</option>
+                <option value="Kệ D02">Kệ D02 (Khu vực D - Mỹ Phẩm)</option>
               </select>
             </div>
             <div class="form-group">
@@ -251,7 +253,7 @@
       }
 
       tbody.innerHTML = list.map(p => {
-        let badgeHtml = '<span class="badge badge-normal">Bình thường</span>';
+        let badgeHtml = '<span class="badge badge-normal">Đủ hàng</span>';
         if (p.stockQty <= 0) badgeHtml = '<span class="badge badge-empty">Hết Hàng</span>';
         else if (p.stockQty <= p.minQty) badgeHtml = '<span class="badge badge-low">Sắp Hết</span>';
 
@@ -259,7 +261,7 @@
           <tr>
             <td><code>${p.sku}</code></td>
             <td>
-              <strong style="color:var(--text-main); font-size:0.95rem;">${p.name}</strong>
+              <strong style="color:var(--text-main); font-size:0.92rem;">${p.name}</strong>
             </td>
             <td>${p.category}</td>
             <td><strong>${p.price.toLocaleString()}đ</strong></td>

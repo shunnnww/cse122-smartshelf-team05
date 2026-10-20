@@ -13,10 +13,10 @@
   <header class="app-header">
     <div class="header-container">
       <a href="../index.html" class="brand-logo">
-        <div class="logo-icon" style="background: linear-gradient(135deg, #b45309, #d97706);">SS</div>
+        <div class="logo-icon" style="background: linear-gradient(135deg, #d97706, #f59e0b);">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Quản Lý Cửa Hàng (SV3: Văn Hân)</span>
+          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Quản Lý Cửa Hàng (SV3: Văn Hân)</span>
         </div>
       </a>
 
@@ -46,10 +46,10 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">
-          <span>✨ Shelf Anomaly Insight – Chẩn Đoán Sai Lệch & Thất Thoát Kệ</span>
+          <span>✨ Chẩn Đoán Sai Lệch & Thất Thoát Kệ Bằng AI</span>
           <span class="ai-badge">AI Feature 3</span>
         </h1>
-        <p class="page-subtitle">Sử dụng AI đối soát tự động giữa dữ liệu bán hàng POS và kết quả đếm thực địa để phát hiện thất thoát hoặc xếp nhầm kệ.</p>
+        <p class="page-subtitle">Sử dụng AI đối soát dữ liệu bán hàng với kết quả đếm thực tế để phát hiện hàng để nhầm kệ hoặc thất thoát.</p>
       </div>
       <div>
         <button class="btn btn-ai btn-sm" id="runBatchAnomalyBtn">✨ Quét Toàn Diện Bất Thường Siêu Thị</button>
@@ -61,42 +61,42 @@
       <div class="ai-header">
         <div>
           <span class="ai-badge">CHẨN ĐOÁN TRỌNG ĐIỂM TỪ AI</span>
-          <span style="font-size: 0.85rem; color: var(--text-muted); margin-left: 0.5rem;">Mô hình: Retail Shelf Audit Anomaly Neural Engine</span>
+          <span style="font-size: 0.82rem; color: var(--text-muted); margin-left: 0.5rem;">Mô hình: Retail Shelf Audit Anomaly Neural Engine</span>
         </div>
-        <span class="badge badge-anomaly" style="font-size: 0.85rem;">Phát hiện 1 sự cố cần can thiệp</span>
+        <span class="badge badge-anomaly" style="font-size: 0.82rem;">1 Sự cố cần can thiệp</span>
       </div>
 
       <div class="grid-3" style="align-items: center; margin-top: 1rem;">
-        <div style="background: white; padding: 1rem; border-radius: var(--radius-sm); border-left: 4px solid #db2777;">
-          <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">ĐỊA ĐIỂM SỰ CỐ</div>
-          <div style="font-size: 1.25rem; font-weight: 700; color: #db2777; margin: 0.25rem 0;">Kệ B02 (Zone B - Tầng 1)</div>
-          <div style="font-size: 0.85rem; color: var(--text-main);">Mặt hàng: <strong>Mì khoai tây Omachi Sốt Bò Hầm</strong></div>
+        <div style="background: white; padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid #db2777; border: 1px solid var(--border); border-left-width: 3px;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Địa Điểm Sự Cố</div>
+          <div style="font-size: 1.15rem; font-weight: 800; color: #db2777; margin: 0.2rem 0;">Kệ B02 (Khu vực B - Tầng 1)</div>
+          <div style="font-size: 0.82rem; color: var(--text-main);">Mặt hàng: <strong>Mì khoai tây Omachi Sốt Bò Hầm</strong></div>
         </div>
 
-        <div style="background: white; padding: 1rem; border-radius: var(--radius-sm); border-left: 4px solid var(--danger);">
-          <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">MỨC ĐỘ SAI SỐ</div>
-          <div style="font-size: 1.25rem; font-weight: 700; color: var(--danger); margin: 0.25rem 0;">-20 Sản Phẩm (-36.4%)</div>
-          <div style="font-size: 0.85rem; color: var(--text-muted);">Tồn POS: 55 sp · Thực đếm: 35 sp</div>
+        <div style="background: white; padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid var(--danger); border: 1px solid var(--border); border-left-width: 3px;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Mức Độ Sai Lệch</div>
+          <div style="font-size: 1.15rem; font-weight: 800; color: var(--danger); margin: 0.2rem 0;">-20 Sản Phẩm (-36.4%)</div>
+          <div style="font-size: 0.82rem; color: var(--text-muted);">Tồn máy tính: 55 sp · Thực đếm: 35 sp</div>
         </div>
 
-        <div style="background: white; padding: 1rem; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-ai);">
-          <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">XÁC SUẤT NGUYÊN NHÂN</div>
-          <div style="font-size: 0.85rem; line-height: 1.4; margin-top: 0.25rem;">
+        <div style="background: white; padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid var(--accent-ai); border: 1px solid var(--border); border-left-width: 3px;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Xác Suất Nguyên Nhân (AI)</div>
+          <div style="font-size: 0.82rem; line-height: 1.4; margin-top: 0.2rem;">
             • Xếp nhầm sang Kệ B01: <strong>65%</strong><br>
-            • Khách bỏ quên giỏ hàng: <strong>25%</strong><br>
+            • Khách bỏ quên tại giỏ: <strong>25%</strong><br>
             • Thất thoát chưa rõ: <strong>10%</strong>
           </div>
         </div>
       </div>
 
-      <div class="ai-reason-box" style="margin-top: 1.25rem;">
-        <strong>Giải trình thuật toán AI:</strong><br>
+      <div class="ai-reason-box" style="margin-top: 1rem;">
+        <strong style="color: var(--accent-ai);">Giải trình thuật toán AI:</strong><br>
         Hệ thống không ghi nhận bất kỳ giao dịch quét thanh toán nào khớp với số lượng 20 gói mì trong khoảng 06:00 - 07:00 sáng. Trong khi đó Kệ B01 kế bên có dấu hiệu đầy vượt định mức 15 gói, suy ra khả năng cao nhân viên ca trước xếp nhầm phân loại.
       </div>
 
-      <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1rem; flex-wrap: wrap;">
-        <button class="btn btn-secondary btn-sm" onclick="showToast('Đã gửi yêu cầu rà soát Camera Zone B tới đội bảo vệ!', 'info')">
-          📹 Trích Xuất Camera Zone B
+      <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; flex-wrap: wrap;">
+        <button class="btn btn-secondary btn-sm" onclick="showToast('Đã gửi yêu cầu rà soát Camera Khu vực B tới đội bảo vệ!', 'info')">
+          📹 Trích Xuất Camera Khu vực B
         </button>
         <button class="btn btn-secondary btn-sm" onclick="showToast('Đã khóa tạm số liệu để tránh đơn hàng bị treo!', 'info')">
           🔒 Khóa Tạm Tồn Kho Trực Tuyến
@@ -107,14 +107,14 @@
       </div>
     </div>
 
-    <!-- SALES VELOCITY & SHELF ALLOCATION TABLE -->
-    <div class="card">
-      <div class="card-header">
+    <!-- SALES VELOCITY TABLE -->
+    <div class="card" style="padding: 1.25rem;">
+      <div class="card-header" style="margin-bottom: 0.75rem;">
         <div>
-          <h2 class="card-title">Bảng Xếp Hạng Tốc Độ Tiêu Thụ Hàng Hóa (Sales Velocity)</h2>
+          <h2 class="card-title">Xếp Hạng Tốc Độ Bán Của Hàng Hóa (Sales Velocity)</h2>
           <p class="page-subtitle">Dữ liệu hỗ trợ quản lý tối ưu hóa diện tích mặt sàn và vị trí tầng kệ.</p>
         </div>
-        <span class="badge badge-normal">Xếp theo vòng quay bán</span>
+        <span class="badge badge-normal">Xếp theo vòng quay</span>
       </div>
 
       <div class="table-responsive">
@@ -130,9 +130,7 @@
               <th>Khuyến Nghị Bố Trí Kệ</th>
             </tr>
           </thead>
-          <tbody id="velocityTbody">
-            <!-- Dynamic items -->
-          </tbody>
+          <tbody id="velocityTbody"></tbody>
         </table>
       </div>
     </div>
@@ -157,7 +155,6 @@
 
     function renderVelocityTable() {
       const prods = getProducts();
-      // sort by salesVelocity desc
       const sorted = [...prods].sort((a, b) => (b.salesVelocity || 0) - (a.salesVelocity || 0));
 
       const tbody = document.getElementById('velocityTbody');
@@ -178,18 +175,18 @@
           <tr>
             <td>${rankBadge}</td>
             <td>
-              <strong style="color:var(--text-main); font-size:0.95rem;">${p.name}</strong>
+              <strong style="color:var(--text-main); font-size:0.92rem;">${p.name}</strong>
               <div style="font-size:0.75rem; color:var(--text-muted);">${p.sku}</div>
             </td>
             <td>${p.category}</td>
             <td><strong>${p.shelfId}</strong> (${p.shelfLevel || 'Tầng 2'})</td>
             <td>
-              <strong style="color:var(--primary); font-size:1rem;">${p.salesVelocity || 20}</strong> sp/ngày
+              <strong style="color:var(--primary); font-size:0.95rem;">${p.salesVelocity || 20}</strong> sp/ngày
             </td>
             <td>
               <strong style="color:${p.stockQty <= p.minQty ? 'var(--danger)' : 'var(--success)'};">${p.stockQty}</strong> sp
             </td>
-            <td style="font-size:0.85rem;">${advice}</td>
+            <td style="font-size:0.82rem;">${advice}</td>
           </tr>
         `;
       }).join('');

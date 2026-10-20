@@ -4,14 +4,13 @@
  * Team 5 - 67KTPM1 (Trần Trọng Hoàng Anh, Nguyễn Quang Long, Nguyễn Văn Hân)
  */
 
-const STORAGE_KEY = 'SMARTSHELF_DB_V1';
+const STORAGE_KEY = 'SMARTSHELF_DB_V2';
 
 // Seed Initial Database if not exists
 async function initDatabase() {
   const existing = localStorage.getItem(STORAGE_KEY);
   if (!existing) {
     try {
-      // Determine relative path depending on current page level
       const isPagesDir = window.location.pathname.includes('/pages/');
       const dataUrl = isPagesDir ? '../assets/data/mock-db.json' : 'assets/data/mock-db.json';
       const res = await fetch(dataUrl);
@@ -24,7 +23,6 @@ async function initDatabase() {
       }
     } catch (e) {
       console.warn('Fallback inline seed database activated:', e);
-      // Fallback minimal seed in case file protocol blocks fetch
       const fallbackData = getFallbackSeed();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(fallbackData));
     }
@@ -77,7 +75,6 @@ function updateProduct(id, updatedFields) {
   const index = db.products.findIndex(p => p.id === id);
   if (index !== -1) {
     db.products[index] = { ...db.products[index], ...updatedFields };
-    // auto update status based on qty
     const p = db.products[index];
     p.status = p.stockQty <= 0 ? 'empty' : (p.stockQty <= p.minQty ? 'low' : 'normal');
     saveDatabase(db);
@@ -191,7 +188,6 @@ function addShelfCheck(check) {
   check.checkedAt = new Date().toISOString().replace('T', ' ').substring(0, 16);
   db.shelfChecks.unshift(check);
 
-  // If check reveals anomaly, mark shelf as anomaly
   if (check.status === 'anomaly') {
     const shelf = db.shelves.find(s => s.id === check.shelfId || s.code === check.shelfCode);
     if (shelf) shelf.status = 'anomaly';
@@ -211,7 +207,7 @@ function getCurrentUser() {
   if (raw) {
     try { return JSON.parse(raw); } catch (e) {}
   }
-  return getUsers()[0]; // Default Hoang Anh
+  return getUsers()[0];
 }
 
 function setCurrentUser(user) {
@@ -282,9 +278,6 @@ function addToCart(productId, quantity = 1) {
 
 /**
  * AI-1: Restock Priority AI
- * Input: List of products & shelves
- * Logic: Priority Score = (1 - stock/minQty)*50 + (salesVelocity/50)*50 + (status == 'empty' ? 30 : 0)
- * Output: Ranked list with explainable reasoning & confidence
  */
 function runRestockPriorityAI(forceError = false) {
   return new Promise((resolve, reject) => {
@@ -342,15 +335,12 @@ function runRestockPriorityAI(forceError = false) {
         algorithm: 'Multi-factor Dynamic Depletion & Velocity Model (MDVM-v2)',
         items: scored
       });
-    }, 900); // simulate realistic AI response latency
+    }, 700);
   });
 }
 
 /**
  * AI-2: Product Alternative AI
- * Input: Out of stock productId
- * Logic: Matches by Category, Price delta (+-25%), High Stock (> 15)
- * Output: Top recommended alternatives with explanation why
  */
 function runProductAlternativeAI(productId, forceError = false) {
   return new Promise((resolve, reject) => {
@@ -368,7 +358,6 @@ function runProductAlternativeAI(productId, forceError = false) {
       }
 
       const all = getProducts();
-      // Candidates: same category or matching tags, in stock, not current
       const candidates = all.filter(p => p.id !== current.id && p.category === current.category && p.stockQty > 0);
 
       if (candidates.length === 0) {
@@ -409,15 +398,12 @@ function runProductAlternativeAI(productId, forceError = false) {
         confidence: '94.8%',
         recommendations: recommendations.slice(0, 3)
       });
-    }, 800);
+    }, 600);
   });
 }
 
 /**
  * AI-3: Shelf Anomaly Insight
- * Input: Shelf Check record or Shelf ID
- * Logic: Compares (System Stock - Physical Stock) & last audit frequency
- * Output: Discrepancy diagnosis, anomaly severity, suggested root cause
  */
 function runShelfAnomalyInsight(shelfId, forceError = false) {
   return new Promise((resolve, reject) => {
@@ -429,7 +415,7 @@ function runShelfAnomalyInsight(shelfId, forceError = false) {
         });
       }
 
-      const shelf = getShelfById(shelfId) || getShelves()[1]; // fallback Kệ B02
+      const shelf = getShelfById(shelfId) || getShelves()[1];
       const checks = getShelfChecks().filter(c => c.shelfId === shelf.id || c.shelfCode === shelf.code);
       const latestCheck = checks[0] || { systemStock: 55, actualStock: 35, discrepancy: -20 };
 
@@ -467,46 +453,45 @@ function runShelfAnomalyInsight(shelfId, forceError = false) {
         recommendedActions: actions,
         analyzedAt: new Date().toLocaleTimeString('vi-VN') + ' hôm nay'
       });
-    }, 850);
+    }, 650);
   });
 }
 
-// Fallback seed object in case of CORS fetch limitation on local file://
 function getFallbackSeed() {
   return {
     zones: [
-      { id: "Z01", code: "ZONE-A", name: "Khu Đồ Uống & Nước Giải Khát", floor: "Tầng 1", description: "Nước ngọt, nước khoáng, trà, cà phê", totalShelves: 4 },
-      { id: "Z02", code: "ZONE-B", name: "Khu Thực Phẩm Khô & Gia Vị", floor: "Tầng 1", description: "Mì ăn liền, gia vị, dầu ăn", totalShelves: 4 },
-      { id: "Z03", code: "ZONE-C", name: "Khu Bánh Kẹo & Snack", floor: "Tầng 2", description: "Snack, bánh quy, kẹo", totalShelves: 3 },
-      { id: "Z04", code: "ZONE-D", name: "Khu Hóa Mỹ Phẩm & Tẩy Rửa", floor: "Tầng 2", description: "Dầu gội, sữa tắm, xà phòng", totalShelves: 3 }
+      { id: "Z01", code: "Khu vực A", name: "Khu vực A: Đồ Uống & Nước Giải Khát", floor: "Tầng 1", description: "Nước ngọt, nước khoáng, trà, cà phê đóng chai", totalShelves: 4 },
+      { id: "Z02", code: "Khu vực B", name: "Khu vực B: Thực Phẩm Khô & Gia Vị", floor: "Tầng 1", description: "Mì ăn liền, gia vị, dầu ăn, gạo", totalShelves: 4 },
+      { id: "Z03", code: "Khu vực C", name: "Khu vực C: Bánh Kẹo & Snack", floor: "Tầng 2", description: "Bánh quy, snack khoai tây, kẹo dẻo, socola", totalShelves: 3 },
+      { id: "Z04", code: "Khu vực D", name: "Khu vực D: Hóa Mỹ Phẩm & Tẩy Rửa", floor: "Tầng 2", description: "Dầu gội, sữa tắm, nước giặt, nước xả vải", totalShelves: 3 }
     ],
     shelves: [
-      { id: "SH-A01", code: "Kệ A01", zoneId: "Z01", zoneCode: "ZONE-A", levelCount: 4, maxCapacity: 120, currentCount: 85, status: "normal", lastChecked: "2026-10-19 14:30" },
-      { id: "SH-A02", code: "Kệ A02", zoneId: "Z01", zoneCode: "ZONE-A", levelCount: 4, maxCapacity: 120, currentCount: 18, status: "low", lastChecked: "2026-10-20 07:15" },
-      { id: "SH-A03", code: "Kệ A03", zoneId: "Z01", zoneCode: "ZONE-A", levelCount: 4, maxCapacity: 100, currentCount: 2, status: "empty", lastChecked: "2026-10-20 06:45" },
-      { id: "SH-A04", code: "Kệ A04", zoneId: "Z01", zoneCode: "ZONE-A", levelCount: 3, maxCapacity: 90, currentCount: 75, status: "normal", lastChecked: "2026-10-18 16:00" },
-      { id: "SH-B01", code: "Kệ B01", zoneId: "Z02", zoneCode: "ZONE-B", levelCount: 4, maxCapacity: 150, currentCount: 120, status: "normal", lastChecked: "2026-10-19 10:20" },
-      { id: "SH-B02", code: "Kệ B02", zoneId: "Z02", zoneCode: "ZONE-B", levelCount: 4, maxCapacity: 140, currentCount: 35, status: "anomaly", lastChecked: "2026-10-20 07:00" },
-      { id: "SH-B03", code: "Kệ B03", zoneId: "Z02", zoneCode: "ZONE-B", levelCount: 3, maxCapacity: 90, currentCount: 12, status: "low", lastChecked: "2026-10-19 17:00" },
-      { id: "SH-B04", code: "Kệ B04", zoneId: "Z02", zoneCode: "ZONE-B", levelCount: 3, maxCapacity: 90, currentCount: 80, status: "normal", lastChecked: "2026-10-18 11:30" },
-      { id: "SH-C01", code: "Kệ C01", zoneId: "Z03", zoneCode: "ZONE-C", levelCount: 4, maxCapacity: 100, currentCount: 90, status: "normal", lastChecked: "2026-10-19 15:40" },
-      { id: "SH-C02", code: "Kệ C02", zoneId: "Z03", zoneCode: "ZONE-C", levelCount: 4, maxCapacity: 110, currentCount: 15, status: "low", lastChecked: "2026-10-20 07:10" },
-      { id: "SH-C03", code: "Kệ C03", zoneId: "Z03", zoneCode: "ZONE-C", levelCount: 3, maxCapacity: 80, currentCount: 0, status: "empty", lastChecked: "2026-10-20 06:30" },
-      { id: "SH-D01", code: "Kệ D01", zoneId: "Z04", zoneCode: "ZONE-D", levelCount: 4, maxCapacity: 100, currentCount: 65, status: "normal", lastChecked: "2026-10-19 09:15" },
-      { id: "SH-D02", code: "Kệ D02", zoneId: "Z04", zoneCode: "ZONE-D", levelCount: 3, maxCapacity: 75, currentCount: 10, status: "low", lastChecked: "2026-10-20 07:25" },
-      { id: "SH-D03", code: "Kệ D03", zoneId: "Z04", zoneCode: "ZONE-D", levelCount: 3, maxCapacity: 80, currentCount: 78, status: "normal", lastChecked: "2026-10-18 14:00" }
+      { id: "SH-A01", code: "Kệ A01", zoneId: "Z01", zoneCode: "Khu vực A", levelCount: 4, maxCapacity: 120, currentCount: 85, status: "normal", lastChecked: "2026-10-19 14:30" },
+      { id: "SH-A02", code: "Kệ A02", zoneId: "Z01", zoneCode: "Khu vực A", levelCount: 4, maxCapacity: 120, currentCount: 18, status: "low", lastChecked: "2026-10-20 07:15" },
+      { id: "SH-A03", code: "Kệ A03", zoneId: "Z01", zoneCode: "Khu vực A", levelCount: 4, maxCapacity: 100, currentCount: 2, status: "empty", lastChecked: "2026-10-20 06:45" },
+      { id: "SH-A04", code: "Kệ A04", zoneId: "Z01", zoneCode: "Khu vực A", levelCount: 3, maxCapacity: 90, currentCount: 75, status: "normal", lastChecked: "2026-10-18 16:00" },
+      { id: "SH-B01", code: "Kệ B01", zoneId: "Z02", zoneCode: "Khu vực B", levelCount: 4, maxCapacity: 150, currentCount: 120, status: "normal", lastChecked: "2026-10-19 10:20" },
+      { id: "SH-B02", code: "Kệ B02", zoneId: "Z02", zoneCode: "Khu vực B", levelCount: 4, maxCapacity: 140, currentCount: 35, status: "anomaly", lastChecked: "2026-10-20 07:00" },
+      { id: "SH-B03", code: "Kệ B03", zoneId: "Z02", zoneCode: "Khu vực B", levelCount: 3, maxCapacity: 90, currentCount: 12, status: "low", lastChecked: "2026-10-19 17:00" },
+      { id: "SH-B04", code: "Kệ B04", zoneId: "Z02", zoneCode: "Khu vực B", levelCount: 3, maxCapacity: 90, currentCount: 80, status: "normal", lastChecked: "2026-10-18 11:30" },
+      { id: "SH-C01", code: "Kệ C01", zoneId: "Z03", zoneCode: "Khu vực C", levelCount: 4, maxCapacity: 100, currentCount: 90, status: "normal", lastChecked: "2026-10-19 15:40" },
+      { id: "SH-C02", code: "Kệ C02", zoneId: "Z03", zoneCode: "Khu vực C", levelCount: 4, maxCapacity: 110, currentCount: 15, status: "low", lastChecked: "2026-10-20 07:10" },
+      { id: "SH-C03", code: "Kệ C03", zoneId: "Z03", zoneCode: "Khu vực C", levelCount: 3, maxCapacity: 80, currentCount: 0, status: "empty", lastChecked: "2026-10-20 06:30" },
+      { id: "SH-D01", code: "Kệ D01", zoneId: "Z04", zoneCode: "Khu vực D", levelCount: 4, maxCapacity: 100, currentCount: 65, status: "normal", lastChecked: "2026-10-19 09:15" },
+      { id: "SH-D02", code: "Kệ D02", zoneId: "Z04", zoneCode: "Khu vực D", levelCount: 3, maxCapacity: 75, currentCount: 10, status: "low", lastChecked: "2026-10-20 07:25" },
+      { id: "SH-D03", code: "Kệ D03", zoneId: "Z04", zoneCode: "Khu vực D", levelCount: 3, maxCapacity: 80, currentCount: 78, status: "normal", lastChecked: "2026-10-18 14:00" }
     ],
     products: [
-      { id: "PROD-001", sku: "DK-COCA-320", name: "Nước ngọt Coca-Cola Sleek Lon 320ml", category: "Đồ Uống", price: 10500, shelfId: "SH-A02", shelfLevel: "Tầng 2", zoneCode: "ZONE-A", stockQty: 8, minQty: 30, maxQty: 100, status: "low", salesVelocity: 45, description: "Nước giải khát có ga hương cola tươi mát sảng khoái truyền thống." },
-      { id: "PROD-002", sku: "DK-PEPSI-320", name: "Nước ngọt Pepsi Sleek Lon 320ml", category: "Đồ Uống", price: 10000, shelfId: "SH-A02", shelfLevel: "Tầng 2", zoneCode: "ZONE-A", stockQty: 10, minQty: 25, maxQty: 80, status: "low", salesVelocity: 38, description: "Hương vị cola sảng khoái với công thức độc quyền từ PepsiCo." },
-      { id: "PROD-003", sku: "DK-LAVI-500", name: "Nước khoáng thiên nhiên La Vie Chai 500ml", category: "Đồ Uống", price: 6000, shelfId: "SH-A01", shelfLevel: "Tầng 1", zoneCode: "ZONE-A", stockQty: 55, minQty: 30, maxQty: 120, status: "normal", salesVelocity: 50, description: "Nước khoáng thiên nhiên chứa 6 loại khoáng chất thiết yếu cho cơ thể." },
-      { id: "PROD-004", sku: "DK-COCA-ZERO", name: "Nước ngọt Coca-Cola Không Đường 320ml", category: "Đồ Uống", price: 11000, shelfId: "SH-A03", shelfLevel: "Tầng 3", zoneCode: "ZONE-A", stockQty: 0, minQty: 20, maxQty: 80, status: "empty", salesVelocity: 32, description: "Vị cola trọn vẹn, không calo, thích hợp cho người ăn kiêng." },
-      { id: "PROD-005", sku: "DK-PEPSI-ZERO", name: "Nước ngọt Pepsi Không Calo Sleek 320ml", category: "Đồ Uống", price: 10500, shelfId: "SH-A01", shelfLevel: "Tầng 3", zoneCode: "ZONE-A", stockQty: 30, minQty: 15, maxQty: 60, status: "normal", salesVelocity: 28, description: "Pepsi vị chanh không calo, cảm giác mát lạnh tức thì." },
-      { id: "PROD-007", sku: "FD-HAOHAO-TCH", name: "Mì ăn liền Hảo Hảo Tôm Chua Cay Gói 75g", category: "Thực Phẩm", price: 4500, shelfId: "SH-B01", shelfLevel: "Tầng 2", zoneCode: "ZONE-B", stockQty: 90, minQty: 40, maxQty: 200, status: "normal", salesVelocity: 85, description: "Mì tôm chua cay đậm đà." },
-      { id: "PROD-009", sku: "FD-OMACHI-XB", name: "Mì khoai tây Omachi Sốt Bò Hầm Gói 80g", category: "Thực Phẩm", price: 8500, shelfId: "SH-B02", shelfLevel: "Tầng 2", zoneCode: "ZONE-B", stockQty: 6, minQty: 30, maxQty: 100, status: "low", salesVelocity: 52, description: "Mì khoai tây sốt bò hầm cao cấp." },
-      { id: "PROD-011", sku: "SN-LAYS-CLASSIC", name: "Snack Khoai Tây Lay's Cổ Điển Tự Nhiên Gói 95g", category: "Snack", price: 22000, shelfId: "SH-C03", shelfLevel: "Tầng 2", zoneCode: "ZONE-C", stockQty: 0, minQty: 15, maxQty: 60, status: "empty", salesVelocity: 35, description: "Snack khoai tây lát mỏng giòn tan." },
-      { id: "PROD-012", sku: "SN-OSTAR-BBQ", name: "Snack Khoai Tây O'Star Vị Bò Bít Tết Gói 90g", category: "Snack", price: 20000, shelfId: "SH-C01", shelfLevel: "Tầng 2", zoneCode: "ZONE-C", stockQty: 38, minQty: 15, maxQty: 50, status: "normal", salesVelocity: 26, description: "Snack khoai tây vị bò BBQ nướng." },
-      { id: "PROD-014", sku: "CH-CLEAR-MEN", name: "Dầu gội sạch gàu Clear Men Cool Sport Bạc Hà 630g", category: "Hóa Mỹ Phẩm", price: 175000, shelfId: "SH-D02", shelfLevel: "Tầng 2", zoneCode: "ZONE-D", stockQty: 10, minQty: 15, maxQty: 40, status: "low", salesVelocity: 12, description: "Dầu gội sạch gàu sảng khoái bạc hà." }
+      { id: "PROD-001", sku: "DK-COCA-320", name: "Nước ngọt Coca-Cola Sleek Lon 320ml", category: "Đồ Uống", price: 10500, shelfId: "Kệ A02", shelfLevel: "Tầng 2", zoneCode: "Khu vực A", stockQty: 8, minQty: 30, maxQty: 100, status: "low", salesVelocity: 45, description: "Nước giải khát có ga hương cola tươi mát sảng khoái truyền thống." },
+      { id: "PROD-002", sku: "DK-PEPSI-320", name: "Nước ngọt Pepsi Sleek Lon 320ml", category: "Đồ Uống", price: 10000, shelfId: "Kệ A02", shelfLevel: "Tầng 2", zoneCode: "Khu vực A", stockQty: 10, minQty: 25, maxQty: 80, status: "low", salesVelocity: 38, description: "Hương vị cola sảng khoái với công thức độc quyền từ PepsiCo." },
+      { id: "PROD-003", sku: "DK-LAVI-500", name: "Nước khoáng thiên nhiên La Vie Chai 500ml", category: "Đồ Uống", price: 6000, shelfId: "Kệ A01", shelfLevel: "Tầng 1", zoneCode: "Khu vực A", stockQty: 55, minQty: 30, maxQty: 120, status: "normal", salesVelocity: 50, description: "Nước khoáng thiên nhiên chứa 6 loại khoáng chất thiết yếu cho cơ thể." },
+      { id: "PROD-004", sku: "DK-COCA-ZERO", name: "Nước ngọt Coca-Cola Không Đường 320ml", category: "Đồ Uống", price: 11000, shelfId: "Kệ A03", shelfLevel: "Tầng 3", zoneCode: "Khu vực A", stockQty: 0, minQty: 20, maxQty: 80, status: "empty", salesVelocity: 32, description: "Vị cola trọn vẹn, không calo, thích hợp cho người ăn kiêng." },
+      { id: "PROD-005", sku: "DK-PEPSI-ZERO", name: "Nước ngọt Pepsi Không Calo Sleek 320ml", category: "Đồ Uống", price: 10500, shelfId: "Kệ A01", shelfLevel: "Tầng 3", zoneCode: "Khu vực A", stockQty: 30, minQty: 15, maxQty: 60, status: "normal", salesVelocity: 28, description: "Pepsi vị chanh không calo, cảm giác mát lạnh tức thì." },
+      { id: "PROD-007", sku: "FD-HAOHAO-TCH", name: "Mì ăn liền Hảo Hảo Tôm Chua Cay Gói 75g", category: "Thực Phẩm", price: 4500, shelfId: "Kệ B01", shelfLevel: "Tầng 2", zoneCode: "Khu vực B", stockQty: 90, minQty: 40, maxQty: 200, status: "normal", salesVelocity: 85, description: "Mì tôm chua cay đậm đà." },
+      { id: "PROD-009", sku: "FD-OMACHI-XB", name: "Mì khoai tây Omachi Sốt Bò Hầm Gói 80g", category: "Thực Phẩm", price: 8500, shelfId: "Kệ B02", shelfLevel: "Tầng 2", zoneCode: "Khu vực B", stockQty: 6, minQty: 30, maxQty: 100, status: "low", salesVelocity: 52, description: "Mì khoai tây sốt bò hầm cao cấp." },
+      { id: "PROD-011", sku: "SN-LAYS-CLASSIC", name: "Snack Khoai Tây Lay's Cổ Điển Tự Nhiên Gói 95g", category: "Snack", price: 22000, shelfId: "Kệ C03", shelfLevel: "Tầng 2", zoneCode: "Khu vực C", stockQty: 0, minQty: 15, maxQty: 60, status: "empty", salesVelocity: 35, description: "Snack khoai tây lát mỏng giòn tan." },
+      { id: "PROD-012", sku: "SN-OSTAR-BBQ", name: "Snack Khoai Tây O'Star Vị Bò Bít Tết Gói 90g", category: "Snack", price: 20000, shelfId: "Kệ C01", shelfLevel: "Tầng 2", zoneCode: "Khu vực C", stockQty: 38, minQty: 15, maxQty: 50, status: "normal", salesVelocity: 26, description: "Snack khoai tây vị bò BBQ nướng." },
+      { id: "PROD-014", sku: "CH-CLEAR-MEN", name: "Dầu gội sạch gàu Clear Men Cool Sport Bạc Hà 630g", category: "Hóa Mỹ Phẩm", price: 175000, shelfId: "Kệ D02", shelfLevel: "Tầng 2", zoneCode: "Khu vực D", stockQty: 10, minQty: 15, maxQty: 40, status: "low", salesVelocity: 12, description: "Dầu gội sạch gàu sảng khoái bạc hà." }
     ],
     restockTasks: [
       { id: "TASK-101", shelfId: "SH-A03", shelfCode: "Kệ A03", productId: "PROD-004", productName: "Coca-Cola Không Đường 320ml", requestedQty: 40, priority: "Cao", aiPriorityScore: 98, aiReason: "Kệ đã trống 100%, tốc độ bán 32 sp/ngày.", status: "pending", assignedTo: "Nguyễn Quang Long", createdAt: "2026-10-20 06:50" },
@@ -516,9 +501,9 @@ function getFallbackSeed() {
       { id: "TASK-105", shelfId: "SH-D02", shelfCode: "Kệ D02", productId: "PROD-014", productName: "Clear Men Cool Sport Bạc Hà 630g", requestedQty: 20, priority: "Thấp", aiPriorityScore: 54, aiReason: "Còn 10 chai, tốc độ luân chuyển vừa phải.", status: "completed", assignedTo: "Nguyễn Văn Hân", createdAt: "2026-10-19 16:30" }
     ],
     shelfChecks: [
-      { id: "CHK-001", shelfId: "SH-B02", shelfCode: "Kệ B02", checkerName: "Nguyễn Quang Long", checkedAt: "2026-10-20 07:00", systemStock: 55, actualStock: 35, discrepancy: -20, status: "anomaly", note: "Nghi ngờ thất thoát hoặc để nhầm kệ." },
-      { id: "CHK-002", shelfId: "SH-A02", shelfCode: "Kệ A02", checkerName: "Nguyễn Quang Long", checkedAt: "2026-10-20 07:15", systemStock: 20, actualStock: 18, discrepancy: -2, status: "normal", note: "Khách cầm xem để tạm sang tầng trên." },
-      { id: "CHK-003", shelfId: "SH-C03", shelfCode: "Kệ C03", checkerName: "Nguyễn Văn Hân", checkedAt: "2026-10-20 06:30", systemStock: 0, actualStock: 0, discrepancy: 0, status: "empty", note: "Kệ trống đúng số liệu hệ thống." }
+      { id: "CHK-001", shelfId: "SH-B02", shelfCode: "Kệ B02", zoneCode: "Khu vực B", checkerName: "Nguyễn Quang Long", checkedAt: "2026-10-20 07:00", systemStock: 55, actualStock: 35, discrepancy: -20, status: "anomaly", note: "Nghi ngờ thất thoát hoặc để nhầm kệ." },
+      { id: "CHK-002", shelfId: "SH-A02", shelfCode: "Kệ A02", zoneCode: "Khu vực A", checkerName: "Nguyễn Quang Long", checkedAt: "2026-10-20 07:15", systemStock: 20, actualStock: 18, discrepancy: -2, status: "normal", note: "Khách cầm xem để tạm sang tầng trên." },
+      { id: "CHK-003", shelfId: "SH-C03", shelfCode: "Kệ C03", zoneCode: "Khu vực C", checkerName: "Nguyễn Văn Hân", checkedAt: "2026-10-20 06:30", systemStock: 0, actualStock: 0, discrepancy: 0, status: "empty", note: "Kệ trống đúng số liệu hệ thống." }
     ],
     users: [
       { id: "USR-001", username: "hoanganh", fullName: "Trần Trọng Hoàng Anh", role: "customer", email: "hoanganh.cse@tlu.edu.vn", badge: "Nhóm trưởng (SV1)" },
@@ -529,5 +514,4 @@ function getFallbackSeed() {
   };
 }
 
-// Auto-run init on load
 initDatabase();

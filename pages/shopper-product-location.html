@@ -84,11 +84,11 @@
         
         <div class="store-floor-layout">
           
-          <!-- Zone A -->
+          <!-- Khu vực A -->
           <div class="zone-block">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
               <div>
-                <strong style="color: var(--text-main); font-size: 0.95rem;">ZONE-A: Khu Đồ Uống & Nước Giải Khát</strong>
+                <strong style="color: var(--text-main); font-size: 0.95rem;">Khu vực A: Đồ Uống & Nước Giải Khát</strong>
                 <div style="font-size: 0.78rem; color: var(--text-muted);">Tầng 1 · Dãy bên phải lối vào chính</div>
               </div>
               <span class="badge badge-normal">4 Kệ</span>
@@ -96,11 +96,11 @@
             <div class="shelf-visual-grid" id="zoneAShelves"></div>
           </div>
 
-          <!-- Zone B -->
+          <!-- Khu vực B -->
           <div class="zone-block">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
               <div>
-                <strong style="color: var(--text-main); font-size: 0.95rem;">ZONE-B: Khu Thực Phẩm Khô & Gia Vị</strong>
+                <strong style="color: var(--text-main); font-size: 0.95rem;">Khu vực B: Thực Phẩm Khô & Gia Vị</strong>
                 <div style="font-size: 0.78rem; color: var(--text-muted);">Tầng 1 · Hành lang trung tâm</div>
               </div>
               <span class="badge badge-normal">4 Kệ</span>
@@ -108,11 +108,11 @@
             <div class="shelf-visual-grid" id="zoneBShelves"></div>
           </div>
 
-          <!-- Zone C & D (Tầng 2) -->
+          <!-- Khu vực C & D (Tầng 2) -->
           <div class="zone-block" style="margin-bottom: 0;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
               <div>
-                <strong style="color: var(--text-main); font-size: 0.95rem;">ZONE-C & D: Khu Bánh Kẹo, Snack & Hóa Mỹ Phẩm</strong>
+                <strong style="color: var(--text-main); font-size: 0.95rem;">Khu vực C & D: Bánh Kẹo, Snack & Hóa Mỹ Phẩm</strong>
                 <div style="font-size: 0.78rem; color: var(--text-muted);">Tầng 2 · Đi thang cuốn lên</div>
               </div>
               <span class="badge badge-normal">6 Kệ</span>
@@ -182,7 +182,6 @@
       if (targetShelf) {
         selectShelf(targetShelf);
       } else {
-        // default select A02
         selectShelf('SH-A02');
       }
     });
@@ -190,9 +189,9 @@
     function renderShelfGrid() {
       const shelves = getShelves();
 
-      const zoneA = shelves.filter(s => s.zoneCode === 'ZONE-A');
-      const zoneB = shelves.filter(s => s.zoneCode === 'ZONE-B');
-      const zoneCD = shelves.filter(s => s.zoneCode === 'ZONE-C' || s.zoneCode === 'ZONE-D');
+      const zoneA = shelves.filter(s => s.zoneCode === 'Khu vực A');
+      const zoneB = shelves.filter(s => s.zoneCode === 'Khu vực B');
+      const zoneCD = shelves.filter(s => s.zoneCode === 'Khu vực C' || s.zoneCode === 'Khu vực D');
 
       document.getElementById('zoneAShelves').innerHTML = renderShelfListHtml(zoneA);
       document.getElementById('zoneBShelves').innerHTML = renderShelfListHtml(zoneB);
@@ -300,12 +299,12 @@
       const routeText = document.getElementById('routeGuideText');
       routeBox.style.display = 'block';
 
-      if (shelf.zoneCode === 'ZONE-A') {
-        routeText.innerHTML = `Từ <strong>Cửa chính Tầng 1</strong> &rarr; Đi thẳng 10m &rarr; Rẽ vào <strong>Lối Đồ Uống (Zone A)</strong> &rarr; Tìm <strong>${shelf.code}</strong> ở dãy tay phải.`;
-      } else if (shelf.zoneCode === 'ZONE-B') {
-        routeText.innerHTML = `Từ <strong>Cửa chính Tầng 1</strong> &rarr; Đi qua quầy thu ngân &rarr; Hành lang thực phẩm &rarr; <strong>${shelf.code}</strong> ở hàng giữa.`;
+      if (shelf.zoneCode === 'Khu vực A') {
+        routeText.innerHTML = `Từ <strong>Cửa chính Tầng 1</strong> &rarr; Đi thẳng 10m &rarr; Rẽ vào <strong>Khu vực A (Đồ Uống)</strong> &rarr; Tìm <strong>${shelf.code}</strong> ở dãy tay phải.`;
+      } else if (shelf.zoneCode === 'Khu vực B') {
+        routeText.innerHTML = `Từ <strong>Cửa chính Tầng 1</strong> &rarr; Đi qua quầy thu ngân &rarr; <strong>Khu vực B (Thực phẩm khô)</strong> &rarr; <strong>${shelf.code}</strong> ở hàng giữa.`;
       } else {
-        routeText.innerHTML = `Từ Tầng 1 &rarr; Đi <strong>Thang cuốn lên Tầng 2</strong> &rarr; Rẽ trái sang khu bánh kẹo/mỹ phẩm &rarr; Nhìn biển treo tìm <strong>${shelf.code}</strong>.`;
+        routeText.innerHTML = `Từ Tầng 1 &rarr; Đi <strong>Thang cuốn lên Tầng 2</strong> &rarr; Rẽ trái sang <strong>${shelf.zoneCode}</strong> &rarr; Nhìn biển treo tìm <strong>${shelf.code}</strong>.`;
       }
 
       document.getElementById('shelfActionsBox').style.display = 'block';

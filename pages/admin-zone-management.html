@@ -16,13 +16,13 @@
         <div class="logo-icon" style="background: linear-gradient(135deg, #6b21a8, #9333ea);">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Quản Trị Master (SV3: Văn Hân)</span>
+          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Quản Trị Master (SV3: Văn Hân)</span>
         </div>
       </a>
 
       <nav class="main-nav">
         <a href="admin-product-management.html" class="nav-link">📦 Quản Lý Sản Phẩm</a>
-        <a href="admin-zone-management.html" class="nav-link active">🏬 Quản Lý Khu Vực & Kệ</a>
+        <a href="admin-zone-management.html" class="nav-link active">🏬 Khu Vực & Kệ</a>
         <a href="admin-user-management.html" class="nav-link">👥 Quản Lý Người Dùng</a>
         <a href="manager-store-dashboard.html" class="nav-link">📊 Về Dashboard</a>
       </nav>
@@ -46,24 +46,24 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">
-          <span>🏬 Quản Trị Mặt Bằng, Khu Vực & Kệ Siêu Thị</span>
+          <span>🏬 Quản Lý Mặt Bằng, Khu Vực & Kệ Siêu Thị</span>
         </h1>
-        <p class="page-subtitle">Thiết lập cấu trúc phân tầng, định mức tải trọng và trạng thái vận hành của các kệ hàng.</p>
+        <p class="page-subtitle">Thiết lập cấu trúc phân tầng, định mức tải trọng và trạng thái hoạt động của các kệ hàng.</p>
       </div>
       <div>
         <button class="btn btn-primary" onclick="openAddShelfModal()">+ Thêm Kệ Hàng Mới</button>
       </div>
     </div>
 
-    <!-- ZONES OVERVIEW CARDS -->
-    <h2 style="font-size: 1.15rem; margin-bottom: 0.75rem;">1. Danh Mục Các Khu Vực Bán Hàng (Zones)</h2>
-    <div class="grid-4" id="zonesCardsGrid" style="margin-bottom: 2rem;">
-      <!-- Dynamic Zone cards -->
-    </div>
+    <!-- 4 ZONES OVERVIEW -->
+    <h2 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-main);">
+      1. Danh Mục Các Khu Vực Bán Hàng:
+    </h2>
+    <div class="grid-4" id="zonesCardsGrid" style="margin-bottom: 2rem;"></div>
 
-    <!-- SHELVES CRUD TABLE -->
-    <div class="card">
-      <div class="card-header">
+    <!-- SHELVES TABLE -->
+    <div class="card" style="padding: 1.25rem;">
+      <div class="card-header" style="margin-bottom: 0.75rem;">
         <h2 class="card-title">2. Danh Sách Chi Tiết 14 Kệ Hàng</h2>
         <span class="badge badge-normal" id="shelvesCountBadge">14 kệ hoạt động</span>
       </div>
@@ -73,24 +73,22 @@
           <thead>
             <tr>
               <th>Mã Kệ</th>
-              <th>Khu Vực (Zone)</th>
+              <th>Thuộc Khu Vực</th>
               <th>Số Tầng Kệ</th>
-              <th>Tải Trọng Tối Đa</th>
+              <th>Sức Chứa Tối Đa</th>
               <th>Hiện Có</th>
               <th>Trạng Thái Vận Hành</th>
               <th style="text-align: right;">Thao Tác</th>
             </tr>
           </thead>
-          <tbody id="shelvesAdminTbody">
-            <!-- Dynamic shelves rows -->
-          </tbody>
+          <tbody id="shelvesAdminTbody"></tbody>
         </table>
       </div>
     </div>
 
     <!-- MODAL ADD SHELF -->
     <div id="shelfModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
-      <div class="card" style="max-width: 500px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg);">
+      <div class="card" style="max-width: 480px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg);">
         <div class="card-header">
           <h2 class="card-title">Thêm Kệ Hàng Mới</h2>
           <button class="btn btn-secondary btn-sm" onclick="closeShelfModal()">✕</button>
@@ -98,17 +96,17 @@
 
         <form id="shelfForm" novalidate>
           <div class="form-group">
-            <label class="form-label" for="shelfCodeInput">Mã kệ * (VD: Kệ A05)</label>
+            <label class="form-label" for="shelfCodeInput">Mã kệ * (Ví dụ: Kệ A05)</label>
             <input type="text" id="shelfCodeInput" class="form-control" required placeholder="Nhập mã kệ...">
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="shelfZoneSelect">Gán vào Khu Vực (Zone)</label>
+            <label class="form-label" for="shelfZoneSelect">Gán vào Khu Vực</label>
             <select id="shelfZoneSelect" class="form-control">
-              <option value="ZONE-A">ZONE-A: Khu Đồ Uống (Tầng 1)</option>
-              <option value="ZONE-B">ZONE-B: Khu Thực Phẩm Khô (Tầng 1)</option>
-              <option value="ZONE-C">ZONE-C: Khu Bánh Kẹo (Tầng 2)</option>
-              <option value="ZONE-D">ZONE-D: Khu Hóa Mỹ Phẩm (Tầng 2)</option>
+              <option value="Khu vực A">Khu vực A: Đồ Uống & Nước Giải Khát (Tầng 1)</option>
+              <option value="Khu vực B">Khu vực B: Thực Phẩm Khô & Gia Vị (Tầng 1)</option>
+              <option value="Khu vực C">Khu vực C: Bánh Kẹo & Snack (Tầng 2)</option>
+              <option value="Khu vực D">Khu vực D: Hóa Mỹ Phẩm & Tẩy Rửa (Tầng 2)</option>
             </select>
           </div>
 
@@ -154,12 +152,12 @@
       const container = document.getElementById('zonesCardsGrid');
 
       container.innerHTML = zones.map(z => `
-        <div class="card" style="border-top: 3px solid var(--primary);">
-          <div style="font-weight: 700; color: var(--primary-dark); font-size: 1rem; margin-bottom: 0.25rem;">
+        <div class="card" style="border-top: 3px solid var(--primary); padding: 1.15rem;">
+          <div style="font-weight: 700; color: var(--primary); font-size: 0.95rem; margin-bottom: 0.25rem;">
             ${z.name}
           </div>
-          <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">
-            Mã: <strong>${z.code}</strong> · ${z.floor}
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+            ${z.floor} · 4 Kệ hoạt động
           </div>
           <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
             ${z.description}
@@ -174,10 +172,10 @@
       document.getElementById('shelvesCountBadge').textContent = `${shelves.length} kệ`;
 
       tbody.innerHTML = shelves.map(s => {
-        let badge = '<span class="badge badge-normal">Bình thường</span>';
+        let badge = '<span class="badge badge-normal">Đủ hàng</span>';
         if (s.status === 'low') badge = '<span class="badge badge-low">Sắp hết</span>';
         else if (s.status === 'empty') badge = '<span class="badge badge-empty">Trống kệ</span>';
-        else if (s.status === 'anomaly') badge = '<span class="badge badge-anomaly">Bất thường</span>';
+        else if (s.status === 'anomaly') badge = '<span class="badge badge-anomaly">Lệch kho</span>';
 
         return `
           <tr>

@@ -41,7 +41,6 @@
   </header>
 
   <main class="main-content">
-    <!-- Breadcrumb -->
     <div class="breadcrumb">
       <a href="../index.html">Trang chủ</a> &gt; <span>Khách mua sắm</span> &gt; <span>Tìm kiếm sản phẩm</span>
     </div>
@@ -89,9 +88,7 @@
     </div>
 
     <!-- PRODUCTS GRID -->
-    <div id="productGrid" class="grid-3">
-      <!-- Dynamic render -->
-    </div>
+    <div id="productGrid" class="grid-3"></div>
 
     <!-- EMPTY STATE -->
     <div id="emptyState" class="state-box" style="display: none;">
@@ -193,7 +190,7 @@
               <div style="background-color: #f8fafc; padding: 0.6rem 0.85rem; border-radius: var(--radius-sm); margin-bottom: 1rem; border: 1px solid var(--border); border-left: 3px solid var(--primary);">
                 <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Vị Trí Kệ Hàng:</div>
                 <div style="font-weight: 700; font-size: 0.92rem; color: var(--text-main); margin-top: 1px;">
-                  📍 ${p.shelfId} &nbsp;·&nbsp; ${p.shelfLevel || 'Tầng 2'} (${p.zoneCode || 'ZONE-A'})
+                  📍 ${p.shelfId} &nbsp;·&nbsp; ${p.shelfLevel || 'Tầng 2'} (${p.zoneCode || 'Khu vực A'})
                 </div>
               </div>
             </div>
