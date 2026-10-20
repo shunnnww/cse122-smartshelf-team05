@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bảng Kanban Điều Phối Bổ Sung Kệ - SmartShelf</title>
+  <title>Bảng Kanban điều phối bổ sung kệ - SmartShelf</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/responsive.css">
   <style>
@@ -62,15 +62,15 @@
         <div class="logo-icon" style="background: linear-gradient(135deg, #b45309, #d97706);">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Quản Lý Cửa Hàng (SV3: Văn Hân)</span>
+          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Quản lý cửa hàng (SV3: Văn Hân)</span>
         </div>
       </a>
 
       <nav class="main-nav">
-        <a href="manager-store-dashboard.html" class="nav-link">📊 Dashboard Điều Hành</a>
-        <a href="manager-restock-board.html" class="nav-link active">📋 Kanban Nhiệm Vụ</a>
-        <a href="manager-retail-insights.html" class="nav-link">✨ Phân Tích & AI Insight</a>
-        <a href="admin-product-management.html" class="nav-link">⚙️ Quản Trị Hệ Thống</a>
+        <a href="manager-store-dashboard.html" class="nav-link">📊 Bảng điều hành</a>
+        <a href="manager-restock-board.html" class="nav-link active">📋 Kanban nhiệm vụ</a>
+        <a href="manager-retail-insights.html" class="nav-link">✨ Phân tích và AI insight</a>
+        <a href="admin-product-management.html" class="nav-link">⚙️ Quản trị hệ thống</a>
       </nav>
 
       <div class="header-actions">
@@ -92,12 +92,12 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">
-          <span>📋 Bảng Điều Phối Kanban Bổ Sung Kệ Hàng</span>
+          <span>📋 Bảng điều phối Kanban bổ sung kệ hàng</span>
         </h1>
         <p class="page-subtitle">Theo dõi quy trình luân chuyển hàng từ kho lên kệ: Chờ xử lý &rarr; Đang thực hiện &rarr; Chờ duyệt &rarr; Hoàn tất.</p>
       </div>
       <div>
-        <button class="btn btn-primary btn-sm" onclick="openCreateModal()">+ Thêm Nhiệm Vụ Mới</button>
+        <button class="btn btn-primary btn-sm" onclick="openCreateModal()">+ Thêm nhiệm vụ mới</button>
       </div>
     </div>
 
@@ -107,7 +107,7 @@
       <!-- Col 1: Pending -->
       <div class="kanban-col">
         <div class="kanban-col-header">
-          <strong style="color: #92400e;">⏳ CHỜ PHÂN CÔNG</strong>
+          <strong style="color: #92400e;">⏳ Chờ phân công</strong>
           <span class="badge badge-pending" id="countPending">0</span>
         </div>
         <div id="colPending"></div>
@@ -116,7 +116,7 @@
       <!-- Col 2: In-Progress -->
       <div class="kanban-col">
         <div class="kanban-col-header">
-          <strong style="color: #0369a1;">🏃 ĐANG THỰC HIỆN</strong>
+          <strong style="color: #0369a1;">🏃 Đang thực hiện</strong>
           <span class="badge badge-in-progress" id="countInProgress">0</span>
         </div>
         <div id="colInProgress"></div>
@@ -125,7 +125,7 @@
       <!-- Col 3: Review -->
       <div class="kanban-col">
         <div class="kanban-col-header">
-          <strong style="color: #6d28d9;">🔍 CHỜ QUẢN LÝ DUYỆT</strong>
+          <strong style="color: #6d28d9;">🔍 Chờ quản lý duyệt</strong>
           <span class="badge" style="background:#ede9fe; color:#6d28d9;" id="countReview">0</span>
         </div>
         <div id="colReview"></div>
@@ -134,7 +134,7 @@
       <!-- Col 4: Completed -->
       <div class="kanban-col">
         <div class="kanban-col-header">
-          <strong style="color: #166534;">✅ ĐÃ HOÀN TẤT</strong>
+          <strong style="color: #166534;">✅ Đã hoàn tất</strong>
           <span class="badge badge-completed" id="countCompleted">0</span>
         </div>
         <div id="colCompleted"></div>
@@ -146,7 +146,7 @@
     <div id="createTaskModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
       <div class="card" style="max-width: 500px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg);">
         <div class="card-header">
-          <h2 class="card-title">Tạo Nhiệm Vụ Bổ Sung Kệ</h2>
+          <h2 class="card-title">Tạo nhiệm vụ bổ sung kệ</h2>
           <button class="btn btn-secondary btn-sm" onclick="closeCreateModal()">✕</button>
         </div>
 
@@ -182,7 +182,7 @@
 
           <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1.5rem;">
             <button type="button" class="btn btn-secondary" onclick="closeCreateModal()">Hủy</button>
-            <button type="submit" class="btn btn-primary">Xác Nhận Tạo Task</button>
+            <button type="submit" class="btn btn-primary">Xác nhận tạo việc</button>
           </div>
         </form>
       </div>
@@ -191,8 +191,8 @@
 
   <footer class="app-footer">
     <div class="footer-content">
-      <div>SmartShelf - Bảng Kanban Điều Phối (Phụ trách bởi: SV3 Nguyễn Văn Hân)</div>
-      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+      <div>SmartShelf - Phân hệ Kanban điều phối (Phụ trách: SV3 Nguyễn Văn Hân)</div>
+      <div>Học phần CSE122 - Đại học Thủy Lợi</div>
     </div>
   </footer>
 
@@ -267,7 +267,7 @@
                 </button>
               ` : ''}
               ${t.status === 'completed' ? `
-                <span style="font-size: 0.7rem; color: var(--success); font-weight: 700;">Đã lưu kho kệ</span>
+                <span style="font-size: 0.7rem; color: var(--success); font-weight: 700;">Đã lên kệ</span>
               ` : ''}
             </div>
           </div>
@@ -287,7 +287,7 @@
 
     function moveTask(taskId, nextStatus) {
       updateRestockTask(taskId, { status: nextStatus });
-      showToast(`Đã chuyển trạng thái sang [${nextStatus.toUpperCase()}]!`, 'info');
+      showToast(`Đã chuyển trạng thái sang [${nextStatus}]!`, 'info');
       renderKanban();
     }
 
@@ -312,7 +312,6 @@
     function handleCreateTask(e) {
       e.preventDefault();
       const select = document.getElementById('taskProductSelect');
-      const selectedOption = select.options[select.selectedIndex];
       const prodId = select.value;
       const prod = getProductById(prodId);
       const qty = parseInt(document.getElementById('taskQtyInput').value) || 20;
@@ -328,7 +327,7 @@
         priority: priority,
         status: 'pending',
         assignedTo: assignee,
-        aiReason: 'Nhiệm vụ được tạo thủ công bởi Quản Lý Cửa Hàng (SV3).'
+        aiReason: 'Nhiệm vụ được tạo thủ công bởi Quản lý cửa hàng (SV3).'
       };
 
       addRestockTask(newTask);

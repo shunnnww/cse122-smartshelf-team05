@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kiểm Kê Kệ Hàng & AI Phân Tích Bất Thường - SmartShelf</title>
+  <title>Kiểm kê kệ hàng và AI phân tích bất thường - SmartShelf</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/responsive.css">
 </head>
@@ -16,14 +16,14 @@
         <div class="logo-icon" style="background: linear-gradient(135deg, #0f766e, #14b8a6);">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Nhân Viên Kệ Hàng (SV2: Quang Long)</span>
+          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Nhân viên kệ hàng (SV2: Quang Long)</span>
         </div>
       </a>
 
       <nav class="main-nav">
-        <a href="associate-zone-view.html" class="nav-link">📋 Điều Hành Khu Vực</a>
-        <a href="associate-shelf-check.html" class="nav-link active">🔍 Kiểm Tra Kệ Hàng</a>
-        <a href="associate-restock-task.html" class="nav-link">📦 Bổ Sung Kệ (AI-1)</a>
+        <a href="associate-zone-view.html" class="nav-link">📋 Điều hành khu vực</a>
+        <a href="associate-shelf-check.html" class="nav-link active">🔍 Kiểm tra kệ hàng</a>
+        <a href="associate-restock-task.html" class="nav-link">📦 Bổ sung kệ (AI-1)</a>
       </nav>
 
       <div class="header-actions">
@@ -45,8 +45,8 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">
-          <span>🔍 Phiếu Kiểm Tra Kệ & AI Shelf Anomaly Insight</span>
-          <span class="ai-badge">AI Feature 3</span>
+          <span>🔍 Phiếu kiểm tra kệ và AI Shelf Anomaly Insight</span>
+          <span class="ai-badge">Tính năng AI 3</span>
         </h1>
         <p class="page-subtitle">Nhập số lượng đếm thực tế tại kệ để đối soát với hệ thống và kích hoạt AI phát hiện bất thường.</p>
       </div>
@@ -57,7 +57,7 @@
       <div style="grid-column: span 2;">
         <div class="card" style="margin-bottom: 1.5rem;">
           <div class="card-header">
-            <h2 class="card-title">1. Chọn Kệ Cần Kiểm Kê</h2>
+            <h2 class="card-title">1. Chọn kệ cần kiểm kê</h2>
             <span class="badge badge-normal" id="auditShelfStatusBadge">Sẵn sàng</span>
           </div>
 
@@ -76,15 +76,15 @@
 
           <!-- Product Physical Count Table -->
           <div style="margin-top: 1rem;">
-            <label class="form-label">2. Đối Soát Số Lượng Hàng Thực Tế Trên Kệ</label>
+            <label class="form-label">2. Đối soát số lượng hàng thực tế trên kệ</label>
             <div class="table-responsive">
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Sản Phẩm</th>
-                    <th>Tồn Hệ Thống</th>
-                    <th>Đếm Thực Tế Tại Kệ</th>
-                    <th>Chênh Lệch</th>
+                    <th>Sản phẩm</th>
+                    <th>Tồn hệ thống</th>
+                    <th>Đếm thực tế tại kệ</th>
+                    <th>Chênh lệch</th>
                   </tr>
                 </thead>
                 <tbody id="auditProductsTbody">
@@ -103,7 +103,7 @@
           <div id="aiAnomalyAlertBox" class="ai-panel" style="display: none; margin-top: 1rem;">
             <div class="ai-header">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span class="ai-badge">⚠️ AI PHÁT HIỆN BẤT THƯỜNG</span>
+                <span class="ai-badge">⚠️ AI phát hiện bất thường</span>
                 <span id="aiAnomalyLevelBadge" class="badge badge-empty">Nghiêm trọng</span>
               </div>
             </div>
@@ -116,10 +116,10 @@
 
           <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1rem;">
             <button type="button" id="scanAnomalyAiBtn" class="btn btn-ai btn-sm">
-              ✨ Chạy AI Chẩn Đoán Sai Lệch
+              ✨ Chẩn đoán sai lệch với AI
             </button>
             <button type="button" id="saveCheckBtn" class="btn btn-primary">
-              💾 Lưu Biên Bản Kiểm Kê
+              💾 Lưu biên bản kiểm kê
             </button>
           </div>
         </div>
@@ -127,19 +127,19 @@
         <!-- RECENT AUDITS TABLE -->
         <div class="card">
           <div class="card-header">
-            <h2 class="card-title">Lịch Sử Kiểm Kê Gần Nhất</h2>
+            <h2 class="card-title">Lịch sử kiểm kê gần nhất</h2>
             <span class="badge badge-normal" id="auditHistoryCount">3 biên bản</span>
           </div>
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th>Mã Phiếu</th>
-                  <th>Kệ Hàng</th>
-                  <th>Hệ Thống / Thực Tế</th>
-                  <th>Chênh Lệch</th>
-                  <th>Trạng Thái</th>
-                  <th>Thời Gian</th>
+                  <th>Mã phiếu</th>
+                  <th>Kệ hàng</th>
+                  <th>Hệ thống / Thực tế</th>
+                  <th>Chênh lệch</th>
+                  <th>Trạng thái</th>
+                  <th>Thời gian</th>
                 </tr>
               </thead>
               <tbody id="auditHistoryTbody">
@@ -154,7 +154,7 @@
       <div>
         <div class="card">
           <div class="card-header">
-            <h2 class="card-title">📖 Quy Chuẩn Kiểm Kê</h2>
+            <h2 class="card-title">📖 Quy chuẩn kiểm kê</h2>
           </div>
           <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
             <p style="margin-bottom: 0.75rem;">
@@ -163,11 +163,11 @@
               2. Đếm số lượng thực tế từng tầng.<br>
               3. Nhập số lượng vào bảng đối chiếu.<br>
               4. Nếu chênh lệch &gt; 15%, hệ thống tự động kích hoạt <strong>AI Shelf Anomaly Insight</strong> để phân tích nguyên nhân.<br>
-              5. Bấm <em>Lưu Biên Bản</em> để đồng bộ vào cơ sở dữ liệu.
+              5. Bấm <em>Lưu biên bản</em> để đồng bộ vào cơ sở dữ liệu.
             </p>
             <div style="background: #f8fafc; padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
               <span style="font-weight: 700; color: var(--danger);">Lưu ý quan trọng:</span>
-              Kệ có phát hiện sai lệch nghiêm trọng sẽ lập tức được gắn nhãn <code>BẤT THƯỜNG</code> và chuyển thông báo đến Dashboard Quản lý (SV3).
+              Kệ có phát hiện sai lệch nghiêm trọng sẽ lập tức được gắn nhãn <code>BẤT THƯỜNG</code> và chuyển thông báo đến Bảng điều khiển Quản lý (SV3).
             </div>
           </div>
         </div>
@@ -177,8 +177,8 @@
 
   <footer class="app-footer">
     <div class="footer-content">
-      <div>SmartShelf - Module Kiểm Kê & Shelf Anomaly Insight (Phụ trách bởi: SV2 Nguyễn Quang Long)</div>
-      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+      <div>SmartShelf - Phân hệ kiểm kê & phát hiện bất thường (Phụ trách: SV2 Nguyễn Quang Long)</div>
+      <div>Học phần CSE122 - Đại học Thủy Lợi</div>
     </div>
   </footer>
 
@@ -207,9 +207,15 @@
     function populateShelfDropdown() {
       const select = document.getElementById('shelfSelect');
       const shelves = getShelves();
-      select.innerHTML = shelves.map(s => `
-        <option value="${s.id}">[${s.zoneCode}] ${s.code} - Sức chứa ${s.currentCount}/${s.maxCapacity} sp (${s.status.toUpperCase()})</option>
-      `).join('');
+      select.innerHTML = shelves.map(s => {
+        let statusText = 'Đầy đủ';
+        if (s.status === 'empty') statusText = 'Hết hàng';
+        else if (s.status === 'low') statusText = 'Sắp hết';
+        else if (s.status === 'anomaly') statusText = 'Bất thường';
+        return `
+          <option value="${s.id}">[${s.zoneCode}] ${s.code} - Sức chứa ${s.currentCount}/${s.maxCapacity} sp (${statusText})</option>
+        `;
+      }).join('');
     }
 
     function loadShelfProducts() {
@@ -227,7 +233,6 @@
       }
 
       tbody.innerHTML = activeShelfProducts.map(p => {
-        // Mock default physical count (if anomaly shelf like B02, mock lower)
         let defaultActual = p.stockQty;
         if (shelf.id === 'SH-B02' || shelf.code === 'Kệ B02') {
           defaultActual = Math.max(0, p.stockQty - 15);
@@ -304,7 +309,7 @@
       });
 
       const discrepancy = totalAct - totalSys;
-      const status = Math.abs(discrepancy) >= 10 ? 'anomaly' : (totalAct <= 5 ? 'low' : 'normal');
+      const status = Math.abs(discrepancy) >= 10 ? 'anomaly' : (totalAct <= 5 ? 'empty' : (totalAct <= 15 ? 'low' : 'normal'));
 
       const checkRecord = {
         shelfId: shelf.id,
@@ -332,8 +337,9 @@
 
       tbody.innerHTML = checks.map(c => {
         let badgeHtml = '<span class="badge badge-normal">Khớp số liệu</span>';
-        if (c.status === 'anomaly') badgeHtml = '<span class="badge badge-anomaly">Bất thường (-20)</span>';
+        if (c.status === 'anomaly') badgeHtml = '<span class="badge badge-anomaly">Bất thường</span>';
         else if (c.status === 'empty') badgeHtml = '<span class="badge badge-empty">Kệ rỗng</span>';
+        else if (c.status === 'low') badgeHtml = '<span class="badge badge-low">Sắp hết</span>';
 
         return `
           <tr>
