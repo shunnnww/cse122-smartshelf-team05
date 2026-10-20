@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản Trị Khu Vực & Kệ Hàng - SmartShelf</title>
+  <title>Quản trị khu vực và kệ hàng - SmartShelf</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/responsive.css">
 </head>
@@ -16,15 +16,15 @@
         <div class="logo-icon" style="background: linear-gradient(135deg, #6b21a8, #9333ea);">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Quản Trị Master (SV3: Văn Hân)</span>
+          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Quản trị hệ thống (SV3: Văn Hân)</span>
         </div>
       </a>
 
       <nav class="main-nav">
-        <a href="admin-product-management.html" class="nav-link">📦 Quản Lý Sản Phẩm</a>
-        <a href="admin-zone-management.html" class="nav-link active">🏬 Khu Vực & Kệ</a>
-        <a href="admin-user-management.html" class="nav-link">👥 Quản Lý Người Dùng</a>
-        <a href="manager-store-dashboard.html" class="nav-link">📊 Về Dashboard</a>
+        <a href="admin-product-management.html" class="nav-link">📦 Quản lý sản phẩm</a>
+        <a href="admin-zone-management.html" class="nav-link active">🏬 Khu vực & kệ</a>
+        <a href="admin-user-management.html" class="nav-link">👥 Quản lý người dùng</a>
+        <a href="manager-store-dashboard.html" class="nav-link">📊 Về bảng điều hành</a>
       </nav>
 
       <div class="header-actions">
@@ -46,25 +46,25 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">
-          <span>🏬 Quản Lý Mặt Bằng, Khu Vực & Kệ Siêu Thị</span>
+          <span>🏬 Quản lý mặt bằng, khu vực và kệ siêu thị</span>
         </h1>
         <p class="page-subtitle">Thiết lập cấu trúc phân tầng, định mức tải trọng và trạng thái hoạt động của các kệ hàng.</p>
       </div>
       <div>
-        <button class="btn btn-primary" onclick="openAddShelfModal()">+ Thêm Kệ Hàng Mới</button>
+        <button class="btn btn-primary" onclick="openAddShelfModal()">+ Thêm kệ hàng mới</button>
       </div>
     </div>
 
     <!-- 4 ZONES OVERVIEW -->
     <h2 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-main);">
-      1. Danh Mục Các Khu Vực Bán Hàng:
+      1. Danh mục các khu vực bán hàng:
     </h2>
     <div class="grid-4" id="zonesCardsGrid" style="margin-bottom: 2rem;"></div>
 
     <!-- SHELVES TABLE -->
     <div class="card" style="padding: 1.25rem;">
       <div class="card-header" style="margin-bottom: 0.75rem;">
-        <h2 class="card-title">2. Danh Sách Chi Tiết 14 Kệ Hàng</h2>
+        <h2 class="card-title">2. Danh sách chi tiết 14 kệ hàng</h2>
         <span class="badge badge-normal" id="shelvesCountBadge">14 kệ hoạt động</span>
       </div>
 
@@ -72,13 +72,13 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Mã Kệ</th>
-              <th>Thuộc Khu Vực</th>
-              <th>Số Tầng Kệ</th>
-              <th>Sức Chứa Tối Đa</th>
-              <th>Hiện Có</th>
-              <th>Trạng Thái Vận Hành</th>
-              <th style="text-align: right;">Thao Tác</th>
+              <th>Mã kệ</th>
+              <th>Thuộc khu vực</th>
+              <th>Số tầng kệ</th>
+              <th>Sức chứa tối đa</th>
+              <th>Hiện có</th>
+              <th>Trạng thái vận hành</th>
+              <th style="text-align: right;">Thao tác</th>
             </tr>
           </thead>
           <tbody id="shelvesAdminTbody"></tbody>
@@ -90,7 +90,7 @@
     <div id="shelfModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
       <div class="card" style="max-width: 480px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg);">
         <div class="card-header">
-          <h2 class="card-title">Thêm Kệ Hàng Mới</h2>
+          <h2 class="card-title">Thêm kệ hàng mới</h2>
           <button class="btn btn-secondary btn-sm" onclick="closeShelfModal()">✕</button>
         </div>
 
@@ -101,12 +101,12 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="shelfZoneSelect">Gán vào Khu Vực</label>
+            <label class="form-label" for="shelfZoneSelect">Gán vào khu vực</label>
             <select id="shelfZoneSelect" class="form-control">
-              <option value="Khu vực A">Khu vực A: Đồ Uống & Nước Giải Khát (Tầng 1)</option>
-              <option value="Khu vực B">Khu vực B: Thực Phẩm Khô & Gia Vị (Tầng 1)</option>
-              <option value="Khu vực C">Khu vực C: Bánh Kẹo & Snack (Tầng 2)</option>
-              <option value="Khu vực D">Khu vực D: Hóa Mỹ Phẩm & Tẩy Rửa (Tầng 2)</option>
+              <option value="Khu vực A">Khu vực A: Đồ uống & nước giải khát (Tầng 1)</option>
+              <option value="Khu vực B">Khu vực B: Thực phẩm khô & gia vị (Tầng 1)</option>
+              <option value="Khu vực C">Khu vực C: Bánh kẹo & snack (Tầng 2)</option>
+              <option value="Khu vực D">Khu vực D: Hóa mỹ phẩm & tẩy rửa (Tầng 2)</option>
             </select>
           </div>
 
@@ -123,7 +123,7 @@
 
           <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1.5rem;">
             <button type="button" class="btn btn-secondary" onclick="closeShelfModal()">Hủy</button>
-            <button type="submit" class="btn btn-primary">Xác Nhận Tạo Kệ</button>
+            <button type="submit" class="btn btn-primary">Xác nhận tạo kệ</button>
           </div>
         </form>
       </div>
@@ -132,8 +132,8 @@
 
   <footer class="app-footer">
     <div class="footer-content">
-      <div>SmartShelf - Quản Trị Mặt Bằng & Kệ Hàng (Phụ trách bởi: SV3 Nguyễn Văn Hân)</div>
-      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+      <div>SmartShelf - Phân hệ quản trị mặt bằng & kệ hàng (Phụ trách: SV3 Nguyễn Văn Hân)</div>
+      <div>Học phần CSE122 - Đại học Thủy Lợi</div>
     </div>
   </footer>
 
@@ -157,7 +157,7 @@
             ${z.name}
           </div>
           <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.4rem;">
-            ${z.floor} · 4 Kệ hoạt động
+            ${z.floor} · 4 kệ hoạt động
           </div>
           <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
             ${z.description}
@@ -181,13 +181,13 @@
           <tr>
             <td><strong style="color:var(--primary); font-size:0.95rem;">${s.code}</strong></td>
             <td><strong>${s.zoneCode}</strong></td>
-            <td>${s.levelCount} Tầng</td>
+            <td>${s.levelCount} tầng</td>
             <td>${s.maxCapacity} sản phẩm</td>
             <td><strong>${s.currentCount}</strong> sp</td>
             <td>${badge}</td>
             <td style="text-align: right;">
               <button class="btn btn-secondary btn-sm" onclick="toggleShelfStatus('${s.id}')" title="Đổi trạng thái thử nghiệm">
-                🔄 Đổi TT
+                🔄 Đổi trạng thái
               </button>
             </td>
           </tr>
@@ -200,7 +200,7 @@
       if (!s) return;
       const nextStatus = s.status === 'normal' ? 'low' : (s.status === 'low' ? 'empty' : (s.status === 'empty' ? 'anomaly' : 'normal'));
       updateShelf(shelfId, { status: nextStatus });
-      showToast(`Đã chuyển trạng thái ${s.code} sang [${nextStatus.toUpperCase()}]!`, 'info');
+      showToast(`Đã chuyển trạng thái ${s.code} sang [${nextStatus}]!`, 'info');
       renderShelves();
     }
 

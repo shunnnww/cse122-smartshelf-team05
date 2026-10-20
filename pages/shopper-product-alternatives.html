@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI-2: Gợi Ý Sản Phẩm Thay Thế - SmartShelf</title>
+  <title>AI-2: Gợi ý sản phẩm thay thế - SmartShelf</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/responsive.css">
 </head>
@@ -16,14 +16,14 @@
         <div class="logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Khách Mua Sắm (SV1: Hoàng Anh)</span>
+          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Khách mua sắm (SV1: Hoàng Anh)</span>
         </div>
       </a>
 
       <nav class="main-nav">
-        <a href="shopper-product-search.html" class="nav-link">🔍 Tìm Kiếm Hàng</a>
-        <a href="shopper-product-location.html" class="nav-link">📍 Bản Đồ Kệ Hàng</a>
-        <a href="shopper-product-alternatives.html" class="nav-link active">✨ Gợi Ý Thay Thế (AI)</a>
+        <a href="shopper-product-search.html" class="nav-link">🔍 Tìm kiếm hàng</a>
+        <a href="shopper-product-location.html" class="nav-link">📍 Bản đồ kệ hàng</a>
+        <a href="shopper-product-alternatives.html" class="nav-link active">✨ Gợi ý thay thế (AI)</a>
       </nav>
 
       <div class="header-actions">
@@ -48,24 +48,24 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">
-          <span>✨ Gợi Ý Sản Phẩm Thay Thế Khi Hết Hàng</span>
-          <span class="ai-badge">AI Feature 2</span>
+          <span>✨ Gợi ý sản phẩm thay thế khi hết hàng</span>
+          <span class="ai-badge">Tính năng AI 2</span>
         </h1>
         <p class="page-subtitle">AI tự động phân tích ngành hàng, phân khúc giá và lượng tồn trên kệ để gợi ý phương án thay thế tối ưu.</p>
       </div>
       <div>
-        <button class="btn btn-secondary btn-sm" id="simulateFailureBtn">🧪 Thử Nghiệm Khi AI Thất Bại</button>
+        <button class="btn btn-secondary btn-sm" id="simulateFailureBtn">🧪 Thử nghiệm khi AI thất bại</button>
       </div>
     </div>
 
     <!-- 1. INPUT CARD -->
     <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
       <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.75rem;">
-        1. Chọn Mặt Hàng Đang Tạm Hết Trên Kệ:
+        1. Chọn mặt hàng đang tạm hết trên kệ:
       </div>
       <div style="display: grid; grid-template-columns: 2fr auto auto; gap: 0.75rem; align-items: center;">
         <select id="targetProductSelect" class="form-control"></select>
-        <button id="runAiBtn" class="btn btn-ai">✨ Chạy AI Đề Xuất</button>
+        <button id="runAiBtn" class="btn btn-ai">✨ Chạy AI đề xuất</button>
         <button id="resetAiBtn" class="btn btn-secondary">Đặt lại</button>
       </div>
     </div>
@@ -73,20 +73,20 @@
     <!-- AI LOADING -->
     <div id="aiLoadingBox" class="state-box" style="display: none; background: #faf5ff; border-color: var(--accent-ai-border);">
       <div class="loading-spinner" style="border-top-color: var(--accent-ai);"></div>
-      <h3 class="state-title" style="color: var(--accent-ai);">AI Đang Phân Tích Danh Mục Kệ Hàng...</h3>
+      <h3 class="state-title" style="color: var(--accent-ai);">AI đang phân tích danh mục kệ hàng...</h3>
       <p class="state-desc">Đang so khớp các sản phẩm cùng ngành, biên độ giá và kiểm tra lượng hàng sẵn có trên các kệ lân cận.</p>
     </div>
 
     <!-- AI ERROR -->
     <div id="aiFailureBox" class="state-box" style="display: none; background: var(--danger-light); border-color: var(--danger-border);">
       <div class="state-icon">⚠️🤖</div>
-      <h3 class="state-title" style="color: var(--danger);">Không Có Đề Xuất Phù Hợp</h3>
+      <h3 class="state-title" style="color: var(--danger);">Không có đề xuất phù hợp</h3>
       <p class="state-desc" id="aiFailureMessage">
         Rất tiếc! Hệ thống chưa tìm thấy sản phẩm cùng phân khúc có sẵn trên kệ lúc này.
       </p>
       <div style="display: flex; gap: 0.5rem; justify-content: center;">
-        <button class="btn btn-secondary btn-sm" onclick="runAiAnalysis(false)">🔄 Thử Lại Lần Nữa</button>
-        <a href="shopper-product-search.html" class="btn btn-primary btn-sm">🔍 Tự Tìm Thủ Công</a>
+        <button class="btn btn-secondary btn-sm" onclick="runAiAnalysis(false)">🔄 Thử lại lần nữa</button>
+        <a href="shopper-product-search.html" class="btn btn-primary btn-sm">🔍 Tự tìm thủ công</a>
       </div>
     </div>
 
@@ -94,12 +94,12 @@
     <div id="aiResultPanel" class="ai-panel" style="display: none;">
       <div class="ai-header">
         <div>
-          <span class="ai-badge">KẾT QUẢ TỪ AI</span>
+          <span class="ai-badge">Kết quả từ AI</span>
           <span style="font-size: 0.82rem; color: var(--text-muted); margin-left: 0.5rem;">
             Độ tin cậy mô hình: <strong id="aiConfidenceText" style="color: var(--success);">94.8%</strong>
           </span>
         </div>
-        <button class="btn btn-secondary btn-sm" onclick="runAiAnalysis(false)">🔄 Tính Lại Gợi Ý</button>
+        <button class="btn btn-secondary btn-sm" onclick="runAiAnalysis(false)">🔄 Tính lại gợi ý</button>
       </div>
 
       <p style="font-size: 0.88rem; margin-bottom: 1rem; color: var(--text-body);">
@@ -112,8 +112,8 @@
 
   <footer class="app-footer">
     <div class="footer-content">
-      <div>SmartShelf - Product Alternative AI (Phụ trách bởi: SV1 Trần Trọng Hoàng Anh)</div>
-      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+      <div>SmartShelf - Phân hệ gợi ý sản phẩm thay thế AI (Phụ trách: SV1 Trần Trọng Hoàng Anh)</div>
+      <div>Học phần CSE122 - Đại học Thủy Lợi</div>
     </div>
   </footer>
 
@@ -147,7 +147,7 @@
       
       select.innerHTML = emptyOrLow.map(p => `
         <option value="${p.id}">
-          [${p.stockQty === 0 ? 'HẾT HÀNG' : 'SẮP HẾT'}] ${p.name} - ${p.price.toLocaleString()}đ (Kệ: ${p.shelfId})
+          [${p.stockQty === 0 ? 'Hết hàng' : 'Sắp hết'}] ${p.name} - ${p.price.toLocaleString()}đ (Kệ: ${p.shelfId})
         </option>
       `).join('');
     }
@@ -215,10 +215,10 @@
 
             <div style="margin-top: 1rem; display: flex; gap: 0.4rem;">
               <button class="btn btn-primary btn-sm" style="flex: 1;" onclick="acceptAlternative('${p.id}')">
-                ✅ Thêm Vào Giỏ
+                ✅ Thêm vào giỏ
               </button>
               <a href="shopper-product-location.html?shelf=${p.shelfId}" class="btn btn-secondary btn-sm" title="Xem vị trí kệ">
-                📍 Dẫn Đường
+                📍 Dẫn đường
               </a>
             </div>
           </div>

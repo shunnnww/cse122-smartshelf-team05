@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Điều Hành Khu Vực & Kệ Hàng - SmartShelf</title>
+  <title>Điều hành khu vực và kệ hàng - SmartShelf</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/responsive.css">
 </head>
@@ -16,14 +16,14 @@
         <div class="logo-icon" style="background: linear-gradient(135deg, #059669, #10b981);">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Nhân Viên Kệ Hàng (SV2: Quang Long)</span>
+          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Nhân viên kệ hàng (SV2: Quang Long)</span>
         </div>
       </a>
 
       <nav class="main-nav">
-        <a href="associate-zone-view.html" class="nav-link active">📋 Giám Sát Khu Vực</a>
-        <a href="associate-shelf-check.html" class="nav-link">🔍 Kiểm Kê Kệ</a>
-        <a href="associate-restock-task.html" class="nav-link">📦 Bổ Sung Kệ (AI)</a>
+        <a href="associate-zone-view.html" class="nav-link active">📋 Giám sát khu vực</a>
+        <a href="associate-shelf-check.html" class="nav-link">🔍 Kiểm kê kệ</a>
+        <a href="associate-restock-task.html" class="nav-link">📦 Bổ sung kệ (AI)</a>
       </nav>
 
       <div class="header-actions">
@@ -45,35 +45,35 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">
-          <span>📋 Giám Sát Tình Trạng 14 Kệ Hàng Siêu Thị</span>
+          <span>📋 Giám sát tình trạng 14 kệ hàng siêu thị</span>
         </h1>
         <p class="page-subtitle">Nhận diện nhanh kệ cạn hàng, sắp hết hoặc bất thường để kịp thời kiểm tra và xếp hàng.</p>
       </div>
       <div style="display: flex; gap: 0.5rem;">
-        <a href="associate-shelf-check.html" class="btn btn-secondary btn-sm">🔍 Phiếu Kiểm Kê</a>
-        <a href="associate-restock-task.html" class="btn btn-primary btn-sm">📦 Bổ Sung Hàng Cấp Bách</a>
+        <a href="associate-shelf-check.html" class="btn btn-secondary btn-sm">🔍 Phiếu kiểm kê</a>
+        <a href="associate-restock-task.html" class="btn btn-primary btn-sm">📦 Bổ sung hàng cấp bách</a>
       </div>
     </div>
 
     <!-- 4 CLEAN STATS CARDS -->
     <div class="grid-4" style="margin-bottom: 1.5rem;">
       <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Tổng Số Kệ</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Tổng số kệ</div>
         <div style="font-size: 1.75rem; font-weight: 800; color: var(--primary); margin: 2px 0;" id="statTotalShelves">14</div>
         <div style="font-size: 0.75rem; color: var(--text-muted);">Phân bố tại 4 khu vực</div>
       </div>
       <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Kệ Sắp Hết</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Kệ sắp hết</div>
         <div style="font-size: 1.75rem; font-weight: 800; color: var(--warning); margin: 2px 0;" id="statLowShelves">5</div>
         <div style="font-size: 0.75rem; color: #b45309;">Cần chú ý bổ sung</div>
       </div>
       <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Kệ Trống 100%</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Kệ trống 100%</div>
         <div style="font-size: 1.75rem; font-weight: 800; color: var(--danger); margin: 2px 0;" id="statEmptyShelves">2</div>
         <div style="font-size: 0.75rem; color: #b91c1c;">Cần xử lý khẩn cấp</div>
       </div>
       <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Cảnh Báo Lệch Kho</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Cảnh báo lệch kho</div>
         <div style="font-size: 1.75rem; font-weight: 800; color: #db2777; margin: 2px 0;" id="statAnomalyShelves">1</div>
         <div style="font-size: 0.75rem; color: #be185d;">Sai lệch kiểm kê (AI)</div>
       </div>
@@ -84,11 +84,11 @@
       <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
         <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">Bộ lọc:</span>
         <select id="filterZone" class="form-control" style="width: auto;">
-          <option value="ALL">Tất cả khu vực (4 Khu vực)</option>
-          <option value="Khu vực A">Khu vực A: Đồ Uống & Nước Giải Khát</option>
-          <option value="Khu vực B">Khu vực B: Thực Phẩm Khô & Gia Vị</option>
-          <option value="Khu vực C">Khu vực C: Bánh Kẹo & Snack</option>
-          <option value="Khu vực D">Khu vực D: Hóa Mỹ Phẩm & Tẩy Rửa</option>
+          <option value="ALL">Tất cả khu vực (4 khu vực)</option>
+          <option value="Khu vực A">Khu vực A: Đồ uống & nước giải khát</option>
+          <option value="Khu vực B">Khu vực B: Thực phẩm khô & gia vị</option>
+          <option value="Khu vực C">Khu vực C: Bánh kẹo & snack</option>
+          <option value="Khu vực D">Khu vực D: Hóa mỹ phẩm & tẩy rửa</option>
         </select>
         <select id="filterStatus" class="form-control" style="width: auto;">
           <option value="ALL">Tất cả trạng thái</option>
@@ -103,7 +103,7 @@
     <!-- SHELVES LIST TABLE -->
     <div class="card" style="padding: 1.25rem;">
       <div class="card-header" style="margin-bottom: 0.75rem;">
-        <h2 class="card-title">Tình Trạng 14 Kệ Hàng Siêu Thị</h2>
+        <h2 class="card-title">Tình trạng 14 kệ hàng siêu thị</h2>
         <span class="badge badge-normal" id="shelfCountBadge">14 kệ</span>
       </div>
 
@@ -111,13 +111,13 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Mã Kệ</th>
-              <th>Khu Vực</th>
-              <th>Hiện Có / Tối Đa</th>
-              <th>Tỷ Lệ Lấp Đầy</th>
-              <th>Trạng Thái</th>
-              <th>Lần Kiểm Cuối</th>
-              <th style="text-align: right;">Thao Tác</th>
+              <th>Mã kệ</th>
+              <th>Khu vực</th>
+              <th>Hiện có / Tối đa</th>
+              <th>Tỷ lệ lấp đầy</th>
+              <th>Trạng thái</th>
+              <th>Lần kiểm cuối</th>
+              <th style="text-align: right;">Thao tác</th>
             </tr>
           </thead>
           <tbody id="shelfTableBody"></tbody>
@@ -128,8 +128,8 @@
 
   <footer class="app-footer">
     <div class="footer-content">
-      <div>SmartShelf - Module Điều Hành Khu Vực (Phụ trách bởi: SV2 Nguyễn Quang Long)</div>
-      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
+      <div>SmartShelf - Phân hệ điều hành khu vực (Phụ trách: SV2 Nguyễn Quang Long)</div>
+      <div>Học phần CSE122 - Đại học Thủy Lợi</div>
     </div>
   </footer>
 
@@ -189,7 +189,7 @@
           <tr>
             <td>
               <strong style="color: var(--primary); font-size: 0.95rem;">${s.code}</strong>
-              <div style="font-size: 0.75rem; color: var(--text-muted);">${s.levelCount} Tầng</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">${s.levelCount} tầng</div>
             </td>
             <td>
               <strong>${s.zoneCode}</strong>
@@ -208,10 +208,10 @@
             <td style="text-align: right;">
               <div style="display: inline-flex; gap: 0.4rem;">
                 <a href="associate-shelf-check.html?shelf=${s.id}" class="btn btn-secondary btn-sm">
-                  🔍 Kiểm Kê
+                  🔍 Kiểm kê
                 </a>
                 <a href="associate-restock-task.html?shelf=${s.id}" class="btn btn-primary btn-sm">
-                  📦 Bổ Sung
+                  📦 Bổ sung
                 </a>
               </div>
             </td>
