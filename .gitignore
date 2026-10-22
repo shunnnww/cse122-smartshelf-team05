@@ -1,0 +1,10 @@
+# Thư mục hướng dẫn nội bộ bí mật của nhóm 5 (Không đẩy lên GitHub)
+huong-dan/
+
+# Tệp cá nhân / nháp của sinh viên
+*.docx
+*.doc
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
