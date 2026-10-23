@@ -3,6 +3,7 @@
 > **Học phần:** CSE122 – Phát triển ứng dụng Web cơ bản  
 > **Nhóm 5 – Lớp 67KTPM1 – ĐH Thủy Lợi**  
 > **Đề tài BTL-10:** SmartShelf – Điều hành kệ hàng và hỗ trợ mua sắm  
+> **Bảng Trello quản lý tiến độ:** [https://trello.com/b/rW6Y8Q04/cse122-btl-10-team-05-smartshelf](https://trello.com/b/rW6Y8Q04/cse122-btl-10-team-05-smartshelf)  
 
 Nhóm tuân thủ nghiêm ngặt nguyên tắc **Lát cắt dọc (Vertical Slice)**: Mỗi sinh viên đều tự chủ thực hiện trọn vẹn chuỗi:  
 `Phân tích yêu cầu → Thiết kế Mockup → HTML Semantic → CSS → JavaScript DOM → Dữ liệu mock → Responsive → Nhánh Git → Commit chuẩn → Pull Request → Video OBS`.

@@ -91,6 +91,7 @@ Chi tiết tại [docs/team-assignment.md](docs/team-assignment.md):
 
 ## 10. Quy trình Git & quản lý mã nguồn
 - **Tên Repository:** `cse122-smartshelf-team05`
+- **Bảng Trello quản lý tiến độ:** [https://trello.com/b/rW6Y8Q04/cse122-btl-10-team-05-smartshelf](https://trello.com/b/rW6Y8Q04/cse122-btl-10-team-05-smartshelf)
 - **Chiến lược nhánh:**
   - `main`: Nhánh sản phẩm ổn định, phát hành cuối cùng.
   - `dev`: Nhánh tích hợp và kiểm thử chung.
@@ -108,10 +109,11 @@ Hệ thống được thiết kế dạng Web tĩnh thuần túy không phụ th
 ---
 
 ## 12. Tài liệu kèm theo & minh chứng quá trình
+- [Bảng Trello quản lý tiến độ](https://trello.com/b/rW6Y8Q04/cse122-btl-10-team-05-smartshelf) – Nhật ký tiến độ làm việc nhóm theo mô hình Kanban.
 - [docs/project-proposal.md](docs/project-proposal.md) – Báo cáo đề tài chi tiết.
 - [docs/screen-inventory.md](docs/screen-inventory.md) – Bảng kiểm kê màn hình chuẩn phụ lục B.
 - [docs/roles-and-features.md](docs/roles-and-features.md) – Phân tích 4 vai trò theo 10 câu hỏi chuẩn.
 - [docs/team-assignment.md](docs/team-assignment.md) – Phân công lát cắt dọc và ma trận đóng góp.
 - [docs/ai-usage-report.md](docs/ai-usage-report.md) – Báo cáo khai báo sử dụng AI chuẩn phụ lục F.
-- [docs/obs-evidence.md](docs/obs-evidence.md) – Hướng dẫn quay OBS và kịch bản live edit bảo vệ.
+- [docs/obs-evidence.md](docs/obs-evidence.md) – Bảng kê minh chứng video quay quá trình thực hiện dự án.
 - [design/figma-link.txt](design/figma-link.txt) – Liên kết và thông số thiết kế Figma/Canva.
