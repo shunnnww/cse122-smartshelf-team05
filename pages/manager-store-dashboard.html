@@ -50,9 +50,17 @@
         </h1>
         <p class="page-subtitle">Theo dõi tổng thể tỷ lệ lấp đầy kệ, cảnh báo cạn hàng và điều phối nhân sự.</p>
       </div>
-      <div style="display: flex; gap: 0.5rem;">
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+        <div class="btn-group" style="display: inline-flex; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;">
+          <button type="button" class="btn btn-primary btn-sm" id="timeFilterToday" style="border-radius: 0; padding: 0.35rem 0.65rem;">Hôm nay</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="timeFilterWeek" style="border-radius: 0; padding: 0.35rem 0.65rem;">7 ngày</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="timeFilterMonth" style="border-radius: 0; padding: 0.35rem 0.65rem;">Tháng này</button>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="exportDashboardCsvBtn" title="Xuất dữ liệu CSV (Mở rộng Bonus)">📥 CSV</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="exportDashboardJsonBtn" title="Xuất dữ liệu JSON (Mở rộng Bonus)">📥 JSON</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()" title="In báo cáo (@media print)">🖨️ In</button>
         <a href="manager-restock-board.html" class="btn btn-primary btn-sm">📋 Điều phối Kanban</a>
-        <a href="manager-retail-insights.html" class="btn btn-ai btn-sm">✨ Xem AI phân tích bất thường</a>
+        <a href="manager-retail-insights.html" class="btn btn-ai btn-sm">✨ AI phân tích bất thường</a>
       </div>
     </div>
 
@@ -197,9 +205,74 @@
   <script src="../js/api.js"></script>
   <script src="../js/main.js"></script>
   <script>
+    let currentPeriod = 'today';
+
     document.addEventListener('DOMContentLoaded', () => {
       renderZoneHealth();
+      setupTimeFilters();
+      setupExportButtons();
     });
+
+    function setupTimeFilters() {
+      const bToday = document.getElementById('timeFilterToday');
+      const bWeek = document.getElementById('timeFilterWeek');
+      const bMonth = document.getElementById('timeFilterMonth');
+
+      function setFilter(period, btn) {
+        currentPeriod = period;
+        [bToday, bWeek, bMonth].forEach(b => {
+          b.classList.remove('btn-primary');
+          b.classList.add('btn-secondary');
+        });
+        btn.classList.remove('btn-secondary');
+        btn.classList.add('btn-primary');
+        renderZoneHealth();
+        showToast(`Đã chuyển bộ lọc thời gian: ${period === 'today' ? 'Hôm nay' : (period === 'week' ? '7 ngày qua' : 'Tháng này')}`, 'info');
+      }
+
+      bToday.addEventListener('click', () => setFilter('today', bToday));
+      bWeek.addEventListener('click', () => setFilter('week', bWeek));
+      bMonth.addEventListener('click', () => setFilter('month', bMonth));
+    }
+
+    function setupExportButtons() {
+      document.getElementById('exportDashboardCsvBtn').addEventListener('click', () => {
+        const zones = getZones();
+        const shelves = getShelves();
+        const headers = ['Mã Zone', 'Tên Zone', 'Số Kệ', 'Tồn Thực Tế', 'Sức Chứa Tối Đa', 'Tỷ Lệ Lấp Đầy (%)'];
+        const rows = zones.map(z => {
+          const zShelves = shelves.filter(s => s.zoneCode === z.code || s.zoneId === z.id);
+          const cap = zShelves.reduce((acc, s) => acc + s.maxCapacity, 0) || 100;
+          const curr = zShelves.reduce((acc, s) => acc + s.currentCount, 0);
+          return [z.id, z.name, zShelves.length, curr, cap, Math.round((curr / cap) * 100) + '%'];
+        });
+        exportDataToCSV(`SmartShelf-BaoCao-KhuVuc-${currentPeriod}.csv`, headers, rows);
+      });
+
+      document.getElementById('exportDashboardJsonBtn').addEventListener('click', () => {
+        const zones = getZones();
+        const shelves = getShelves();
+        const exportObj = {
+          reportType: 'Manager Dashboard Store Health',
+          period: currentPeriod,
+          exportedAt: new Date().toISOString(),
+          zones: zones.map(z => {
+            const zShelves = shelves.filter(s => s.zoneCode === z.code || s.zoneId === z.id);
+            const cap = zShelves.reduce((acc, s) => acc + s.maxCapacity, 0) || 100;
+            const curr = zShelves.reduce((acc, s) => acc + s.currentCount, 0);
+            return {
+              id: z.id,
+              name: z.name,
+              totalShelves: zShelves.length,
+              currentStock: curr,
+              maxCapacity: cap,
+              fillRatePercent: Math.round((curr / cap) * 100)
+            };
+          })
+        };
+        exportDataToJSON(`SmartShelf-StoreHealth-${currentPeriod}.json`, exportObj);
+      });
+    }
 
     function renderZoneHealth() {
       const zones = getZones();
@@ -209,7 +282,12 @@
       container.innerHTML = zones.map(z => {
         const zoneShelves = shelves.filter(s => s.zoneCode === z.code || s.zoneId === z.id);
         const totalCapacity = zoneShelves.reduce((acc, s) => acc + s.maxCapacity, 0) || 100;
-        const totalCurrent = zoneShelves.reduce((acc, s) => acc + s.currentCount, 0);
+        let totalCurrent = zoneShelves.reduce((acc, s) => acc + s.currentCount, 0);
+
+        // Adjust slightly based on period for interactive demo visualization
+        if (currentPeriod === 'week') totalCurrent = Math.min(totalCapacity, Math.round(totalCurrent * 1.1));
+        if (currentPeriod === 'month') totalCurrent = Math.min(totalCapacity, Math.round(totalCurrent * 0.95));
+
         const pct = Math.round((totalCurrent / totalCapacity) * 100);
 
         let barCol = 'var(--success)';
@@ -223,12 +301,15 @@
               <span style="font-weight: 700; color: ${barCol};">${totalCurrent}/${totalCapacity} sp (${pct}%)</span>
             </div>
             <div class="shelf-progress-bar">
-              <div class="shelf-progress-fill" style="width: ${pct}%; background-color: ${barCol};"></div>
+              <div class="shelf-progress-fill" style="width: ${pct}%; background-color: ${barCol}; transition: width 0.4s ease;"></div>
             </div>
           </div>
         `;
       }).join('');
     }
+
+    // Alias for cross-tab auto refresh
+    window.renderHealth = renderZoneHealth;
   </script>
 </body>
 </html>

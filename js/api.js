@@ -41,8 +41,56 @@ function getDatabase() {
   return getFallbackSeed();
 }
 
+// Bonus 1: Kênh đồng bộ liên thông đa tab / đa vai trò (BroadcastChannel & Storage Event)
+let syncChannel = null;
+try {
+  syncChannel = new BroadcastChannel('smartshelf_sync_channel');
+  syncChannel.onmessage = (event) => {
+    if (event.data && event.data.type === 'DB_MUTATED') {
+      handleCrossTabSync(event.data);
+    }
+  };
+} catch (e) {
+  console.warn('BroadcastChannel not supported, using storage event.');
+}
+
+window.addEventListener('storage', (e) => {
+  if (e.key === STORAGE_KEY) {
+    handleCrossTabSync({ type: 'DB_MUTATED', timestamp: Date.now() });
+  }
+});
+
+function handleCrossTabSync(data) {
+  window.dispatchEvent(new CustomEvent('smartshelf:sync', { detail: data }));
+  if (typeof showToast === 'function') {
+    showToast('🔄 Dữ liệu liên thông: Đã tự động cập nhật từ vai trò khác!', 'info');
+  }
+}
+
+function notifyChange(action, details) {
+  if (syncChannel) {
+    try {
+      syncChannel.postMessage({ type: 'DB_MUTATED', action, details, timestamp: Date.now() });
+    } catch (e) {}
+  }
+}
+
 function saveDatabase(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  notifyChange('SAVE_DB', {});
+}
+
+// Bonus 2: Quản lý API Key an toàn trong sessionStorage (không lộ mã nguồn)
+function getCustomAIKey() {
+  return sessionStorage.getItem('SMARTSHELF_CUSTOM_AI_KEY') || '';
+}
+
+function setCustomAIKey(key) {
+  if (key && key.trim()) {
+    sessionStorage.setItem('SMARTSHELF_CUSTOM_AI_KEY', key.trim());
+  } else {
+    sessionStorage.removeItem('SMARTSHELF_CUSTOM_AI_KEY');
+  }
 }
 
 function resetDatabase() {

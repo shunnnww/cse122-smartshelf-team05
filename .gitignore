@@ -4,6 +4,7 @@ huong-dan/
 # Tệp cá nhân / nháp của sinh viên
 *.docx
 *.doc
+*.pdf
 *.tmp
 *.bak
 .DS_Store

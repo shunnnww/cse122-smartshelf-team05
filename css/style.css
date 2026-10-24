@@ -673,3 +673,131 @@ a:hover {
   flex-wrap: wrap;
   gap: 0.75rem;
 }
+
+
+/* ===================================================================
+   BONUS FEATURES: DARK THEME, A11Y FOCUS-VISIBLE & PRINT STYLES
+   =================================================================== */
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-light: #1e293b;
+  --primary-border: #3b82f6;
+
+  --secondary: #14b8a6;
+  --secondary-light: #134e4a;
+
+  --accent-ai: #a855f7;
+  --accent-ai-light: #3b0764;
+  --accent-ai-border: #9333ea;
+
+  --success: #34d399;
+  --success-light: #064e3b;
+  --success-border: #059669;
+
+  --warning: #fbbf24;
+  --warning-light: #78350f;
+  --warning-border: #d97706;
+
+  --danger: #f87171;
+  --danger-light: #7f1d1d;
+  --danger-border: #dc2626;
+
+  --text-main: #f8fafc;
+  --text-body: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+
+  --bg-page: #0f172a;
+  --bg-card: #1e293b;
+  --border: #334155;
+  --border-light: #1e293b;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.6);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.7);
+}
+
+[data-theme="dark"] .app-header,
+[data-theme="dark"] .app-footer,
+[data-theme="dark"] .card,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+  background-color: var(--bg-card);
+  color: var(--text-body);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .table {
+  color: var(--text-body);
+}
+
+[data-theme="dark"] .table th {
+  background-color: #1e293b;
+  color: var(--text-main);
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .table td {
+  border-bottom-color: var(--border);
+}
+
+/* Accessibility: Focus-Visible Ring (Tiêu chí 3.3 & Live Mod Đề C4) */
+:focus-visible {
+  outline: 3px solid var(--primary) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25) !important;
+}
+
+/* Bonus 4: Chuẩn in ấn báo cáo chuyên nghiệp (@media print) */
+@media print {
+  .app-header, 
+  .role-switcher-bar, 
+  .app-footer, 
+  .btn, 
+  .modal-overlay, 
+  #smart-toast-container, 
+  #aiConfigModal,
+  .quick-demo-box,
+  .action-bar {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt;
+  }
+
+  .main-content {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .card {
+    box-shadow: none !important;
+    border: 1px solid #999999 !important;
+    page-break-inside: avoid;
+    margin-bottom: 1rem !important;
+  }
+
+  .table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  .table th, .table td {
+    border: 1px solid #333333 !important;
+    color: #000000 !important;
+    padding: 6px !important;
+  }
+
+  .badge {
+    border: 1px solid #333333 !important;
+    color: #000000 !important;
+    background: transparent !important;
+  }
+}

@@ -51,7 +51,10 @@
         </h1>
         <p class="page-subtitle">Sử dụng AI đối soát dữ liệu bán hàng với kết quả đếm thực tế để phát hiện hàng để nhầm kệ hoặc thất thoát.</p>
       </div>
-      <div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button type="button" class="btn btn-secondary btn-sm" id="exportVelocityCsvBtn" title="Xuất CSV vận tốc bán hàng">📥 CSV</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="exportVelocityJsonBtn" title="Xuất JSON báo cáo">📥 JSON</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()" title="In báo cáo">🖨️ In</button>
         <button class="btn btn-ai btn-sm" id="runBatchAnomalyBtn">✨ Quét toàn diện bất thường siêu thị</button>
       </div>
     </div>
@@ -150,6 +153,32 @@
       renderVelocityTable();
       document.getElementById('runBatchAnomalyBtn').addEventListener('click', () => {
         showToast('AI đang quét lại 14 kệ hàng siêu thị... Không phát hiện thêm bất thường mới!', 'ai');
+      });
+
+      document.getElementById('exportVelocityCsvBtn').addEventListener('click', () => {
+        const prods = getProducts();
+        const sorted = [...prods].sort((a, b) => (b.salesVelocity || 0) - (a.salesVelocity || 0));
+        const headers = ['Hạng', 'Mã SKU', 'Tên Sản Phẩm', 'Ngành Hàng', 'Vị Trí Kệ', 'Tốc Độ Bán (sp/ngày)', 'Tồn Kệ'];
+        const rows = sorted.map((p, idx) => [
+          idx + 1,
+          p.sku,
+          p.name,
+          p.category,
+          `${p.shelfId} (${p.shelfLevel || 'Tầng 2'})`,
+          p.salesVelocity || 20,
+          p.stockQty
+        ]);
+        exportDataToCSV('SmartShelf-TocDoBanHang-AI.csv', headers, rows);
+      });
+
+      document.getElementById('exportVelocityJsonBtn').addEventListener('click', () => {
+        const prods = getProducts();
+        const sorted = [...prods].sort((a, b) => (b.salesVelocity || 0) - (a.salesVelocity || 0));
+        exportDataToJSON('SmartShelf-TocDoBanHang-AI.json', {
+          title: 'SmartShelf AI Sales Velocity & Shelf Allocation Matrix',
+          analyzedAt: new Date().toISOString(),
+          items: sorted
+        });
       });
     });
 
