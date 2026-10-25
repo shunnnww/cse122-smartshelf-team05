@@ -1,7 +1,8 @@
-# Thư mục hướng dẫn nội bộ bí mật của nhóm 5 (Không đẩy lên GitHub)
+# Thu muc noi bo bi mat cua nhom (Khong day len GitHub)
 huong-dan/
+giai-thich/
 
-# Tệp cá nhân / nháp của sinh viên
+# Tep ca nhan / nhap cua sinh vien
 *.docx
 *.doc
 *.pdf
