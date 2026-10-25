@@ -14,6 +14,7 @@ Nhóm tuân thủ nghiêm ngặt nguyên tắc **Lát cắt dọc (Vertical Slic
 
 ### Sinh Viên 1: TRẦN TRỌNG HOÀNG ANH (Nhóm trưởng)
 - **Mã sinh viên:** 2551170859
+- **Email:** 2551170859@e.tlu.edu.vn
 - **Lát cắt dọc chính:** **Vai trò Khách Mua Sắm (Shopper / Customer)**
 - **Các màn hình phụ trách xây dựng:**
   1. `index.html` – Cổng thông tin điều hướng trung tâm hệ thống SmartShelf.
@@ -31,6 +32,7 @@ Nhóm tuân thủ nghiêm ngặt nguyên tắc **Lát cắt dọc (Vertical Slic
 
 ### Sinh Viên 2: NGUYỄN QUANG LONG
 - **Mã sinh viên:** 2551170915
+- **Email:** 2551170915@e.tlu.edu.vn
 - **Lát cắt dọc chính:** **Vai trò Nhân Viên Cửa Hàng (Store Associate / Staff)**
 - **Các màn hình phụ trách xây dựng:**
   1. `pages/associate-zone-view.html` – Bảng điều hành tình trạng 14 kệ hàng theo 4 Zone, hiển thị % lấp đầy và trạng thái cảnh báo.
@@ -45,6 +47,7 @@ Nhóm tuân thủ nghiêm ngặt nguyên tắc **Lát cắt dọc (Vertical Slic
 
 ### Sinh Viên 3: NGUYỄN VĂN HÂN
 - **Mã sinh viên:** 2551170885
+- **Email:** 2551170885@e.tlu.edu.vn
 - **Lát cắt dọc chính:** **Vai trò Quản Lý Cửa Hàng (Manager) & Quản Trị Viên (Admin)**
 - **Các màn hình phụ trách xây dựng:**
   1. `pages/manager-store-dashboard.html` – Executive Dashboard: Theo dõi KPI doanh thu, tỷ lệ lấp đầy, bảng các điểm nóng cần xử lý ngay.

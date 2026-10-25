@@ -16,9 +16,9 @@ Trong các siêu thị và chuỗi bán lẻ quy mô lớn, khách hàng thườ
 ## 2. Thông tin Giảng viên & Nhóm sinh viên thực hiện
 * **Giảng viên hướng dẫn & Chấm điểm:** ThS. Kiều Tuấn Dũng – ThS. Tạ Chí Hiếu
 * **Nhóm sinh viên thực hiện (Nhóm 5 – Lớp 67KTPM1):**
-  1. **Trần Trọng Hoàng Anh (Nhóm trưởng - SV1)** – MSV: `2551170859` – Email: `hoanganh.cse@tlu.edu.vn`
-  2. **Nguyễn Quang Long (SV2)** – MSV: `2551170915` – Email: `quanglong.cse@tlu.edu.vn`
-  3. **Nguyễn Văn Hân (SV3)** – MSV: `2551170885` – Email: `vanhan.cse@tlu.edu.vn`
+  1. **Trần Trọng Hoàng Anh (Nhóm trưởng - SV1)** – MSV: `2551170859` – Email: `2551170859@e.tlu.edu.vn`
+  2. **Nguyễn Quang Long (SV2)** – MSV: `2551170915` – Email: `2551170915@e.tlu.edu.vn`
+  3. **Nguyễn Văn Hân (SV3)** – MSV: `2551170885` – Email: `2551170885@e.tlu.edu.vn`
 
 ---
 

@@ -554,10 +554,10 @@ function getFallbackSeed() {
       { id: "CHK-003", shelfId: "SH-C03", shelfCode: "Kệ C03", zoneCode: "Khu vực C", checkerName: "Nguyễn Văn Hân", checkedAt: "2026-10-20 06:30", systemStock: 0, actualStock: 0, discrepancy: 0, status: "empty", note: "Kệ trống đúng số liệu hệ thống." }
     ],
     users: [
-      { id: "USR-001", username: "hoanganh", fullName: "Trần Trọng Hoàng Anh", role: "customer", email: "hoanganh.cse@tlu.edu.vn", badge: "Nhóm trưởng (SV1)" },
-      { id: "USR-002", username: "quanglong", fullName: "Nguyễn Quang Long", role: "staff", email: "quanglong.cse@tlu.edu.vn", badge: "Nhân viên Kệ Hàng (SV2)" },
-      { id: "USR-003", username: "vanhan", fullName: "Nguyễn Văn Hân", role: "manager", email: "vanhan.cse@tlu.edu.vn", badge: "Quản lý Cửa Hàng (SV3)" },
-      { id: "USR-004", username: "admin", fullName: "Quản Trị Viên", role: "admin", email: "admin@smartshelf.vn", badge: "Quản trị viên" }
+      { id: "USR-001", username: "hoanganh", fullName: "Trần Trọng Hoàng Anh", role: "customer", email: "2551170859@e.tlu.edu.vn", badge: "Nhóm trưởng (SV1)" },
+      { id: "USR-002", username: "quanglong", fullName: "Nguyễn Quang Long", role: "staff", email: "2551170915@e.tlu.edu.vn", badge: "Nhân viên Kệ Hàng (SV2)" },
+      { id: "USR-003", username: "vanhan", fullName: "Nguyễn Văn Hân", role: "manager", email: "2551170885@e.tlu.edu.vn", badge: "Quản lý Cửa Hàng (SV3)" },
+      { id: "USR-004", username: "admin", fullName: "Quản Trị Viên", role: "admin", email: "admin@e.tlu.edu.vn", badge: "Quản trị viên" }
     ]
   };
 }

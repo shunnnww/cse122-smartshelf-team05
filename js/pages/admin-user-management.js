@@ -92,7 +92,7 @@ function handleAddUser(e) {
     fullName: name,
     username: login,
     role: role,
-    email: email || `${login}@smartshelf.vn`,
+    email: email || `${login}@e.tlu.edu.vn`,
     badge: 'Thành viên mới'
   });
 

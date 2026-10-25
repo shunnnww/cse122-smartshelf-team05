@@ -6,9 +6,9 @@
 > **Giảng viên hướng dẫn:** ThS. Kiều Tuấn Dũng  
 > **Nhóm thực hiện:** Nhóm 5 – Lớp 67KTPM1  
 > **Thành viên:**  
-> 1. **Trần Trọng Hoàng Anh** (Nhóm trưởng) – MSV: 2551170859  
-> 2. **Nguyễn Quang Long** – MSV: 2551170915  
-> 3. **Nguyễn Văn Hân** – MSV: 2551170885  
+> 1. **Trần Trọng Hoàng Anh** (Nhóm trưởng) – MSV: 2551170859 – Email: 2551170859@e.tlu.edu.vn  
+> 2. **Nguyễn Quang Long** – MSV: 2551170915 – Email: 2551170915@e.tlu.edu.vn  
+> 3. **Nguyễn Văn Hân** – MSV: 2551170885 – Email: 2551170885@e.tlu.edu.vn  
 > **Hà Nội, Năm học 2026 – 2027**
 
 ---
