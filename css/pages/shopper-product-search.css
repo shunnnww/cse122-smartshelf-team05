@@ -1,11 +1,27 @@
 /* ===================================================================
    SmartShelf - Màn hình Tìm kiếm sản phẩm (shopper-product-search.html)
    Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
 
 .search-box-card {
   margin-bottom: 1.5rem;
   padding: 1.25rem;
+}
+
+.search-filter-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.2fr auto;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.search-form-group {
+  margin-bottom: 0;
+}
+
+.btn-reset-filter {
+  height: 38px;
 }
 
 .product-item-card {
@@ -21,6 +37,35 @@
   box-shadow: var(--shadow-md);
 }
 
+.product-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.product-category-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.product-name-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: var(--text-main);
+  line-height: 1.35;
+  min-height: 2.7rem;
+}
+
+.product-price-tag {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
 .shelf-location-chip {
   background-color: #f8fafc;
   padding: 0.6rem 0.85rem;
@@ -28,4 +73,34 @@
   margin-bottom: 1rem;
   border: 1px solid var(--border);
   border-left: 3px solid var(--primary);
+}
+
+.shelf-location-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.shelf-location-val {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text-main);
+  margin-top: 1px;
+}
+
+.product-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.cart-count-badge {
+  color: var(--primary);
+}
+
+.brand-sub-badge {
+  font-size: 0.72rem;
+  display: block;
+  font-weight: 500;
+  color: var(--text-muted);
 }

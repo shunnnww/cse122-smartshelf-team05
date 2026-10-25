@@ -2,16 +2,58 @@
    SmartShelf - Màn hình Kiểm kê kệ hàng (associate-shelf-check.html)
    Phụ trách bởi: SV2 Nguyễn Quang Long (MSV: 2551170915)
    Tính năng AI: AI-3 Shelf Anomaly Insight (Hiện trường)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
+
+.check-logo-icon {
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+}
 
 .audit-form-card {
   padding: 1.25rem;
   background: var(--bg-card);
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
 }
 
 .diff-badge-highlight {
   font-weight: 700;
   font-size: 0.9rem;
+}
+
+.audit-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.checker-readonly-input {
+  background-color: #f1f5f9;
+}
+
+.audit-prod-input {
+  width: 100px;
+}
+
+.expected-stock-num {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.ai-anomaly-box {
+  display: none;
+  margin-top: 1rem;
+}
+
+.ai-actions-ul {
+  padding-left: 1.2rem;
+  margin-top: 0.25rem;
+}
+
+.empty-shelf-msg {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
 }

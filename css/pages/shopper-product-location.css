@@ -1,6 +1,7 @@
 /* ===================================================================
    SmartShelf - Bản đồ vị trí kệ hàng (shopper-product-location.html)
    Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
 
 .store-floor-layout {
@@ -19,8 +20,110 @@
   margin-bottom: 1.25rem;
 }
 
+.zone-block-last {
+  margin-bottom: 0;
+}
+
+.zone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.zone-title {
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.zone-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
 .active-shelf-target {
   border: 2px solid var(--primary) !important;
   background: var(--primary-light) !important;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2) !important;
+}
+
+.status-legend-bar {
+  font-size: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.map-layout-grid {
+  align-items: start;
+}
+
+.map-main-col {
+  grid-column: span 2;
+}
+
+.route-guide-panel {
+  display: none;
+  margin-top: 1rem;
+  background: #eff6ff;
+  border-left: 3px solid var(--primary);
+  padding: 0.85rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.route-guide-header {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.82rem;
+  margin-bottom: 0.25rem;
+}
+
+.route-guide-text {
+  font-size: 0.85rem;
+  color: #1e3a8a;
+  line-height: 1.45;
+}
+
+.shelf-action-panel {
+  display: none;
+  margin-top: 1rem;
+  border-top: 1px solid var(--border-light);
+  padding-top: 0.85rem;
+}
+
+.btn-report-shelf {
+  width: 100%;
+  font-size: 0.82rem;
+}
+
+.shelf-item-card {
+  background: var(--bg-page);
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shelf-item-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.shelf-item-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.shelf-item-price {
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.btn-ai-compact {
+  font-size: 0.7rem;
+  padding: 2px 8px;
 }

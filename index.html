@@ -18,7 +18,7 @@
         <div>SmartShelf</div>
       </a>
 
-      <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">
+      <div class="header-course-info">
         CSE122 · Nhóm 5 (67KTPM1) · GVHD: ThS. Kiều Tuấn Dũng
       </div>
 
@@ -32,47 +32,47 @@
   <main class="main-content">
     
     <!-- HERO TITLE -->
-    <div style="text-align: center; max-width: 680px; margin: 1rem auto 2.5rem;">
-      <span class="badge badge-normal" style="margin-bottom: 0.75rem; font-size: 0.8rem;">
+    <div class="hero-section">
+      <span class="badge badge-normal hero-badge">
         Đề tài BTL-10 · Lĩnh vực bán lẻ / RetailTech
       </span>
-      <h1 style="font-size: 2.1rem; font-weight: 800; color: var(--text-main); line-height: 1.25; margin-bottom: 0.75rem;">
+      <h1 class="hero-title">
         Hệ thống điều hành kệ hàng<br>và hỗ trợ mua sắm thông minh
       </h1>
-      <p style="font-size: 0.95rem; color: var(--text-muted);">
+      <p class="hero-desc">
         Chọn một vai trò bên dưới để bắt đầu trải nghiệm trực tiếp các luồng nghiệp vụ và tính năng AI:
       </p>
     </div>
 
     <!-- 4 MAIN ROLE CARDS -->
-    <div class="grid-4" style="margin-bottom: 2.5rem;">
+    <div class="grid-4 roles-grid">
       
       <!-- VAI TRÒ 1: KHÁCH HÀNG (SV1) -->
       <div class="role-hero-card">
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div class="role-icon" style="background: #eff6ff; color: #2563eb;">🛒</div>
+          <div class="role-card-header">
+            <div class="role-icon role-icon-shopper">🛒</div>
             <span class="role-badge-tag role-shopper">Vai trò 1</span>
           </div>
 
-          <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+          <h2 class="role-title">
             Khách mua sắm
           </h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          <p class="role-desc">
             Tìm kiếm sản phẩm, xem vị trí chính xác Kệ - Tầng trên sơ đồ siêu thị, nhận gợi ý sản phẩm thay thế khi hết hàng.
           </p>
 
-          <div style="background: var(--bg-page); padding: 0.6rem 0.75rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.78rem;">
-            <div style="font-weight: 700; color: var(--text-main);">✨ Tính năng AI-2:</div>
-            <div style="color: var(--text-muted);">Gợi ý sản phẩm tương đương khi hết hàng</div>
+          <div class="role-feature-box">
+            <div class="role-feature-title">✨ Tính năng AI-2:</div>
+            <div class="role-feature-desc">Gợi ý sản phẩm tương đương khi hết hàng</div>
           </div>
         </div>
 
         <div>
-          <a href="pages/shopper-product-search.html" class="btn btn-primary" style="width: 100%;">
+          <a href="pages/shopper-product-search.html" class="btn btn-primary btn-role-action">
             Vào mua sắm &rarr;
           </a>
-          <div style="font-size: 0.75rem; color: var(--text-light); text-align: center; margin-top: 0.5rem;">
+          <div class="role-author">
             Phụ trách: <strong>Trần Trọng Hoàng Anh (SV1)</strong>
           </div>
         </div>
@@ -81,29 +81,29 @@
       <!-- VAI TRÒ 2: NHÂN VIÊN (SV2) -->
       <div class="role-hero-card">
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div class="role-icon" style="background: #ecfdf5; color: #059669;">📋</div>
+          <div class="role-card-header">
+            <div class="role-icon role-icon-associate">📋</div>
             <span class="role-badge-tag role-associate">Vai trò 2</span>
           </div>
 
-          <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+          <h2 class="role-title">
             Nhân viên kệ hàng
           </h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          <p class="role-desc">
             Giám sát 14 kệ hàng, nhập số lượng đếm kiểm kê thực tế, nhận nhiệm vụ xếp dỡ hàng ưu tiên từ AI.
           </p>
 
-          <div style="background: var(--bg-page); padding: 0.6rem 0.75rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.78rem;">
-            <div style="font-weight: 700; color: var(--text-main);">✨ Tính năng AI-1 & AI-3:</div>
-            <div style="color: var(--text-muted);">Ưu tiên bổ sung kệ & cảnh báo lệch kho</div>
+          <div class="role-feature-box">
+            <div class="role-feature-title">✨ Tính năng AI-1 & AI-3:</div>
+            <div class="role-feature-desc">Ưu tiên bổ sung kệ & cảnh báo lệch kho</div>
           </div>
         </div>
 
         <div>
-          <a href="pages/associate-zone-view.html" class="btn btn-primary" style="width: 100%; background: #059669;">
+          <a href="pages/associate-zone-view.html" class="btn btn-primary btn-role-action btn-associate">
             Vào điều hành kệ &rarr;
           </a>
-          <div style="font-size: 0.75rem; color: var(--text-light); text-align: center; margin-top: 0.5rem;">
+          <div class="role-author">
             Phụ trách: <strong>Nguyễn Quang Long (SV2)</strong>
           </div>
         </div>
@@ -112,29 +112,29 @@
       <!-- VAI TRÒ 3: QUẢN LÝ (SV3) -->
       <div class="role-hero-card">
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div class="role-icon" style="background: #fffbeb; color: #d97706;">📊</div>
+          <div class="role-card-header">
+            <div class="role-icon role-icon-manager">📊</div>
             <span class="role-badge-tag role-manager">Vai trò 3</span>
           </div>
 
-          <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+          <h2 class="role-title">
             Quản lý cửa hàng
           </h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          <p class="role-desc">
             Bảng điều khiển giám sát KPI doanh thu, điều phối việc qua bảng Kanban 4 cột, chẩn đoán nguyên nhân thất thoát.
           </p>
 
-          <div style="background: var(--bg-page); padding: 0.6rem 0.75rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.78rem;">
-            <div style="font-weight: 700; color: var(--text-main);">✨ Phân tích chuyên sâu:</div>
-            <div style="color: var(--text-muted);">Ma trận chẩn đoán thất thoát & tốc độ bán</div>
+          <div class="role-feature-box">
+            <div class="role-feature-title">✨ Phân tích chuyên sâu:</div>
+            <div class="role-feature-desc">Ma trận chẩn đoán thất thoát & tốc độ bán</div>
           </div>
         </div>
 
         <div>
-          <a href="pages/manager-store-dashboard.html" class="btn btn-primary" style="width: 100%; background: #d97706;">
+          <a href="pages/manager-store-dashboard.html" class="btn btn-primary btn-role-action btn-manager">
             Mở bảng điều khiển &rarr;
           </a>
-          <div style="font-size: 0.75rem; color: var(--text-light); text-align: center; margin-top: 0.5rem;">
+          <div class="role-author">
             Phụ trách: <strong>Nguyễn Văn Hân (SV3)</strong>
           </div>
         </div>
@@ -143,29 +143,29 @@
       <!-- VAI TRÒ 4: QUẢN TRỊ VIÊN (ADMIN) -->
       <div class="role-hero-card">
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div class="role-icon" style="background: #f5f3ff; color: #7c3aed;">⚙️</div>
+          <div class="role-card-header">
+            <div class="role-icon role-icon-admin">⚙️</div>
             <span class="role-badge-tag role-admin">Vai trò 4</span>
           </div>
 
-          <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">
+          <h2 class="role-title">
             Quản trị viên
           </h2>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          <p class="role-desc">
             Quản lý danh mục sản phẩm, cấu hình số tầng kệ và định mức tải trọng, quản lý người dùng và phân quyền.
           </p>
 
-          <div style="background: var(--bg-page); padding: 0.6rem 0.75rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.78rem;">
-            <div style="font-weight: 700; color: var(--text-main);">⚙️ Dữ liệu hệ thống:</div>
-            <div style="color: var(--text-muted);">Sản phẩm · Khu vực & kệ · Tài khoản</div>
+          <div class="role-feature-box">
+            <div class="role-feature-title">⚙️ Dữ liệu hệ thống:</div>
+            <div class="role-feature-desc">Sản phẩm · Khu vực & kệ · Tài khoản</div>
           </div>
         </div>
 
         <div>
-          <a href="pages/admin-product-management.html" class="btn btn-primary" style="width: 100%; background: #7c3aed;">
+          <a href="pages/admin-product-management.html" class="btn btn-primary btn-role-action btn-admin">
             Vào quản trị &rarr;
           </a>
-          <div style="font-size: 0.75rem; color: var(--text-light); text-align: center; margin-top: 0.5rem;">
+          <div class="role-author">
             Phụ trách: <strong>Nguyễn Văn Hân (SV3)</strong>
           </div>
         </div>
@@ -174,46 +174,46 @@
     </div>
 
     <!-- 3 TÍNH NĂNG AI NỔI BẬT -->
-    <div class="card" style="margin-bottom: 2rem;">
+    <div class="card ai-overview-card">
       <div class="card-header">
         <h3 class="card-title">✨ 3 tính năng AI thực tế trong hệ thống</h3>
-        <span class="badge" style="background:#f5f3ff; color:#7c3aed; font-weight: 600;">Không phải chatbot trang trí</span>
+        <span class="badge ai-badge-header">Không phải chatbot trang trí</span>
       </div>
 
       <div class="grid-3">
-        <div style="padding: 0.75rem; background: var(--bg-page); border-radius: var(--radius-sm);">
-          <strong style="color: var(--accent-ai); font-size: 0.9rem;">1. AI-1: Ưu tiên bổ sung hàng</strong>
-          <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">
+        <div class="ai-feature-card">
+          <strong class="ai-feature-card-title">1. AI-1: Ưu tiên bổ sung hàng</strong>
+          <p class="ai-feature-card-desc">
             Đánh giá tốc độ bán và lượng tồn để tự động xếp hạng kệ cần lấy hàng từ kho ra bổ sung gấp.
           </p>
-          <a href="pages/associate-restock-task.html" style="font-size: 0.8rem; font-weight: 600;">Xem tại trang bổ sung hàng &rarr;</a>
+          <a href="pages/associate-restock-task.html" class="ai-feature-card-link">Xem tại trang bổ sung hàng &rarr;</a>
         </div>
 
-        <div style="padding: 0.75rem; background: var(--bg-page); border-radius: var(--radius-sm);">
-          <strong style="color: var(--accent-ai); font-size: 0.9rem;">2. AI-2: Gợi ý sản phẩm thay thế</strong>
-          <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">
+        <div class="ai-feature-card">
+          <strong class="ai-feature-card-title">2. AI-2: Gợi ý sản phẩm thay thế</strong>
+          <p class="ai-feature-card-desc">
             Khi kệ hết hàng, tự động đề xuất sản phẩm tương đương cùng mức giá và còn sẵn hàng để giữ chân khách.
           </p>
-          <a href="pages/shopper-product-alternatives.html" style="font-size: 0.8rem; font-weight: 600;">Xem tại trang mua sắm &rarr;</a>
+          <a href="pages/shopper-product-alternatives.html" class="ai-feature-card-link">Xem tại trang mua sắm &rarr;</a>
         </div>
 
-        <div style="padding: 0.75rem; background: var(--bg-page); border-radius: var(--radius-sm);">
-          <strong style="color: var(--accent-ai); font-size: 0.9rem;">3. AI-3: Chẩn đoán sai lệch kệ</strong>
-          <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.25rem 0 0.5rem;">
+        <div class="ai-feature-card">
+          <strong class="ai-feature-card-title">3. AI-3: Chẩn đoán sai lệch kệ</strong>
+          <p class="ai-feature-card-desc">
             Đối soát kiểm kê thực tế với máy tính để phát hiện hàng xếp nhầm kệ hoặc thất thoát.
           </p>
-          <a href="pages/associate-shelf-check.html" style="font-size: 0.8rem; font-weight: 600;">Xem tại phiếu kiểm kê &rarr;</a>
+          <a href="pages/associate-shelf-check.html" class="ai-feature-card-link">Xem tại phiếu kiểm kê &rarr;</a>
         </div>
       </div>
     </div>
 
     <!-- THÔNG TIN NHÓM THỰC HIỆN -->
-    <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <div class="team-info-banner">
       <div>
-        <div style="font-weight: 700; color: var(--text-main); font-size: 0.95rem;">
+        <div class="team-info-title">
           👥 Nhóm 5 - Lớp 67KTPM1 (Khoa CNTT - Đại học Thủy Lợi)
         </div>
-        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;">
+        <div class="team-info-members">
           1. Trần Trọng Hoàng Anh (2551170859) &nbsp;·&nbsp; 
           2. Nguyễn Quang Long (2551170915) &nbsp;·&nbsp; 
           3. Nguyễn Văn Hân (2551170885)

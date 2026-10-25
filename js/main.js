@@ -45,9 +45,7 @@ function setupHeaderExtraActions() {
     const themeBtn = document.createElement('button');
     themeBtn.type = 'button';
     themeBtn.id = 'globalThemeToggleBtn';
-    themeBtn.className = 'btn btn-secondary btn-sm';
-    themeBtn.style.padding = '0.35rem 0.65rem';
-    themeBtn.style.fontSize = '0.8rem';
+    themeBtn.className = 'btn btn-secondary btn-sm header-action-btn';
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     themeBtn.innerHTML = currentTheme === 'dark' ? '☀️ Sáng' : '🌙 Tối';
     themeBtn.title = 'Bật/tắt chế độ Sáng - Tối toàn hệ thống';
@@ -60,9 +58,7 @@ function setupHeaderExtraActions() {
     const aiBtn = document.createElement('button');
     aiBtn.type = 'button';
     aiBtn.id = 'globalAiConfigBtn';
-    aiBtn.className = 'btn btn-secondary btn-sm';
-    aiBtn.style.padding = '0.35rem 0.65rem';
-    aiBtn.style.fontSize = '0.8rem';
+    aiBtn.className = 'btn btn-secondary btn-sm header-action-btn';
     aiBtn.innerHTML = '⚙️ AI Key';
     aiBtn.title = 'Cấu hình API Key AI an toàn (sessionStorage)';
     aiBtn.addEventListener('click', openAiConfigModal);
@@ -74,7 +70,7 @@ function setupHeaderExtraActions() {
 function setupGlobalModalEsc() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' || e.key === 'Esc') {
-      const openModals = document.querySelectorAll('.modal-overlay, .modal, #aiConfigModal');
+      const openModals = document.querySelectorAll('.modal-overlay, .modal, #aiConfigModal, .shelf-modal-overlay, .admin-modal-overlay, .user-modal-overlay');
       openModals.forEach(m => {
         if (m.style.display !== 'none' && m.style.display !== '') {
           m.style.display = 'none';
@@ -84,6 +80,9 @@ function setupGlobalModalEsc() {
       });
       if (typeof closeModal === 'function') closeModal();
       if (typeof closeEditModal === 'function') closeEditModal();
+      if (typeof closeProductModal === 'function') closeProductModal();
+      if (typeof closeShelfModal === 'function') closeShelfModal();
+      if (typeof closeUserModal === 'function') closeUserModal();
     }
   });
 }
@@ -107,54 +106,51 @@ function openAiConfigModal() {
   if (!modal) {
     modal = document.createElement('div');
     modal.id = 'aiConfigModal';
-    modal.className = 'modal-overlay';
-    modal.style.display = 'none';
-    modal.style.position = 'fixed';
-    modal.style.top = '0';
-    modal.style.left = '0';
-    modal.style.width = '100vw';
-    modal.style.height = '100vh';
-    modal.style.backgroundColor = 'rgba(15, 23, 42, 0.65)';
-    modal.style.zIndex = '9999';
-    modal.style.alignItems = 'center';
-    modal.style.justifyContent = 'center';
-    modal.style.padding = '1rem';
+    modal.className = 'ai-modal-overlay';
 
     modal.innerHTML = `
-      <div class="modal-content" style="max-width: 480px; width: 100%; padding: 1.5rem; background: var(--bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); border: 1px solid var(--border);">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-          <h3 style="font-size:1.1rem; color:var(--text-main); margin:0; font-weight:800;">⚙️ Cấu hình API Key AI (Mở rộng Bonus)</h3>
-          <button type="button" class="btn btn-secondary btn-sm" onclick="closeAiConfigModal()" style="border:none; background:transparent; font-size:1.3rem; cursor:pointer; color:var(--text-muted);">&times;</button>
+      <div class="ai-modal-card">
+        <div class="ai-modal-header">
+          <h3 class="ai-modal-title">⚙️ Cấu hình API Key AI (Mở rộng Bonus)</h3>
+          <button type="button" class="ai-modal-close-btn" id="closeAiConfigCrossBtn">&times;</button>
         </div>
-        <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:1rem; line-height:1.5;">
+        <p class="ai-modal-desc">
           Hệ thống mặc định sử dụng <strong>bộ giải thuật AI suy luận nội bộ (MDVM-v2)</strong> cực nhanh và bảo mật tuyệt đối. Bạn có thể nhập API Key (Gemini/OpenAI) để thử nghiệm gọi LLM thời gian thực. Key được lưu tạm trong <code>sessionStorage</code> và tự hủy khi đóng tab.
         </p>
-        <div class="form-group" style="margin-bottom:1.25rem;">
-          <label class="form-label" for="tempApiKeyInput" style="font-weight:600; font-size:0.85rem;">API Key tạm thời (SessionStorage):</label>
-          <input type="password" id="tempApiKeyInput" class="form-control" placeholder="sk-... hoặc AIzaSy..." style="width:100%;" />
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.35rem;">
+        <div class="form-group mb-125">
+          <label class="form-label fw-semibold fs-sm" for="tempApiKeyInput">API Key tạm thời (SessionStorage):</label>
+          <input type="password" id="tempApiKeyInput" class="form-control w-100" placeholder="sk-... hoặc AIzaSy..." />
+          <div class="ai-modal-security">
             🔒 Bảo mật: Tuyệt đối không lưu vào mã nguồn, tránh lỗi VP-01.
           </div>
         </div>
-        <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
-          <button type="button" class="btn btn-secondary btn-sm" onclick="clearAiConfigKey()">Xóa Key</button>
-          <button type="button" class="btn btn-primary btn-sm" onclick="saveAiConfigKey()">Lưu vào phiên làm việc</button>
+        <div class="ai-modal-footer">
+          <button type="button" class="btn btn-secondary btn-sm" id="clearAiConfigBtn">Xóa Key</button>
+          <button type="button" class="btn btn-primary btn-sm" id="saveAiConfigBtn">Lưu vào phiên làm việc</button>
         </div>
       </div>
     `;
     document.body.appendChild(modal);
+
+    const closeBtn = document.getElementById('closeAiConfigCrossBtn');
+    const clearBtn = document.getElementById('clearAiConfigBtn');
+    const saveBtn = document.getElementById('saveAiConfigBtn');
+
+    if (closeBtn) closeBtn.addEventListener('click', closeAiConfigModal);
+    if (clearBtn) clearBtn.addEventListener('click', clearAiConfigKey);
+    if (saveBtn) saveBtn.addEventListener('click', saveAiConfigKey);
   }
 
   const input = document.getElementById('tempApiKeyInput');
   if (input) {
     input.value = typeof getCustomAIKey === 'function' ? getCustomAIKey() : (sessionStorage.getItem('SMARTSHELF_CUSTOM_AI_KEY') || '');
   }
-  modal.style.display = 'flex';
+  modal.classList.add('active');
 }
 
 function closeAiConfigModal() {
   const modal = document.getElementById('aiConfigModal');
-  if (modal) modal.style.display = 'none';
+  if (modal) modal.classList.remove('active');
 }
 
 function saveAiConfigKey() {
@@ -192,22 +188,18 @@ function showToast(message, type = 'info') {
   }
 
   const toast = document.createElement('div');
-  toast.className = 'toast';
+  toast.className = `toast toast-${type}`;
   
   let icon = 'ℹ️';
-  let borderCol = 'var(--primary)';
-  if (type === 'success') { icon = '✅'; borderCol = 'var(--success)'; }
-  else if (type === 'error') { icon = '⚠️'; borderCol = 'var(--danger)'; }
-  else if (type === 'ai') { icon = '✨'; borderCol = 'var(--accent-ai)'; }
+  if (type === 'success') { icon = '✅'; }
+  else if (type === 'error') { icon = '⚠️'; }
+  else if (type === 'ai') { icon = '✨'; }
 
-  toast.style.borderLeftColor = borderCol;
   toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
   container.appendChild(toast);
 
   setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(10px)';
-    toast.style.transition = 'all 0.3s ease';
+    toast.classList.add('toast-hide');
     setTimeout(() => toast.remove(), 300);
   }, 3200);
 }

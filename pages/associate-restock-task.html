@@ -14,10 +14,10 @@
   <header class="app-header">
     <div class="header-container">
       <a href="../index.html" class="brand-logo">
-        <div class="logo-icon" style="background: linear-gradient(135deg, #0f766e, #14b8a6);">SS</div>
+        <div class="logo-icon restock-logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Nhân viên kệ hàng (SV2: Quang Long)</span>
+          <span class="brand-sub-badge">Nhân viên kệ hàng (SV2: Quang Long)</span>
         </div>
       </a>
 
@@ -51,48 +51,48 @@
         </h1>
         <p class="page-subtitle">Mô hình AI tự động tính toán tốc độ bán và lượng hàng tồn để đề xuất thứ tự ưu tiên bổ sung hàng lên kệ.</p>
       </div>
-      <div style="display: flex; gap: 0.5rem;">
-        <button id="runAiPriorityBtn" class="btn btn-ai btn-sm">✨ Chạy AI xếp hạng ưu tiên</button>
+      <div class="d-flex gap-05">
+        <button id="runAiPriorityBtn" class="btn btn-ai btn-sm">⚡ Chạy thuật toán AI xếp hạng ưu tiên</button>
         <button id="simulateAiErrorBtn" class="btn btn-secondary btn-sm">🧪 Thử nghiệm trạng thái lỗi AI</button>
       </div>
     </div>
 
     <!-- AI PROCESSING SKELETON / LOADING -->
-    <div id="aiPriorityLoadingBox" class="state-box" style="display: none; background: #faf5ff; border-color: var(--accent-ai-border);">
-      <div class="loading-spinner" style="border-top-color: var(--accent-ai);"></div>
-      <h3 class="state-title" style="color: var(--accent-ai);">AI đang phân tích dữ liệu tồn kho và tốc độ tiêu thụ...</h3>
+    <div id="aiPriorityLoadingBox" class="state-box ai-priority-loading">
+      <div class="loading-spinner ai-spinner-purple"></div>
+      <h3 class="state-title text-primary">AI đang phân tích dữ liệu tồn kho và tốc độ tiêu thụ...</h3>
       <p class="state-desc">Áp dụng thuật toán Multi-factor Dynamic Depletion & Velocity Model để tính điểm khẩn cấp cho từng kệ hàng.</p>
     </div>
 
     <!-- AI FAILURE / INSUFFICIENT DATA BOX -->
-    <div id="aiPriorityErrorBox" class="state-box" style="display: none; background: var(--danger-bg); border-color: #fca5a5;">
+    <div id="aiPriorityErrorBox" class="state-box ai-priority-error">
       <div class="state-icon">⚠️🤖</div>
-      <h3 class="state-title" style="color: var(--danger);">Không thể xếp hạng bằng AI lúc này</h3>
+      <h3 class="state-title text-danger">Không thể xếp hạng bằng AI lúc này</h3>
       <p class="state-desc" id="aiPriorityErrorMessage">
         Dữ liệu bán hàng thời gian thực bị gián đoạn hoặc không đủ để tính toán độ tin cậy.
       </p>
-      <div style="display: flex; gap: 0.5rem; justify-content: center;">
-        <button class="btn btn-secondary btn-sm" onclick="triggerAiPriority(false)">🔄 Thử lại</button>
-        <button class="btn btn-primary btn-sm" onclick="showToast('Chế độ tạo nhiệm vụ thủ công đã kích hoạt', 'info')">✍️ Tạo nhiệm vụ thủ công</button>
+      <div class="d-flex gap-05 justify-center">
+        <button class="btn btn-secondary btn-sm" id="retryAiPriorityBtn">🔄 Thử lại</button>
+        <button class="btn btn-primary btn-sm" id="manualCreateTaskBtn">✍️ Tạo nhiệm vụ thủ công</button>
       </div>
     </div>
 
     <!-- AI PRIORITY SUGGESTIONS PANEL -->
-    <div id="aiPriorityPanel" class="ai-panel" style="display: none;">
+    <div id="aiPriorityPanel" class="ai-panel ai-priority-panel">
       <div class="ai-header">
         <div>
           <span class="ai-badge">Danh sách đề xuất xếp hạng bởi AI</span>
-          <span style="font-size: 0.85rem; color: var(--text-muted); margin-left: 0.5rem;">
-            Độ chính xác thuật toán: <strong style="color: var(--success);">96.4%</strong>
+          <span class="fs-sm text-muted ml-05">
+            Độ chính xác thuật toán: <strong class="text-success">96.4%</strong>
           </span>
         </div>
-        <div style="display: flex; gap: 0.5rem;">
-          <button class="btn btn-secondary btn-sm" onclick="document.getElementById('aiPriorityPanel').style.display='none'">Ẩn đề xuất</button>
+        <div class="d-flex gap-05">
+          <button class="btn btn-secondary btn-sm" id="hideAiPanelBtn">Ẩn đề xuất</button>
         </div>
       </div>
 
       <div class="table-responsive">
-        <table class="table" style="background: white; border-radius: var(--radius-sm); overflow: hidden;">
+        <table class="table ai-table-white">
           <thead>
             <tr>
               <th>Điểm AI</th>
@@ -100,7 +100,7 @@
               <th>Mặt hàng và kệ</th>
               <th>Hiện có / Ngưỡng</th>
               <th>Lý do đề xuất (Explainable AI)</th>
-              <th style="text-align: right;">Hành động phê duyệt</th>
+              <th class="text-right">Hành động phê duyệt</th>
             </tr>
           </thead>
           <tbody id="aiPriorityTbody">
@@ -111,14 +111,14 @@
     </div>
 
     <!-- ACTIVE TASKS LIST -->
-    <div class="card" style="margin-top: 1.5rem;">
+    <div class="card task-queue-card">
       <div class="card-header">
         <div>
           <h2 class="card-title">Hàng đợi nhiệm vụ bổ sung kệ của nhân viên</h2>
           <p class="page-subtitle">Các công việc đã được duyệt và đang triển khai thực tế tại kho và kệ siêu thị.</p>
         </div>
-        <div style="display: flex; gap: 0.5rem;">
-          <select id="taskStatusFilter" class="form-control" style="width: auto; padding: 0.35rem 0.75rem;">
+        <div class="d-flex gap-05">
+          <select id="taskStatusFilter" class="form-control task-filter-select">
             <option value="ALL">Tất cả trạng thái</option>
             <option value="pending">Chờ xử lý</option>
             <option value="in-progress">Đang thực hiện</option>
@@ -138,12 +138,10 @@
               <th>Mức ưu tiên</th>
               <th>Trạng thái</th>
               <th>Người phụ trách</th>
-              <th style="text-align: right;">Cập nhật tiến độ</th>
+              <th class="text-right">Thao tác ca trực</th>
             </tr>
           </thead>
-          <tbody id="tasksTableBody">
-            <!-- Dynamic active tasks -->
-          </tbody>
+          <tbody id="tasksTableBody"></tbody>
         </table>
       </div>
     </div>
@@ -151,7 +149,7 @@
 
   <footer class="app-footer">
     <div class="footer-content">
-      <div>SmartShelf - Phân hệ bổ sung kệ & Restock Priority AI (Phụ trách: SV2 Nguyễn Quang Long)</div>
+      <div>SmartShelf - Phân hệ điều phối bổ sung kệ (Phụ trách: SV2 Nguyễn Quang Long)</div>
       <div>Học phần CSE122 - Đại học Thủy Lợi</div>
     </div>
   </footer>

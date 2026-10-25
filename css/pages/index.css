@@ -1,7 +1,42 @@
-/* ===================================================================
-   SmartShelf - Trang chủ / Cổng hệ thống (index.html)
-   Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
-   =================================================================== */
+/* ========================================================
+ * SmartShelf - Trang chủ / Cổng hệ thống (index.html)
+ * Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
+ * Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
+ * ======================================================== */
+
+.header-course-info {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.hero-section {
+  text-align: center;
+  max-width: 680px;
+  margin: 1rem auto 2.5rem;
+}
+
+.hero-badge {
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.hero-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+}
+
+.hero-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.roles-grid {
+  margin-bottom: 2.5rem;
+}
 
 .role-hero-card {
   background: var(--bg-card);
@@ -20,6 +55,12 @@
   box-shadow: var(--shadow-md);
 }
 
+.role-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .role-badge-tag {
   font-size: 0.72rem;
   font-weight: 700;
@@ -31,3 +72,132 @@
 .role-associate { background: #ecfdf5; color: #059669; }
 .role-manager { background: #fffbeb; color: #d97706; }
 .role-admin { background: #fdf2f8; color: #db2777; }
+
+.role-icon-shopper { background: #eff6ff; color: #2563eb; }
+.role-icon-associate { background: #ecfdf5; color: #059669; }
+.role-icon-manager { background: #fffbeb; color: #d97706; }
+.role-icon-admin { background: #f5f3ff; color: #7c3aed; }
+
+.role-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.4rem;
+}
+
+.role-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.role-feature-box {
+  background: var(--bg-page);
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.25rem;
+  font-size: 0.78rem;
+}
+
+.role-feature-title {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.role-feature-desc {
+  color: var(--text-muted);
+}
+
+.btn-role-action {
+  width: 100%;
+}
+
+.btn-associate {
+  background: #059669;
+  border-color: #059669;
+}
+.btn-associate:hover {
+  background: #047857;
+  border-color: #047857;
+}
+
+.btn-manager {
+  background: #d97706;
+  border-color: #d97706;
+}
+.btn-manager:hover {
+  background: #b45309;
+  border-color: #b45309;
+}
+
+.btn-admin {
+  background: #7c3aed;
+  border-color: #7c3aed;
+}
+.btn-admin:hover {
+  background: #6d28d9;
+  border-color: #6d28d9;
+}
+
+.role-author {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.ai-overview-card {
+  margin-bottom: 2rem;
+}
+
+.ai-badge-header {
+  background: #f5f3ff;
+  color: #7c3aed;
+  font-weight: 600;
+}
+
+.ai-feature-card {
+  padding: 0.75rem;
+  background: var(--bg-page);
+  border-radius: var(--radius-sm);
+}
+
+.ai-feature-card-title {
+  color: var(--accent-ai);
+  font-size: 0.9rem;
+}
+
+.ai-feature-card-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0.25rem 0 0.5rem;
+}
+
+.ai-feature-card-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.team-info-banner {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.team-info-title {
+  font-weight: 700;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.team-info-members {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}

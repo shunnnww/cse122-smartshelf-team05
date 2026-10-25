@@ -9,11 +9,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const addBtn = document.getElementById('openAddUserModalBtn');
   const cancelBtn = document.getElementById('cancelAddUserBtn');
+  const closeCrossBtn = document.getElementById('closeUserModalCrossBtn');
   const form = document.getElementById('userForm');
+  const tbody = document.getElementById('usersTableBody');
 
   if (addBtn) addBtn.addEventListener('click', openAddUserModal);
   if (cancelBtn) cancelBtn.addEventListener('click', closeUserModal);
+  if (closeCrossBtn) closeCrossBtn.addEventListener('click', closeUserModal);
   if (form) form.addEventListener('submit', handleAddUser);
+
+  if (tbody) {
+    tbody.addEventListener('click', (e) => {
+      const resetBtn = e.target.closest('.btn-reset-pw');
+      if (resetBtn) {
+        const username = resetBtn.getAttribute('data-username');
+        if (username) {
+          showToast(`Đã cấp lại mật khẩu mặc định 123456 cho ${username}!`, 'info');
+        }
+      }
+    });
+  }
 });
 
 function renderUsers() {
@@ -32,14 +47,14 @@ function renderUsers() {
     return `
       <tr>
         <td><code>${u.id}</code></td>
-        <td><strong style="color:var(--text-main); font-size:0.95rem;">${u.fullName}</strong></td>
+        <td><strong class="user-full-name">${u.fullName}</strong></td>
         <td><code>${u.username}</code></td>
         <td>${roleBadge}</td>
         <td>${u.email || 'Chưa cập nhật'}</td>
         <td><span class="badge badge-normal">${u.badge || 'Tài khoản thường'}</span></td>
-        <td style="text-align: right;">
-          <div style="display: inline-flex; gap: 0.3rem;">
-            <button class="btn btn-secondary btn-sm" onclick="showToast('Đã cấp lại mật khẩu mặc định 123456 cho ${u.username}!', 'info')">
+        <td class="text-right">
+          <div class="d-inline-flex gap-1">
+            <button type="button" class="btn btn-secondary btn-sm btn-reset-pw" data-username="${u.username}">
               🔑 Đặt lại mật khẩu
             </button>
           </div>
@@ -53,12 +68,12 @@ function openAddUserModal() {
   const form = document.getElementById('userForm');
   if (form) form.reset();
   const modal = document.getElementById('userModal');
-  if (modal) modal.style.display = 'flex';
+  if (modal) modal.classList.add('active');
 }
 
 function closeUserModal() {
   const modal = document.getElementById('userModal');
-  if (modal) modal.style.display = 'none';
+  if (modal) modal.classList.remove('active');
 }
 
 function handleAddUser(e) {
@@ -86,5 +101,7 @@ function handleAddUser(e) {
   renderUsers();
 }
 
-// Window alias for cross-tab auto refresh
+// Window aliases for cross-tab auto refresh or compatibility
 window.renderUsers = renderUsers;
+window.openAddUserModal = openAddUserModal;
+window.closeUserModal = closeUserModal;

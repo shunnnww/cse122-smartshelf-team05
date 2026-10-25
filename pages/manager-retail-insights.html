@@ -14,10 +14,10 @@
   <header class="app-header">
     <div class="header-container">
       <a href="../index.html" class="brand-logo">
-        <div class="logo-icon" style="background: linear-gradient(135deg, #d97706, #f59e0b);">SS</div>
+        <div class="logo-icon mgr-logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Quản lý cửa hàng (SV3: Văn Hân)</span>
+          <span class="brand-sub-badge">Quản lý cửa hàng (SV3: Văn Hân)</span>
         </div>
       </a>
 
@@ -52,40 +52,40 @@
         </h1>
         <p class="page-subtitle">Sử dụng AI đối soát dữ liệu bán hàng với kết quả đếm thực tế để phát hiện hàng để nhầm kệ hoặc thất thoát.</p>
       </div>
-      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <div class="insight-header-actions">
         <button type="button" class="btn btn-secondary btn-sm" id="exportVelocityCsvBtn" title="Xuất CSV vận tốc bán hàng">📥 CSV</button>
         <button type="button" class="btn btn-secondary btn-sm" id="exportVelocityJsonBtn" title="Xuất JSON báo cáo">📥 JSON</button>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()" title="In báo cáo">🖨️ In</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="printReportBtn" title="In báo cáo">🖨️ In</button>
         <button class="btn btn-ai btn-sm" id="runBatchAnomalyBtn">✨ Quét toàn diện bất thường siêu thị</button>
       </div>
     </div>
 
     <!-- ANOMALY INSIGHT HIGHLIGHT PANEL -->
-    <div class="ai-panel" style="margin-bottom: 2rem;">
+    <div class="ai-panel anomaly-highlight-panel">
       <div class="ai-header">
         <div>
           <span class="ai-badge">Chẩn đoán trọng điểm từ AI</span>
-          <span style="font-size: 0.82rem; color: var(--text-muted); margin-left: 0.5rem;">Mô hình: Retail Shelf Audit Anomaly Neural Engine</span>
+          <span class="fs-sm text-muted ml-05">Mô hình: Retail Shelf Audit Anomaly Neural Engine</span>
         </div>
-        <span class="badge badge-anomaly" style="font-size: 0.82rem;">1 sự cố cần can thiệp</span>
+        <span class="badge badge-anomaly fs-sm">1 sự cố cần can thiệp</span>
       </div>
 
-      <div class="grid-3" style="align-items: center; margin-top: 1rem;">
-        <div style="background: white; padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid #db2777; border: 1px solid var(--border); border-left-width: 3px;">
-          <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Địa điểm sự cố</div>
-          <div style="font-size: 1.15rem; font-weight: 800; color: #db2777; margin: 0.2rem 0;">Kệ B02 (Khu vực B - Tầng 1)</div>
-          <div style="font-size: 0.82rem; color: var(--text-main);">Mặt hàng: <strong>Mì khoai tây Omachi Sốt Bò Hầm</strong></div>
+      <div class="grid-3 mt-1 align-center">
+        <div class="anomaly-card-spot">
+          <div class="kpi-label">Địa điểm sự cố</div>
+          <div class="anomaly-card-val-pink">Kệ B02 (Khu vực B - Tầng 1)</div>
+          <div class="fs-sm text-main">Mặt hàng: <strong>Mì khoai tây Omachi Sốt Bò Hầm</strong></div>
         </div>
 
-        <div style="background: white; padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid var(--danger); border: 1px solid var(--border); border-left-width: 3px;">
-          <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Mức độ sai lệch</div>
-          <div style="font-size: 1.15rem; font-weight: 800; color: var(--danger); margin: 0.2rem 0;">-20 sản phẩm (-36.4%)</div>
-          <div style="font-size: 0.82rem; color: var(--text-muted);">Tồn máy tính: 55 sp · Thực đếm: 35 sp</div>
+        <div class="anomaly-card-diff">
+          <div class="kpi-label">Mức độ sai lệch</div>
+          <div class="anomaly-card-val-red">-20 sản phẩm (-36.4%)</div>
+          <div class="fs-sm text-muted">Tồn máy tính: 55 sp · Thực đếm: 35 sp</div>
         </div>
 
-        <div style="background: white; padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid var(--accent-ai); border: 1px solid var(--border); border-left-width: 3px;">
-          <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Xác suất nguyên nhân (AI)</div>
-          <div style="font-size: 0.82rem; line-height: 1.4; margin-top: 0.2rem;">
+        <div class="anomaly-card-prob">
+          <div class="kpi-label">Xác suất nguyên nhân (AI)</div>
+          <div class="anomaly-prob-list">
             • Xếp nhầm sang Kệ B01: <strong>65%</strong><br>
             • Khách bỏ quên tại giỏ: <strong>25%</strong><br>
             • Thất thoát chưa rõ: <strong>10%</strong>
@@ -93,27 +93,27 @@
         </div>
       </div>
 
-      <div class="ai-reason-box" style="margin-top: 1rem;">
-        <strong style="color: var(--accent-ai);">Giải trình thuật toán AI:</strong><br>
+      <div class="ai-reason-box mt-1">
+        <strong class="text-primary">Giải trình thuật toán AI:</strong><br>
         Hệ thống không ghi nhận bất kỳ giao dịch quét thanh toán nào khớp với số lượng 20 gói mì trong khoảng 06:00 - 07:00 sáng. Trong khi đó Kệ B01 kế bên có dấu hiệu đầy vượt định mức 15 gói, suy ra khả năng cao nhân viên ca trước xếp nhầm phân loại.
       </div>
 
-      <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; flex-wrap: wrap;">
-        <button class="btn btn-secondary btn-sm" onclick="showToast('Đã gửi yêu cầu rà soát Camera Khu vực B tới đội bảo vệ!', 'info')">
+      <div class="anomaly-actions-bar">
+        <button class="btn btn-secondary btn-sm" id="actionCameraBtn">
           📹 Trích xuất camera Khu vực B
         </button>
-        <button class="btn btn-secondary btn-sm" onclick="showToast('Đã khóa tạm số liệu để tránh đơn hàng bị treo!', 'info')">
+        <button class="btn btn-secondary btn-sm" id="actionLockStockBtn">
           🔒 Khóa tạm tồn kho trực tuyến
         </button>
-        <button class="btn btn-primary btn-sm" onclick="showToast('Đã phân công lại cho NV Nguyễn Quang Long đi kiểm đếm lại Kệ B01 & B02!', 'success')">
+        <button class="btn btn-primary btn-sm" id="actionReassignCheckBtn">
           📢 Giao lệnh tái kiểm tra kệ
         </button>
       </div>
     </div>
 
     <!-- SALES VELOCITY TABLE -->
-    <div class="card" style="padding: 1.25rem;">
-      <div class="card-header" style="margin-bottom: 0.75rem;">
+    <div class="card p-125">
+      <div class="card-header zone-table-header">
         <div>
           <h2 class="card-title">Xếp hạng tốc độ bán của hàng hóa (Sales Velocity)</h2>
           <p class="page-subtitle">Dữ liệu hỗ trợ quản lý tối ưu hóa diện tích mặt sàn và vị trí tầng kệ.</p>
@@ -142,7 +142,7 @@
 
   <footer class="app-footer">
     <div class="footer-content">
-      <div>SmartShelf - Phân hệ phân tích và AI insight (Phụ trách: SV3 Nguyễn Văn Hân)</div>
+      <div>SmartShelf - Phân hệ phân tích bán lẻ AI (Phụ trách: SV3 Nguyễn Văn Hân)</div>
       <div>Học phần CSE122 - Đại học Thủy Lợi</div>
     </div>
   </footer>

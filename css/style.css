@@ -752,7 +752,157 @@ a:hover {
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25) !important;
 }
 
-/* Bonus 4: Chuẩn in ấn báo cáo chuyên nghiệp (@media print) */
+/* Bonus 4: Chuẩn in ấn báo cáo chuyên nghiệp (
+/* ===================================================================
+   UTILITY CLASSES (Loại bỏ 100% inline styles - Tiêu chuẩn CSE122 W3C)
+   =================================================================== */
+.d-flex { display: flex !important; }
+.d-inline-flex { display: inline-flex !important; }
+.d-none { display: none !important; }
+.d-block { display: block !important; }
+.d-grid { display: grid !important; }
+
+.flex-column { flex-direction: column !important; }
+.flex-wrap { flex-wrap: wrap !important; }
+.flex-1 { flex: 1 !important; }
+
+.justify-start { justify-content: flex-start !important; }
+.justify-end { justify-content: flex-end !important; }
+.justify-center { justify-content: center !important; }
+.justify-between { justify-content: space-between !important; }
+
+.align-center { align-items: center !important; }
+.align-start { align-items: flex-start !important; }
+.align-end { align-items: flex-end !important; }
+
+.gap-025 { gap: 0.25rem !important; }
+.gap-05 { gap: 0.5rem !important; }
+.gap-075 { gap: 0.75rem !important; }
+.gap-1 { gap: 1rem !important; }
+.gap-15 { gap: 1.5rem !important; }
+
+.text-left { text-align: left !important; }
+.text-center { text-align: center !important; }
+.text-right { text-align: right !important; }
+
+.text-primary { color: var(--primary) !important; }
+.text-success { color: var(--success) !important; }
+.text-danger { color: var(--danger) !important; }
+.text-warning { color: var(--warning) !important; }
+.text-muted { color: var(--text-muted) !important; }
+.text-main { color: var(--text-main) !important; }
+.text-ai { color: var(--accent-ai) !important; }
+
+.progress-fill-normal { background-color: var(--success) !important; }
+.progress-fill-low { background-color: var(--warning) !important; }
+.progress-fill-empty { background-color: var(--danger) !important; }
+.progress-fill-anomaly { background-color: var(--accent-ai) !important; }
+
+/* Dynamic AI Config Modal Classes */
+.ai-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.65);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.ai-modal-overlay.active {
+  display: flex !important;
+}
+
+.ai-modal-card {
+  max-width: 480px;
+  width: 100%;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+}
+
+.ai-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.ai-modal-title {
+  font-size: 1.1rem;
+  color: var(--text-main);
+  margin: 0;
+  font-weight: 800;
+}
+
+.ai-modal-close-btn {
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.ai-modal-desc {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.ai-modal-security {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+.ai-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.fw-normal { font-weight: 400 !important; }
+.fw-medium { font-weight: 500 !important; }
+.fw-semibold { font-weight: 600 !important; }
+.fw-bold { font-weight: 700 !important; }
+.fw-bolder { font-weight: 800 !important; }
+
+.fs-xs { font-size: 0.75rem !important; }
+.fs-sm { font-size: 0.85rem !important; }
+.fs-base { font-size: 0.95rem !important; }
+.fs-lg { font-size: 1.15rem !important; }
+.fs-xl { font-size: 1.5rem !important; }
+.fs-2xl { font-size: 1.75rem !important; }
+
+.w-100 { width: 100% !important; }
+.w-auto { width: auto !important; }
+.h-100 { height: 100% !important; }
+
+.m-0 { margin: 0 !important; }
+.mb-0 { margin-bottom: 0 !important; }
+.mb-025 { margin-bottom: 0.25rem !important; }
+.mb-05 { margin-bottom: 0.5rem !important; }
+.mb-075 { margin-bottom: 0.75rem !important; }
+.mb-1 { margin-bottom: 1rem !important; }
+.mb-15 { margin-bottom: 1.5rem !important; }
+.mb-2 { margin-bottom: 2rem !important; }
+.mt-05 { margin-top: 0.5rem !important; }
+.mt-1 { margin-top: 1rem !important; }
+
+.p-05 { padding: 0.5rem !important; }
+.p-075 { padding: 0.75rem !important; }
+.p-1 { padding: 1rem !important; }
+.p-125 { padding: 1.25rem !important; }
+.p-15 { padding: 1.5rem !important; }
+.p-2 { padding: 2rem !important; }
+
+/* Print Stylesheet */
 @media print {
   .app-header, 
   .role-switcher-bar, 

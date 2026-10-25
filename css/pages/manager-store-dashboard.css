@@ -1,7 +1,12 @@
 /* ===================================================================
    SmartShelf - Bảng điều hành cửa hàng (manager-store-dashboard.html)
    Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
+
+.mgr-logo-icon {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
 
 .kpi-stat-card {
   padding: 1.15rem;
@@ -14,4 +19,94 @@
   font-size: 1.75rem;
   font-weight: 800;
   margin: 2px 0;
+}
+
+.kpi-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.kpi-sub {
+  font-size: 0.75rem;
+}
+
+.time-filter-group {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.btn-time-filter {
+  border-radius: 0;
+  padding: 0.35rem 0.65rem;
+}
+
+.dash-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.zone-health-card {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+}
+
+.zone-health-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.zone-health-row-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  margin-bottom: 0.2rem;
+}
+
+.hotspot-card {
+  padding: 1.25rem;
+}
+
+.staff-card {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+}
+
+.staff-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.staff-item {
+  background: var(--bg-page);
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.staff-name {
+  font-weight: 700;
+  color: var(--text-main);
+  font-size: 0.88rem;
+}
+
+.staff-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.ai-summary-panel {
+  padding: 1.15rem;
+}
+
+.ai-summary-text {
+  font-size: 0.82rem;
+  color: var(--text-body);
+  line-height: 1.45;
 }

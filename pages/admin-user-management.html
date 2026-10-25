@@ -14,10 +14,10 @@
   <header class="app-header">
     <div class="header-container">
       <a href="../index.html" class="brand-logo">
-        <div class="logo-icon" style="background: linear-gradient(135deg, #6b21a8, #9333ea);">SS</div>
+        <div class="logo-icon admin-logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Quản trị hệ thống (SV3: Văn Hân)</span>
+          <span class="fs-xs d-block fw-normal text-muted">Quản trị hệ thống (SV3: Văn Hân)</span>
         </div>
       </a>
 
@@ -52,7 +52,7 @@
         <p class="page-subtitle">Quản lý danh sách thành viên, phân quyền theo 4 vai trò chính: Khách hàng, Nhân viên, Quản lý và Quản trị viên.</p>
       </div>
       <div>
-        <button class="btn btn-primary" onclick="openAddUserModal()">+ Thêm người dùng mới</button>
+        <button type="button" class="btn btn-primary" id="openAddUserModalBtn">+ Thêm người dùng mới</button>
       </div>
     </div>
 
@@ -73,7 +73,7 @@
               <th>Vai trò</th>
               <th>Email liên hệ</th>
               <th>Ghi chú phân công</th>
-              <th style="text-align: right;">Thao tác</th>
+              <th class="text-right">Thao tác</th>
             </tr>
           </thead>
           <tbody id="usersTableBody">
@@ -84,11 +84,11 @@
     </div>
 
     <!-- MODAL ADD USER -->
-    <div id="userModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
-      <div class="card" style="max-width: 500px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg);">
+    <div id="userModal" class="user-modal-overlay">
+      <div class="card user-modal-card">
         <div class="card-header">
           <h2 class="card-title">Thêm người dùng mới</h2>
-          <button class="btn btn-secondary btn-sm" onclick="closeUserModal()">✕</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="closeUserModalCrossBtn">✕</button>
         </div>
 
         <form id="userForm" novalidate>
@@ -118,8 +118,8 @@
             <input type="email" id="userEmailInput" class="form-control" placeholder="ten@tlu.edu.vn">
           </div>
 
-          <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1.5rem;">
-            <button type="button" class="btn btn-secondary" onclick="closeUserModal()">Hủy</button>
+          <div class="d-flex gap-05 justify-end mt-2">
+            <button type="button" class="btn btn-secondary" id="cancelAddUserBtn">Hủy</button>
             <button type="submit" class="btn btn-primary">Lưu người dùng</button>
           </div>
         </form>

@@ -14,10 +14,10 @@
   <header class="app-header">
     <div class="header-container">
       <a href="../index.html" class="brand-logo">
-        <div class="logo-icon" style="background: linear-gradient(135deg, #059669, #10b981);">SS</div>
+        <div class="logo-icon zone-logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Nhân viên kệ hàng (SV2: Quang Long)</span>
+          <span class="brand-sub-badge">Nhân viên kệ hàng (SV2: Quang Long)</span>
         </div>
       </a>
 
@@ -50,48 +50,48 @@
         </h1>
         <p class="page-subtitle">Nhận diện nhanh kệ cạn hàng, sắp hết hoặc bất thường để kịp thời kiểm tra và xếp hàng.</p>
       </div>
-      <div style="display: flex; gap: 0.5rem;">
+      <div class="d-flex gap-05">
         <a href="associate-shelf-check.html" class="btn btn-secondary btn-sm">🔍 Phiếu kiểm kê</a>
         <a href="associate-restock-task.html" class="btn btn-primary btn-sm">📦 Bổ sung hàng cấp bách</a>
       </div>
     </div>
 
     <!-- 4 CLEAN STATS CARDS -->
-    <div class="grid-4" style="margin-bottom: 1.5rem;">
-      <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Tổng số kệ</div>
-        <div style="font-size: 1.75rem; font-weight: 800; color: var(--primary); margin: 2px 0;" id="statTotalShelves">14</div>
-        <div style="font-size: 0.75rem; color: var(--text-muted);">Phân bố tại 4 khu vực</div>
+    <div class="grid-4 mb-15">
+      <div class="card zone-stat-card">
+        <div class="zone-stat-label">Tổng số kệ</div>
+        <div class="zone-stat-counter text-primary" id="statTotalShelves">14</div>
+        <div class="zone-stat-sub">Phân bố tại 4 khu vực</div>
       </div>
-      <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Kệ sắp hết</div>
-        <div style="font-size: 1.75rem; font-weight: 800; color: var(--warning); margin: 2px 0;" id="statLowShelves">5</div>
-        <div style="font-size: 0.75rem; color: #b45309;">Cần chú ý bổ sung</div>
+      <div class="card zone-stat-card">
+        <div class="zone-stat-label">Kệ sắp hết</div>
+        <div class="zone-stat-counter text-warning" id="statLowShelves">5</div>
+        <div class="zone-stat-sub text-warning">Cần chú ý bổ sung</div>
       </div>
-      <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Kệ trống 100%</div>
-        <div style="font-size: 1.75rem; font-weight: 800; color: var(--danger); margin: 2px 0;" id="statEmptyShelves">2</div>
-        <div style="font-size: 0.75rem; color: #b91c1c;">Cần xử lý khẩn cấp</div>
+      <div class="card zone-stat-card">
+        <div class="zone-stat-label">Kệ trống 100%</div>
+        <div class="zone-stat-counter text-danger" id="statEmptyShelves">2</div>
+        <div class="zone-stat-sub text-danger">Cần xử lý khẩn cấp</div>
       </div>
-      <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">Cảnh báo lệch kho</div>
-        <div style="font-size: 1.75rem; font-weight: 800; color: #db2777; margin: 2px 0;" id="statAnomalyShelves">1</div>
-        <div style="font-size: 0.75rem; color: #be185d;">Sai lệch kiểm kê (AI)</div>
+      <div class="card zone-stat-card">
+        <div class="zone-stat-label">Cảnh báo lệch kho</div>
+        <div class="zone-stat-counter text-anomaly-pink" id="statAnomalyShelves">1</div>
+        <div class="zone-stat-sub text-anomaly-sub">Sai lệch kiểm kê (AI)</div>
       </div>
     </div>
 
     <!-- CLEAN FILTER -->
-    <div class="card" style="margin-bottom: 1.5rem; padding: 1rem 1.25rem;">
-      <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-        <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">Bộ lọc:</span>
-        <select id="filterZone" class="form-control" style="width: auto;">
+    <div class="card zone-filter-card">
+      <div class="zone-filter-inner">
+        <span class="zone-filter-label">Bộ lọc:</span>
+        <select id="filterZone" class="form-control zone-filter-select">
           <option value="ALL">Tất cả khu vực (4 khu vực)</option>
           <option value="Khu vực A">Khu vực A: Đồ uống & nước giải khát</option>
           <option value="Khu vực B">Khu vực B: Thực phẩm khô & gia vị</option>
           <option value="Khu vực C">Khu vực C: Bánh kẹo & snack</option>
           <option value="Khu vực D">Khu vực D: Hóa mỹ phẩm & tẩy rửa</option>
         </select>
-        <select id="filterStatus" class="form-control" style="width: auto;">
+        <select id="filterStatus" class="form-control zone-filter-select">
           <option value="ALL">Tất cả trạng thái</option>
           <option value="empty">Kệ rỗng (0 sp)</option>
           <option value="low">Kệ sắp hết hàng</option>
@@ -102,8 +102,8 @@
     </div>
 
     <!-- SHELVES LIST TABLE -->
-    <div class="card" style="padding: 1.25rem;">
-      <div class="card-header" style="margin-bottom: 0.75rem;">
+    <div class="card zone-table-card">
+      <div class="card-header zone-table-header">
         <h2 class="card-title">Tình trạng 14 kệ hàng siêu thị</h2>
         <span class="badge badge-normal" id="shelfCountBadge">14 kệ</span>
       </div>
@@ -118,7 +118,7 @@
               <th>Tỷ lệ lấp đầy</th>
               <th>Trạng thái</th>
               <th>Lần kiểm cuối</th>
-              <th style="text-align: right;">Thao tác</th>
+              <th class="text-right">Thao tác</th>
             </tr>
           </thead>
           <tbody id="shelfTableBody"></tbody>

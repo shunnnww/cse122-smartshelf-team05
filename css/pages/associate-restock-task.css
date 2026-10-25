@@ -2,7 +2,12 @@
    SmartShelf - Phân hệ Bổ sung hàng lên kệ (associate-restock-task.html)
    Phụ trách bởi: SV2 Nguyễn Quang Long (MSV: 2551170915)
    Tính năng AI: AI-1 Restock Priority AI (MDVM-v2)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
+
+.restock-logo-icon {
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+}
 
 .ai-priority-score-badge {
   display: inline-block;
@@ -17,13 +22,50 @@
 }
 
 .task-urgency-high {
-  background-color: var(--danger);
+  background-color: var(--danger) !important;
 }
 
 .task-urgency-medium {
-  background-color: #d97706;
+  background-color: #d97706 !important;
 }
 
 .task-urgency-normal {
-  background-color: var(--primary);
+  background-color: var(--primary) !important;
+}
+
+.ai-priority-loading {
+  display: none;
+  background: #faf5ff;
+  border-color: var(--accent-ai-border);
+}
+
+.ai-priority-error {
+  display: none;
+  background: var(--danger-light);
+  border-color: #fca5a5;
+}
+
+.ai-priority-panel {
+  display: none;
+}
+
+.ai-table-white {
+  background: white;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.task-queue-card {
+  margin-top: 1.5rem;
+}
+
+.task-filter-select {
+  width: auto;
+  padding: 0.35rem 0.75rem;
+}
+
+.empty-task-msg {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
 }

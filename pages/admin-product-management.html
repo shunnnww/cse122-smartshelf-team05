@@ -14,10 +14,10 @@
   <header class="app-header">
     <div class="header-container">
       <a href="../index.html" class="brand-logo">
-        <div class="logo-icon" style="background: linear-gradient(135deg, #6b21a8, #9333ea);">SS</div>
+        <div class="logo-icon admin-logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Quản trị hệ thống (SV3: Văn Hân)</span>
+          <span class="brand-sub-badge">Quản trị hệ thống (SV3: Văn Hân)</span>
         </div>
       </a>
 
@@ -52,13 +52,13 @@
         <p class="page-subtitle">Thực hiện đầy đủ nghiệp vụ thêm, sửa, xóa và gán sản phẩm vào từng kệ - tầng trong siêu thị.</p>
       </div>
       <div>
-        <button class="btn btn-primary" onclick="openProductModal()">+ Thêm sản phẩm mới</button>
+        <button class="btn btn-primary" id="openAddProdModalBtn">🛒 Nhập thêm hàng mới vào kệ</button>
       </div>
     </div>
 
     <!-- FILTER BAR -->
-    <div class="card" style="margin-bottom: 1.5rem; padding: 1.15rem;">
-      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.75rem;">
+    <div class="card admin-filter-card">
+      <div class="admin-filter-grid">
         <input type="text" id="adminSearchInput" class="form-control" placeholder="Tìm theo tên hoặc mã SKU...">
         <select id="adminCatFilter" class="form-control">
           <option value="ALL">Tất cả ngành hàng</option>
@@ -84,8 +84,8 @@
     </div>
 
     <!-- PRODUCTS CRUD TABLE -->
-    <div class="card" style="padding: 1.25rem;">
-      <div class="card-header" style="margin-bottom: 0.75rem;">
+    <div class="card admin-table-card">
+      <div class="card-header zone-table-header">
         <h2 class="card-title">Danh sách hàng hóa trên kệ</h2>
         <span class="badge badge-normal" id="totalProdsBadge">15 sản phẩm</span>
       </div>
@@ -101,7 +101,7 @@
               <th>Vị trí kệ</th>
               <th>Tồn kho</th>
               <th>Trạng thái</th>
-              <th style="text-align: right;">Thao tác</th>
+              <th class="text-right">Thao tác</th>
             </tr>
           </thead>
           <tbody id="adminProductsTbody"></tbody>
@@ -110,11 +110,11 @@
     </div>
 
     <!-- MODAL ADD/EDIT PRODUCT -->
-    <div id="productModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
-      <div class="card" style="max-width: 580px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto;">
+    <div id="productModal" class="admin-modal-overlay">
+      <div class="card admin-modal-card">
         <div class="card-header">
           <h2 class="card-title" id="productModalTitle">Thêm sản phẩm mới</h2>
-          <button class="btn btn-secondary btn-sm" onclick="closeProductModal()">✕</button>
+          <button class="btn btn-secondary btn-sm" id="closeProdModalBtn">✕</button>
         </div>
 
         <form id="productCrudForm" novalidate>
@@ -200,8 +200,8 @@
             <textarea id="prodDescInput" class="form-control" rows="2" placeholder="Ghi chú chi tiết sản phẩm..."></textarea>
           </div>
 
-          <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1.5rem;">
-            <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Hủy</button>
+          <div class="d-flex gap-05 justify-end mt-15">
+            <button type="button" class="btn btn-secondary" id="cancelProdModalBtn">Hủy</button>
             <button type="submit" class="btn btn-primary" id="saveProdBtn">Lưu dữ liệu</button>
           </div>
         </form>

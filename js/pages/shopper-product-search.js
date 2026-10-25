@@ -2,6 +2,7 @@
  * SmartShelf - Logic Tìm kiếm & lọc sản phẩm (shopper-product-search.html)
  * Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
  * Vertical Slice: Tìm kiếm từ khóa, Lọc danh mục, Lọc tồn kệ, Empty State & Thêm giỏ hàng
+ * Tách biệt 3 tầng kiến trúc: 100% JS nằm trong file này
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,29 +13,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const catFilter = document.getElementById('categoryFilter');
   const stockFilter = document.getElementById('stockFilter');
   const resetBtn = document.getElementById('resetFiltersBtn');
+  const emptyResetBtn = document.getElementById('emptyStateResetBtn');
 
   if (searchInput) searchInput.addEventListener('input', renderProducts);
   if (catFilter) catFilter.addEventListener('change', renderProducts);
   if (stockFilter) stockFilter.addEventListener('change', renderProducts);
   if (resetBtn) resetBtn.addEventListener('click', resetFilters);
+  if (emptyResetBtn) emptyResetBtn.addEventListener('click', resetFilters);
 });
 
 function resetFilters() {
-  document.getElementById('searchInput').value = '';
-  document.getElementById('categoryFilter').value = 'ALL';
-  document.getElementById('stockFilter').value = 'ALL';
+  const searchInput = document.getElementById('searchInput');
+  const catFilter = document.getElementById('categoryFilter');
+  const stockFilter = document.getElementById('stockFilter');
+
+  if (searchInput) searchInput.value = '';
+  if (catFilter) catFilter.value = 'ALL';
+  if (stockFilter) stockFilter.value = 'ALL';
+
   renderProducts();
   showToast('Đã đặt lại toàn bộ bộ lọc về mặc định.', 'info');
 }
+
+// Window export for backward compatibility
+window.resetFilters = resetFilters;
 
 function renderProducts() {
   const container = document.getElementById('productGrid');
   const emptyBox = document.getElementById('emptyState');
   if (!container || !emptyBox) return;
 
-  const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
-  const cat = document.getElementById('categoryFilter').value;
-  const stock = document.getElementById('stockFilter').value;
+  const searchInput = document.getElementById('searchInput');
+  const catFilter = document.getElementById('categoryFilter');
+  const stockFilter = document.getElementById('stockFilter');
+
+  const keyword = searchInput ? searchInput.value.trim().toLowerCase() : '';
+  const cat = catFilter ? catFilter.value : 'ALL';
+  const stock = stockFilter ? stockFilter.value : 'ALL';
 
   let list = getProducts();
 
@@ -56,11 +71,11 @@ function renderProducts() {
 
   if (list.length === 0) {
     container.innerHTML = '';
-    emptyBox.style.display = 'block';
+    emptyBox.classList.remove('d-none');
     return;
   }
 
-  emptyBox.style.display = 'none';
+  emptyBox.classList.add('d-none');
   container.innerHTML = list.map(p => {
     const isOutOfStock = p.stockQty <= 0;
     let badgeHtml = '';
@@ -75,39 +90,39 @@ function renderProducts() {
     return `
       <div class="card product-item-card">
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
-            <span style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted);">${p.category}</span>
+          <div class="product-card-top">
+            <span class="product-category-tag">${p.category}</span>
             ${badgeHtml}
           </div>
           
-          <h3 style="font-size: 0.98rem; font-weight: 700; margin-bottom: 0.35rem; color: var(--text-main); line-height: 1.35; min-height: 2.7rem;">
+          <h3 class="product-name-title">
             ${p.name}
           </h3>
           
-          <div style="font-size: 1.2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.75rem;">
+          <div class="product-price-tag">
             ${p.price.toLocaleString()}đ
           </div>
 
           <!-- Vị trí kệ -->
           <div class="shelf-location-chip">
-            <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted);">Vị trí trên kệ:</div>
-            <div style="font-weight: 700; font-size: 0.92rem; color: var(--text-main); margin-top: 1px;">
+            <div class="shelf-location-label">Vị trí trên kệ:</div>
+            <div class="shelf-location-val">
               📍 ${p.shelfId} &nbsp;·&nbsp; ${p.shelfLevel || 'Tầng 2'} (${p.zoneCode || 'Khu vực A'})
             </div>
           </div>
         </div>
 
-        <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+        <div class="product-card-actions">
           ${isOutOfStock ? `
-            <a href="shopper-product-alternatives.html?id=${p.id}" class="btn btn-ai" style="width: 100%;">
+            <a href="shopper-product-alternatives.html?id=${p.id}" class="btn btn-ai w-100">
               ✨ Gợi ý thay thế bằng AI
             </a>
-            <a href="shopper-product-location.html?shelf=${p.shelfId}" class="btn btn-secondary btn-sm" style="width: 100%;">
+            <a href="shopper-product-location.html?shelf=${p.shelfId}" class="btn btn-secondary btn-sm w-100">
               📍 Xem vị trí kệ trống
             </a>
           ` : `
-            <div style="display: flex; gap: 0.5rem;">
-              <button class="btn btn-primary" style="flex: 1;" onclick="handleAddToCart('${p.id}')">
+            <div class="d-flex gap-05">
+              <button class="btn btn-primary flex-1 btn-add-cart" data-id="${p.id}">
                 + Thêm vào giỏ
               </button>
               <a href="shopper-product-location.html?shelf=${p.shelfId}&prod=${p.id}" class="btn btn-secondary" title="Dẫn đường tới kệ">
@@ -119,17 +134,32 @@ function renderProducts() {
       </div>
     `;
   }).join('');
+
+  // Bind cart buttons cleanly without inline onclick
+  container.querySelectorAll('.btn-add-cart').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-id');
+      if (id) handleAddToCart(id);
+    });
+  });
 }
 
 function handleAddToCart(productId) {
   addToCart(productId, 1);
   updateCartBadge();
-  showToast('Đã thêm sản phẩm vào giỏ hàng!', 'success');
+  showToast('🛒 Tuyệt vời! Đã thêm sản phẩm vào giỏ hàng thành công!', 'success');
 }
 
+// Window export
+window.handleAddToCart = handleAddToCart;
+
 function updateCartBadge() {
-  const cart = getCart();
-  const count = cart.reduce((acc, item) => acc + item.quantity, 0);
   const badge = document.getElementById('cartCount');
-  if (badge) badge.textContent = count;
+  if (!badge) return;
+  const cart = getCart();
+  const total = cart.reduce((acc, item) => acc + item.quantity, 0);
+  badge.textContent = total;
 }
+
+// Window alias for cross-tab auto refresh
+window.renderProducts = renderProducts;

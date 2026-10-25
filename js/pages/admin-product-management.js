@@ -11,11 +11,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const catFilter = document.getElementById('adminCatFilter');
   const shelfFilter = document.getElementById('adminShelfFilter');
   const crudForm = document.getElementById('productCrudForm');
+  const openBtn = document.getElementById('openAddProdModalBtn');
+  const closeBtn = document.getElementById('closeProdModalBtn');
+  const cancelBtn = document.getElementById('cancelProdModalBtn');
+  const tbody = document.getElementById('adminProductsTbody');
 
   if (searchInput) searchInput.addEventListener('input', renderAdminProducts);
   if (catFilter) catFilter.addEventListener('change', renderAdminProducts);
   if (shelfFilter) shelfFilter.addEventListener('change', renderAdminProducts);
   if (crudForm) crudForm.addEventListener('submit', handleSaveProduct);
+  if (openBtn) openBtn.addEventListener('click', openProductModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeProductModal);
+  if (cancelBtn) cancelBtn.addEventListener('click', closeProductModal);
+
+  if (tbody) {
+    tbody.addEventListener('click', (e) => {
+      const editBtn = e.target.closest('.btn-edit-prod');
+      if (editBtn) {
+        const id = editBtn.getAttribute('data-id');
+        if (id) editProduct(id);
+        return;
+      }
+      const deleteBtn = e.target.closest('.btn-delete-prod');
+      if (deleteBtn) {
+        const id = deleteBtn.getAttribute('data-id');
+        if (id) deleteProductItem(id);
+        return;
+      }
+    });
+  }
 });
 
 function renderAdminProducts() {
@@ -46,7 +70,7 @@ function renderAdminProducts() {
   if (!tbody) return;
 
   if (list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:var(--text-muted);">Không có sản phẩm nào phù hợp.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="text-center p-4 text-muted">Không có sản phẩm nào phù hợp.</td></tr>`;
     return;
   }
 
@@ -59,19 +83,19 @@ function renderAdminProducts() {
       <tr>
         <td><code>${p.sku}</code></td>
         <td>
-          <strong style="color:var(--text-main); font-size:0.92rem;">${p.name}</strong>
+          <strong class="text-main fs-sm">${p.name}</strong>
         </td>
         <td>${p.category}</td>
         <td><strong>${p.price.toLocaleString()}đ</strong></td>
         <td>
-          <strong style="color:var(--primary);">${p.shelfId}</strong> · ${p.shelfLevel || 'Tầng 2'}
+          <strong class="text-primary">${p.shelfId}</strong> · ${p.shelfLevel || 'Tầng 2'}
         </td>
         <td><strong>${p.stockQty}</strong> / Tối thiểu ${p.minQty}</td>
         <td>${badgeHtml}</td>
-        <td style="text-align: right;">
-          <div style="display: inline-flex; gap: 0.3rem;">
-            <button class="btn btn-secondary btn-sm" onclick="editProduct('${p.id}')">✏️ Sửa</button>
-            <button class="btn btn-secondary btn-sm" style="color:var(--danger);" onclick="deleteProductItem('${p.id}')">🗑️ Xóa</button>
+        <td class="text-right">
+          <div class="d-inline-flex gap-1">
+            <button type="button" class="btn btn-secondary btn-sm btn-edit-prod" data-id="${p.id}">✏️ Sửa</button>
+            <button type="button" class="btn btn-secondary btn-sm text-danger btn-delete-prod" data-id="${p.id}">🗑️ Xóa</button>
           </div>
         </td>
       </tr>
@@ -83,11 +107,13 @@ function openProductModal() {
   document.getElementById('editProdId').value = '';
   document.getElementById('productModalTitle').textContent = 'Thêm sản phẩm mới vào kệ';
   document.getElementById('productCrudForm').reset();
-  document.getElementById('productModal').style.display = 'flex';
+  const modal = document.getElementById('productModal');
+  if (modal) modal.classList.add('active');
 }
 
 function closeProductModal() {
-  document.getElementById('productModal').style.display = 'none';
+  const modal = document.getElementById('productModal');
+  if (modal) modal.classList.remove('active');
 }
 
 function editProduct(id) {
@@ -107,7 +133,8 @@ function editProduct(id) {
   document.getElementById('prodVelocityInput').value = p.salesVelocity || 20;
   document.getElementById('prodDescInput').value = p.description || '';
 
-  document.getElementById('productModal').style.display = 'flex';
+  const modal = document.getElementById('productModal');
+  if (modal) modal.classList.add('active');
 }
 
 function handleSaveProduct(e) {
@@ -148,6 +175,7 @@ function handleSaveProduct(e) {
 
 function deleteProductItem(id) {
   const p = getProductById(id);
+  if (!p) return;
   if (confirm(`Bạn có chắc chắn muốn xóa/lưu trữ sản phẩm: ${p.name}?`)) {
     deleteProduct(id);
     showToast(`Đã xóa sản phẩm ${p.sku}!`, 'info');
@@ -155,5 +183,10 @@ function deleteProductItem(id) {
   }
 }
 
-// Window alias for cross-tab auto refresh
+// Window aliases for cross-tab or inline compatibility
 window.renderProducts = renderAdminProducts;
+window.renderAdminProducts = renderAdminProducts;
+window.openProductModal = openProductModal;
+window.closeProductModal = closeProductModal;
+window.editProduct = editProduct;
+window.deleteProductItem = deleteProductItem;

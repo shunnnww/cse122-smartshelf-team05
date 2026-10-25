@@ -17,7 +17,7 @@
         <div class="logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Khách mua sắm (SV1: Hoàng Anh)</span>
+          <span class="brand-sub-badge">Khách mua sắm (SV1: Hoàng Anh)</span>
         </div>
       </a>
 
@@ -50,26 +50,26 @@
         </h1>
         <p class="page-subtitle">Bấm vào bất kỳ kệ nào trên sơ đồ để xem các mặt hàng đang có và hướng dẫn đường đi.</p>
       </div>
-      <div style="font-size: 0.8rem; display: flex; gap: 0.5rem; align-items: center;">
+      <div class="status-legend-bar">
         <span class="badge badge-normal">● Đủ hàng</span>
         <span class="badge badge-low">● Sắp hết</span>
         <span class="badge badge-empty">● Trống kệ</span>
       </div>
     </div>
 
-    <div class="grid-3" style="align-items: start;">
+    <div class="grid-3 map-layout-grid">
       
       <!-- STORE MAP & SHELVES (2 COLS) -->
-      <div style="grid-column: span 2;">
+      <div class="map-main-col">
         
         <div class="store-floor-layout">
           
           <!-- Khu vực A -->
           <div class="zone-block">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+            <div class="zone-header">
               <div>
-                <strong style="color: var(--text-main); font-size: 0.95rem;">Khu vực A: Đồ uống & nước giải khát</strong>
-                <div style="font-size: 0.78rem; color: var(--text-muted);">Tầng 1 · Dãy bên phải lối vào chính</div>
+                <strong class="zone-title">Khu vực A: Đồ uống & nước giải khát</strong>
+                <div class="zone-subtitle">Tầng 1 · Dãy bên phải lối vào chính</div>
               </div>
               <span class="badge badge-normal">4 kệ</span>
             </div>
@@ -78,10 +78,10 @@
 
           <!-- Khu vực B -->
           <div class="zone-block">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+            <div class="zone-header">
               <div>
-                <strong style="color: var(--text-main); font-size: 0.95rem;">Khu vực B: Thực phẩm khô & gia vị</strong>
-                <div style="font-size: 0.78rem; color: var(--text-muted);">Tầng 1 · Hành lang trung tâm</div>
+                <strong class="zone-title">Khu vực B: Thực phẩm khô & gia vị</strong>
+                <div class="zone-subtitle">Tầng 1 · Hành lang trung tâm</div>
               </div>
               <span class="badge badge-normal">4 kệ</span>
             </div>
@@ -89,11 +89,11 @@
           </div>
 
           <!-- Khu vực C & D (Tầng 2) -->
-          <div class="zone-block" style="margin-bottom: 0;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <div class="zone-block zone-block-last">
+            <div class="zone-header">
               <div>
-                <strong style="color: var(--text-main); font-size: 0.95rem;">Khu vực C & D: Bánh kẹo, snack & hóa mỹ phẩm</strong>
-                <div style="font-size: 0.78rem; color: var(--text-muted);">Tầng 2 · Đi thang cuốn lên</div>
+                <strong class="zone-title">Khu vực C & D: Bánh kẹo, snack & hóa mỹ phẩm</strong>
+                <div class="zone-subtitle">Tầng 2 · Đi thang cuốn lên</div>
               </div>
               <span class="badge badge-normal">6 kệ</span>
             </div>
@@ -113,25 +113,25 @@
           </div>
 
           <div id="shelfDetailContent">
-            <div class="state-box" style="padding: 1.5rem 1rem;">
+            <div class="state-box p-15">
               <div class="state-icon">👈🗺️</div>
-              <p style="font-size: 0.85rem; color: var(--text-muted);">
+              <p class="fs-sm text-muted">
                 Bấm vào một khối kệ trên sơ đồ để xem sản phẩm và lộ trình di chuyển tối ưu.
               </p>
             </div>
           </div>
 
           <!-- Navigation Guide Box -->
-          <div id="routeGuideBox" style="display: none; margin-top: 1rem; background: #eff6ff; border-left: 3px solid var(--primary); padding: 0.85rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;">
-            <div style="font-weight: 700; color: var(--primary); font-size: 0.82rem; margin-bottom: 0.25rem;">
+          <div id="routeGuideBox" class="route-guide-panel">
+            <div class="route-guide-header">
               🧭 Chỉ dẫn đường đi:
             </div>
-            <div id="routeGuideText" style="font-size: 0.85rem; color: #1e3a8a; line-height: 1.45;"></div>
+            <div id="routeGuideText" class="route-guide-text"></div>
           </div>
 
           <!-- Action for customer: Report Empty Shelf -->
-          <div id="shelfActionsBox" style="display: none; margin-top: 1rem; border-top: 1px solid var(--border-light); padding-top: 0.85rem;">
-            <button class="btn btn-secondary btn-sm" style="width: 100%; font-size: 0.82rem;" onclick="handleReportEmptyShelf()">
+          <div id="shelfActionsBox" class="shelf-action-panel">
+            <button class="btn btn-secondary btn-sm btn-report-shelf" id="reportShelfEmptyBtn">
               📢 Báo nhân viên kệ này đang vơi hàng
             </button>
           </div>
@@ -139,12 +139,13 @@
       </div>
 
     </div>
+
   </main>
 
   <footer class="app-footer">
     <div class="footer-content">
-      <div>SmartShelf - Phân hệ định vị kệ hàng (Phụ trách: SV1 Trần Trọng Hoàng Anh)</div>
-      <div>Học phần CSE122 - Đại học Thủy Lợi</div>
+      <div>SmartShelf - Định vị kệ hàng (Phụ trách bởi: SV1 Trần Trọng Hoàng Anh)</div>
+      <div>Học phần CSE122 - ĐH Thủy Lợi</div>
     </div>
   </footer>
 

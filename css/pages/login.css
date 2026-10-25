@@ -1,7 +1,17 @@
 /* ===================================================================
    SmartShelf - Màn hình Đăng nhập phân quyền (login.html)
    Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
+
+.login-body {
+  background-color: var(--bg-page);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
 
 .login-card {
   max-width: 440px;
@@ -12,8 +22,66 @@
   background: var(--bg-card);
 }
 
+.login-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-brand-logo {
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.login-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.login-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.quick-roles-container {
+  margin-bottom: 1.25rem;
+  background: var(--bg-page);
+  padding: 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.quick-roles-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
 .quick-roles-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.4rem;
+}
+
+.btn-quick-role {
+  font-size: 0.75rem;
+  justify-content: flex-start;
+}
+
+.btn-login-submit {
+  width: 100%;
+  padding: 0.65rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.login-footer-link {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.82rem;
+}
+
+.login-footer-link a {
+  color: var(--text-muted);
 }

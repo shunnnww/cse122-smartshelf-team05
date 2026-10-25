@@ -8,34 +8,34 @@
   <link rel="stylesheet" href="../css/responsive.css">
   <link rel="stylesheet" href="../css/pages/login.css">
 </head>
-<body style="background-color: var(--bg-page); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem;">
+<body class="login-body">
 
-  <main role="main" class="card" style="max-width: 440px; width: 100%; padding: 2rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);">
-    <div style="text-align: center; margin-bottom: 1.5rem;">
-      <div class="brand-logo" style="justify-content: center; margin-bottom: 0.5rem;">
+  <main role="main" class="card login-card">
+    <div class="login-header">
+      <div class="brand-logo login-brand-logo">
         <div class="logo-icon">SS</div>
         <span>SmartShelf</span>
       </div>
-      <h1 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Đăng nhập cổng điều hành</h1>
-      <p style="font-size: 0.85rem; color: var(--text-muted);">Chọn tài khoản để bắt đầu trải nghiệm</p>
+      <h1 class="login-title">Đăng nhập cổng điều hành</h1>
+      <p class="login-subtitle">Chọn tài khoản để bắt đầu trải nghiệm</p>
     </div>
 
     <!-- Quick Role Pickers for Demo -->
-    <div style="margin-bottom: 1.25rem; background: var(--bg-page); padding: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
-      <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem;">
+    <div class="quick-roles-container">
+      <div class="quick-roles-title">
         ⚡ Bấm chọn nhanh tài khoản demo:
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
-        <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('hoanganh', 'shopper')" style="font-size: 0.75rem; justify-content: flex-start;">
+      <div class="quick-roles-grid">
+        <button type="button" class="btn btn-secondary btn-sm btn-quick-role" data-user="hoanganh" data-role="shopper">
           👤 Hoàng Anh (SV1)
         </button>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('quanglong', 'associate')" style="font-size: 0.75rem; justify-content: flex-start;">
+        <button type="button" class="btn btn-secondary btn-sm btn-quick-role" data-user="quanglong" data-role="associate">
           👤 Quang Long (SV2)
         </button>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('vanhan', 'manager')" style="font-size: 0.75rem; justify-content: flex-start;">
+        <button type="button" class="btn btn-secondary btn-sm btn-quick-role" data-user="vanhan" data-role="manager">
           👤 Văn Hân (SV3)
         </button>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="quickFill('admin', 'admin')" style="font-size: 0.75rem; justify-content: flex-start;">
+        <button type="button" class="btn btn-secondary btn-sm btn-quick-role" data-user="admin" data-role="admin">
           ⚙️ Quản trị viên
         </button>
       </div>
@@ -65,13 +65,13 @@
         </select>
       </div>
 
-      <button type="submit" id="loginBtn" class="btn btn-primary" style="width: 100%; padding: 0.65rem; font-weight: 700; margin-top: 0.5rem;">
+      <button type="submit" id="loginBtn" class="btn btn-primary btn-login-submit">
         Đăng nhập vào hệ thống
       </button>
     </form>
 
-    <div style="text-align: center; margin-top: 1.25rem; font-size: 0.82rem;">
-      <a href="../index.html" style="color: var(--text-muted);">&larr; Quay lại trang chủ SmartShelf</a>
+    <div class="login-footer-link">
+      <a href="../index.html">&larr; Quay lại trang chủ SmartShelf</a>
     </div>
   </main>
 

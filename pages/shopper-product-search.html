@@ -17,7 +17,7 @@
         <div class="logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Khách mua sắm (SV1: Hoàng Anh)</span>
+          <span class="brand-sub-badge">Khách mua sắm (SV1: Hoàng Anh)</span>
         </div>
       </a>
 
@@ -29,7 +29,7 @@
 
       <div class="header-actions">
         <button class="btn btn-secondary btn-sm" id="cartBtn" title="Xem giỏ hàng">
-          🛒 Giỏ hàng: <strong id="cartCount" style="color: var(--primary);">0</strong> món
+          🛒 Giỏ hàng: <strong id="cartCount" class="cart-count-badge">0</strong> món
         </button>
         <select id="globalRoleSwitcher" class="role-switcher-select">
           <option value="shopper" selected>Khách hàng</option>
@@ -59,13 +59,13 @@
     </div>
 
     <!-- CLEAN FILTER BAR -->
-    <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
-      <div style="display: grid; grid-template-columns: 2fr 1.2fr 1.2fr auto; gap: 0.75rem; align-items: flex-end;">
-        <div class="form-group" style="margin-bottom: 0;">
+    <div class="card search-box-card">
+      <div class="search-filter-grid">
+        <div class="form-group search-form-group">
           <label class="form-label" for="searchInput">Tìm theo tên hoặc mã hàng</label>
           <input type="text" id="searchInput" class="form-control" placeholder="Ví dụ: Coca, mì Omachi, snack Lay's...">
         </div>
-        <div class="form-group" style="margin-bottom: 0;">
+        <div class="form-group search-form-group">
           <label class="form-label" for="categoryFilter">Ngành hàng</label>
           <select id="categoryFilter" class="form-control">
             <option value="ALL">Tất cả ngành hàng</option>
@@ -76,7 +76,7 @@
             <option value="Hóa Mỹ Phẩm">Hóa mỹ phẩm</option>
           </select>
         </div>
-        <div class="form-group" style="margin-bottom: 0;">
+        <div class="form-group search-form-group">
           <label class="form-label" for="stockFilter">Tình trạng kệ</label>
           <select id="stockFilter" class="form-control">
             <option value="ALL">Tất cả trạng thái</option>
@@ -84,7 +84,7 @@
             <option value="EMPTY">Tạm hết hàng (có gợi ý AI)</option>
           </select>
         </div>
-        <button id="resetFiltersBtn" class="btn btn-secondary" style="height: 38px;">Làm mới</button>
+        <button id="resetFiltersBtn" class="btn btn-secondary btn-reset-filter">Làm mới</button>
       </div>
     </div>
 
@@ -92,11 +92,11 @@
     <div id="productGrid" class="grid-3"></div>
 
     <!-- EMPTY STATE -->
-    <div id="emptyState" class="state-box" style="display: none;">
+    <div id="emptyState" class="state-box d-none">
       <div class="state-icon">🔎📦</div>
       <h3 class="state-title">Không tìm thấy sản phẩm phù hợp</h3>
       <p class="state-desc">Hãy thử thay đổi từ khóa tìm kiếm hoặc bấm nút bên dưới để xem lại tất cả sản phẩm.</p>
-      <button class="btn btn-primary btn-sm" onclick="resetFilters()">Xem tất cả sản phẩm</button>
+      <button class="btn btn-primary btn-sm" id="emptyStateResetBtn">Xem tất cả sản phẩm</button>
     </div>
   </main>
 

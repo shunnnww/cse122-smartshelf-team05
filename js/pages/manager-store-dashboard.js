@@ -2,6 +2,7 @@
  * SmartShelf - Logic Bảng điều hành cửa hàng (manager-store-dashboard.html)
  * Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
  * Vertical Slice: Dashboard 4 KPI, thanh tỷ lệ lấp đầy theo Zone, bộ lọc thời gian & xuất báo cáo CSV/JSON
+ * Tách biệt 3 tầng kiến trúc: 100% JS nằm trong file này
  */
 
 let currentPeriod = 'today';
@@ -10,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
   renderZoneHealth();
   setupTimeFilters();
   setupExportButtons();
+
+  const printBtn = document.getElementById('printReportBtn');
+  if (printBtn) {
+    printBtn.addEventListener('click', () => window.print());
+  }
 });
 
 function setupTimeFilters() {
@@ -100,22 +106,33 @@ function renderZoneHealth() {
 
     const pct = Math.round((totalCurrent / totalCapacity) * 100);
 
-    let barCol = 'var(--success)';
-    if (pct < 50) barCol = 'var(--danger)';
-    else if (pct < 75) barCol = 'var(--warning)';
+    let statusColClass = 'text-success';
+    let progressColClass = 'progress-fill-normal';
+    if (pct < 50) {
+      statusColClass = 'text-danger';
+      progressColClass = 'progress-fill-empty';
+    } else if (pct < 75) {
+      statusColClass = 'text-warning';
+      progressColClass = 'progress-fill-low';
+    }
 
     return `
       <div>
-        <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.2rem;">
+        <div class="zone-health-row-header">
           <strong>${z.name}</strong>
-          <span style="font-weight: 700; color: ${barCol};">${totalCurrent}/${totalCapacity} sp (${pct}%)</span>
+          <span class="fw-bold ${statusColClass}">${totalCurrent}/${totalCapacity} sp (${pct}%)</span>
         </div>
         <div class="shelf-progress-bar">
-          <div class="shelf-progress-fill" style="width: ${pct}%; background-color: ${barCol}; transition: width 0.4s ease;"></div>
+          <div class="shelf-progress-fill ${progressColClass}" data-pct="${pct}"></div>
         </div>
       </div>
     `;
   }).join('');
+
+  container.querySelectorAll('.shelf-progress-fill').forEach(fill => {
+    const pct = fill.getAttribute('data-pct');
+    if (pct) fill.style.width = pct + '%';
+  });
 }
 
 // Window alias for cross-tab auto refresh

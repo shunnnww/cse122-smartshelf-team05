@@ -1,13 +1,72 @@
 /* ===================================================================
    SmartShelf - Quản trị khu vực & kệ hàng (admin-zone-management.html)
    Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
 
+.admin-logo-icon {
+  background: linear-gradient(135deg, #6b21a8, #9333ea);
+}
+
+.admin-section-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-main);
+}
+
 .zone-admin-card {
-  border-top: 3px solid var(--primary);
   padding: 1.15rem;
   background: var(--bg-card);
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
-  border-top-width: 3px;
+  border-top: 3px solid var(--primary);
+}
+
+.zone-admin-title {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.zone-admin-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.zone-admin-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.shelf-code-tag {
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.shelf-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.shelf-modal-overlay.active {
+  display: flex;
+}
+
+.shelf-modal-card {
+  max-width: 480px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
 }

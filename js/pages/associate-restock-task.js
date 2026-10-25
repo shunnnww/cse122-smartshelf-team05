@@ -2,6 +2,7 @@
  * SmartShelf - Logic Bổ sung kệ & AI-1 Restock Priority (associate-restock-task.html)
  * Phụ trách bởi: SV2 Nguyễn Quang Long (MSV: 2551170915)
  * Tính năng AI: AI-1 Restock Priority AI (Mô hình MDVM-v2, Failure UX & Chuyển trạng thái)
+ * Tách biệt 3 tầng kiến trúc: 100% JS nằm trong file này
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,10 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const runAiBtn = document.getElementById('runAiPriorityBtn');
   const simErrorBtn = document.getElementById('simulateAiErrorBtn');
   const filterSelect = document.getElementById('taskStatusFilter');
+  const retryBtn = document.getElementById('retryAiPriorityBtn');
+  const manualBtn = document.getElementById('manualCreateTaskBtn');
+  const hidePanelBtn = document.getElementById('hideAiPanelBtn');
 
   if (runAiBtn) runAiBtn.addEventListener('click', () => triggerAiPriority(false));
   if (simErrorBtn) simErrorBtn.addEventListener('click', () => triggerAiPriority(true));
   if (filterSelect) filterSelect.addEventListener('change', renderTasksTable);
+  if (retryBtn) retryBtn.addEventListener('click', () => triggerAiPriority(false));
+  if (manualBtn) manualBtn.addEventListener('click', () => showToast('Chế độ tạo nhiệm vụ thủ công đã kích hoạt', 'info'));
+  if (hidePanelBtn) {
+    hidePanelBtn.addEventListener('click', () => {
+      const panel = document.getElementById('aiPriorityPanel');
+      if (panel) panel.classList.add('d-none');
+    });
+  }
 });
 
 async function triggerAiPriority(forceError = false) {
@@ -22,13 +34,13 @@ async function triggerAiPriority(forceError = false) {
   const panel = document.getElementById('aiPriorityPanel');
   const errBox = document.getElementById('aiPriorityErrorBox');
 
-  if (panel) panel.style.display = 'none';
-  if (errBox) errBox.style.display = 'none';
-  if (loading) loading.style.display = 'block';
+  if (panel) panel.classList.add('d-none');
+  if (errBox) errBox.classList.add('d-none');
+  if (loading) loading.classList.remove('d-none');
 
   try {
     const res = await runRestockPriorityAI(forceError);
-    if (loading) loading.style.display = 'none';
+    if (loading) loading.classList.add('d-none');
 
     if (res.status === 'empty' || res.items.length === 0) {
       showToast('Tất cả kệ đều đang đủ hàng!', 'info');
@@ -36,31 +48,34 @@ async function triggerAiPriority(forceError = false) {
     }
 
     renderAiPriorityRows(res.items);
-    if (panel) panel.style.display = 'block';
+    if (panel) panel.classList.remove('d-none');
     showToast('AI đã hoàn tất xếp hạng ưu tiên bổ sung kệ!', 'ai');
 
   } catch (err) {
-    if (loading) loading.style.display = 'none';
-    if (errBox) errBox.style.display = 'block';
+    if (loading) loading.classList.add('d-none');
+    if (errBox) errBox.classList.remove('d-none');
     const errMsg = document.getElementById('aiPriorityErrorMessage');
     if (errMsg) errMsg.textContent = err.message || 'Mô phỏng lỗi AI kích hoạt.';
     showToast('Đã kích hoạt trạng thái AI thất bại / không chắc chắn.', 'error');
   }
 }
 
+// Window export
+window.triggerAiPriority = triggerAiPriority;
+
 function renderAiPriorityRows(items) {
   const tbody = document.getElementById('aiPriorityTbody');
   if (!tbody) return;
 
   tbody.innerHTML = items.map(item => {
-    let badgeCol = 'var(--primary)';
-    if (item.score >= 85) badgeCol = 'var(--danger)';
-    else if (item.score >= 70) badgeCol = '#d97706';
+    let urgencyClass = 'task-urgency-normal';
+    if (item.score >= 85) urgencyClass = 'task-urgency-high';
+    else if (item.score >= 70) urgencyClass = 'task-urgency-medium';
 
     return `
       <tr>
         <td>
-          <span class="ai-priority-score-badge" style="background: ${badgeCol};">
+          <span class="ai-priority-score-badge ${urgencyClass}">
             ${item.score}
           </span>
         </td>
@@ -68,23 +83,45 @@ function renderAiPriorityRows(items) {
           <span class="badge ${item.score >= 85 ? 'badge-empty' : 'badge-low'}">${item.urgency}</span>
         </td>
         <td>
-          <strong style="color: var(--text-main); font-size: 0.95rem;">${item.productName}</strong>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">Vị trí: <strong>${item.shelfId}</strong></div>
+          <strong class="text-main fs-sm">${item.productName}</strong>
+          <div class="fs-xs text-muted">Vị trí: <strong>${item.shelfId}</strong></div>
         </td>
         <td>
-          <strong style="color: ${item.stockQty === 0 ? 'var(--danger)' : '#d97706'};">${item.stockQty}</strong> / Tối thiểu ${item.minQty}
+          <strong class="${item.stockQty === 0 ? 'text-danger' : 'text-warning'}">${item.stockQty}</strong> / Tối thiểu ${item.minQty}
         </td>
-        <td style="font-size: 0.85rem; color: #4b5563; max-width: 320px;">
+        <td class="fs-sm text-body">
           ${item.reason}
         </td>
-        <td style="text-align: right;">
-          <button class="btn btn-ai btn-sm" onclick="acceptAiRestockItem('${item.shelfId}', '${item.productId}', '${item.productName.replace(/'/g, "\\'")}', ${item.suggestedQty}, '${item.urgency}', ${item.score}, '${item.reason.replace(/'/g, "\\'')}')">
+        <td class="text-right">
+          <button class="btn btn-ai btn-sm btn-accept-ai-task" 
+                  data-shelf="${item.shelfId}" 
+                  data-prod-id="${item.productId}" 
+                  data-prod-name="${item.productName.replace(/"/g, '&quot;')}" 
+                  data-qty="${item.suggestedQty}" 
+                  data-urgency="${item.urgency}" 
+                  data-score="${item.score}" 
+                  data-reason="${item.reason.replace(/"/g, '&quot;')}">
             ✅ Duyệt và tạo việc
           </button>
         </td>
       </tr>
     `;
   }).join('');
+
+  // Bind approval buttons cleanly without inline onclick
+  tbody.querySelectorAll('.btn-accept-ai-task').forEach(btn => {
+    btn.addEventListener('click', () => {
+      acceptAiRestockItem(
+        btn.getAttribute('data-shelf'),
+        btn.getAttribute('data-prod-id'),
+        btn.getAttribute('data-prod-name'),
+        parseInt(btn.getAttribute('data-qty')) || 20,
+        btn.getAttribute('data-urgency'),
+        parseInt(btn.getAttribute('data-score')) || 80,
+        btn.getAttribute('data-reason')
+      );
+    });
+  });
 }
 
 function acceptAiRestockItem(shelfId, prodId, prodName, qty, urgency, score, reason) {
@@ -106,6 +143,9 @@ function acceptAiRestockItem(shelfId, prodId, prodName, qty, urgency, score, rea
   renderTasksTable();
 }
 
+// Window export
+window.acceptAiRestockItem = acceptAiRestockItem;
+
 function renderTasksTable() {
   const tasks = getRestockTasks();
   const filterSelect = document.getElementById('taskStatusFilter');
@@ -119,7 +159,7 @@ function renderTasksTable() {
   }
 
   if (list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:var(--text-muted);">Không có nhiệm vụ nào trong trạng thái này.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-task-msg">Không có nhiệm vụ nào trong trạng thái này.</td></tr>`;
     return;
   }
 
@@ -131,31 +171,31 @@ function renderTasksTable() {
     return `
       <tr>
         <td><strong>${t.id}</strong></td>
-        <td><strong style="color: var(--primary);">${t.shelfCode || t.shelfId}</strong></td>
+        <td><strong class="text-primary">${t.shelfCode || t.shelfId}</strong></td>
         <td>
           <strong>${t.productName}</strong>
-          ${t.aiPriorityScore ? `<div style="font-size:0.7rem; color:var(--accent-ai);">Điểm AI: ${t.aiPriorityScore}</div>` : ''}
+          ${t.aiPriorityScore ? `<div class="fs-xs text-ai">Điểm AI: ${t.aiPriorityScore}</div>` : ''}
         </td>
         <td><strong>${t.requestedQty}</strong> sp</td>
         <td><span class="badge ${t.priority === 'Cao' || t.priority === 'Rất Cao' ? 'badge-empty' : 'badge-low'}">${t.priority}</span></td>
         <td>${statusBadge}</td>
-        <td style="font-size: 0.85rem;">${t.assignedTo || 'Chưa gán'}</td>
-        <td style="text-align: right;">
-          <div style="display: inline-flex; gap: 0.4rem;">
+        <td class="fs-sm">${t.assignedTo || 'Chưa gán'}</td>
+        <td class="text-right">
+          <div class="d-inline-flex gap-025">
             ${t.status === 'pending' ? `
-              <button class="btn btn-secondary btn-sm" onclick="advanceTaskStatus('${t.id}', 'in-progress')">
+              <button class="btn btn-secondary btn-sm btn-advance-task" data-id="${t.id}" data-next="in-progress">
                 ▶️ Bắt đầu
               </button>
             ` : ''}
             ${t.status === 'in-progress' ? `
-              <button class="btn btn-success btn-sm" onclick="advanceTaskStatus('${t.id}', 'completed')">
+              <button class="btn btn-success btn-sm btn-advance-task" data-id="${t.id}" data-next="completed">
                 ✅ Đã xếp lên kệ
               </button>
             ` : ''}
             ${t.status === 'completed' ? `
-              <span style="font-size:0.8rem; color:var(--success); font-weight:600;">✓ Hoàn thành</span>
+              <span class="fs-xs text-success fw-semibold">✓ Hoàn thành</span>
             ` : `
-              <button class="btn btn-secondary btn-sm" style="color:var(--danger);" onclick="handleDeleteTask('${t.id}')" title="Hủy việc">
+              <button class="btn btn-secondary btn-sm text-danger btn-delete-task" data-id="${t.id}" title="Hủy việc">
                 🗑️
               </button>
             `}
@@ -164,6 +204,19 @@ function renderTasksTable() {
       </tr>
     `;
   }).join('');
+
+  // Bind actions cleanly without inline onclick
+  tbody.querySelectorAll('.btn-advance-task').forEach(btn => {
+    btn.addEventListener('click', () => {
+      advanceTaskStatus(btn.getAttribute('data-id'), btn.getAttribute('data-next'));
+    });
+  });
+
+  tbody.querySelectorAll('.btn-delete-task').forEach(btn => {
+    btn.addEventListener('click', () => {
+      handleDeleteTask(btn.getAttribute('data-id'));
+    });
+  });
 }
 
 function advanceTaskStatus(taskId, nextStatus) {
@@ -178,26 +231,35 @@ function advanceTaskStatus(taskId, nextStatus) {
       const newQty = prod.stockQty + task.requestedQty;
       updateProduct(prod.id, { stockQty: newQty });
     }
-    const shelf = getShelfById(task.shelfId);
+
+    const shelf = getShelfById(task.shelfId) || getShelves().find(s => s.code === task.shelfCode);
     if (shelf) {
-      const newCurrent = Math.min(shelf.maxCapacity, shelf.currentCount + task.requestedQty);
-      updateShelf(shelf.id, { currentCount: newCurrent, status: 'normal' });
+      updateShelf(shelf.id, {
+        currentCount: Math.min(shelf.maxCapacity, shelf.currentCount + task.requestedQty),
+        status: 'normal',
+        lastChecked: 'Vừa bổ sung hàng'
+      });
     }
-    showToast(`Đã hoàn thành xếp hàng lên ${task.shelfCode}! Tồn kho và kệ đã được tự động cập nhật.`, 'success');
+
+    showToast(`Đã bổ sung ${task.requestedQty} sp cho ${task.productName}! Toàn hệ thống đã cập nhật số lượng tồn.`, 'success');
   } else {
-    showToast(`Nhiệm vụ ${taskId} đã chuyển sang trạng thái: ${nextStatus}`, 'info');
+    showToast(`Đã chuyển trạng thái nhiệm vụ [${task.id}] sang: ${nextStatus}!`, 'info');
   }
 
   renderTasksTable();
 }
 
+// Window export
+window.advanceTaskStatus = advanceTaskStatus;
+
 function handleDeleteTask(taskId) {
-  if (confirm(`Bạn có chắc chắn muốn hủy nhiệm vụ ${taskId}?`)) {
-    deleteRestockTask(taskId);
-    showToast(`Đã hủy nhiệm vụ ${taskId}!`, 'info');
-    renderTasksTable();
-  }
+  deleteRestockTask(taskId);
+  showToast('Đã xóa nhiệm vụ!', 'info');
+  renderTasksTable();
 }
+
+// Window export
+window.handleDeleteTask = handleDeleteTask;
 
 // Window alias for cross-tab auto refresh
 window.renderTasks = renderTasksTable;

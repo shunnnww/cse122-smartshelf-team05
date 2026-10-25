@@ -2,6 +2,7 @@
    SmartShelf - Chẩn đoán sai lệch & Tốc độ bán (manager-retail-insights.html)
    Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
    Tính năng AI: AI-3 Deep Shelf Anomaly Matrix
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
 
 .anomaly-spotlight-card {
@@ -18,4 +19,70 @@
   border-radius: var(--radius-full);
   font-weight: 800;
   font-size: 0.75rem;
+}
+
+.velocity-rank-top1 { background: #fef3c7; color: #b45309; }
+.velocity-rank-top2 { background: #e0f2fe; color: #0369a1; }
+.velocity-rank-top3 { background: #f1f5f9; color: #475569; }
+
+.insight-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.anomaly-highlight-panel {
+  margin-bottom: 2rem;
+}
+
+.anomaly-card-spot {
+  background: white;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  border-left: 3px solid #db2777;
+}
+
+.anomaly-card-diff {
+  background: white;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--danger);
+}
+
+.anomaly-card-prob {
+  background: white;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-ai);
+}
+
+.anomaly-card-val-pink {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #db2777;
+  margin: 0.2rem 0;
+}
+
+.anomaly-card-val-red {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--danger);
+  margin: 0.2rem 0;
+}
+
+.anomaly-prob-list {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  margin-top: 0.2rem;
+}
+
+.anomaly-actions-bar {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  flex-wrap: wrap;
 }

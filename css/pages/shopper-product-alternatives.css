@@ -2,6 +2,7 @@
    SmartShelf - Gợi ý sản phẩm thay thế AI (shopper-product-alternatives.html)
    Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
    Tính năng AI: AI-2 Product Alternative AI
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
 
 .ai-reason-box {
@@ -17,4 +18,60 @@
 .alternative-card-highlight {
   border: 2px solid var(--accent-ai) !important;
   box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15) !important;
+}
+
+.ai-input-card {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+}
+
+.ai-input-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+}
+
+.ai-input-grid {
+  display: grid;
+  grid-template-columns: 2fr auto auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.ai-loading-panel {
+  display: none;
+  background: #faf5ff;
+  border-color: var(--accent-ai-border);
+}
+
+.ai-spinner-purple {
+  border-top-color: var(--accent-ai);
+}
+
+.ai-failure-panel {
+  display: none;
+  background: var(--danger-light);
+  border-color: var(--danger-border);
+}
+
+.ai-match-badge {
+  background: #ede9fe;
+  color: #6d28d9;
+  font-weight: 700;
+}
+
+.ai-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  min-height: 2.5rem;
+  color: var(--text-main);
+}
+
+.ai-card-price {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
 }

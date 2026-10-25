@@ -10,11 +10,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const addShelfBtn = document.getElementById('openAddShelfModalBtn');
   const cancelBtn = document.getElementById('cancelAddShelfBtn');
-  const form = document.getElementById('shelfCrudForm');
+  const closeCrossBtn = document.getElementById('closeShelfModalCrossBtn');
+  const form = document.getElementById('shelfForm') || document.getElementById('shelfCrudForm');
+  const tbody = document.getElementById('shelvesAdminTbody');
 
   if (addShelfBtn) addShelfBtn.addEventListener('click', openAddShelfModal);
   if (cancelBtn) cancelBtn.addEventListener('click', closeShelfModal);
+  if (closeCrossBtn) closeCrossBtn.addEventListener('click', closeShelfModal);
   if (form) form.addEventListener('submit', handleAddShelf);
+
+  if (tbody) {
+    tbody.addEventListener('click', (e) => {
+      const toggleBtn = e.target.closest('.btn-toggle-shelf');
+      if (toggleBtn) {
+        const id = toggleBtn.getAttribute('data-id');
+        if (id) toggleShelfStatus(id);
+      }
+    });
+  }
 });
 
 function renderZones() {
@@ -24,13 +37,13 @@ function renderZones() {
 
   container.innerHTML = zones.map(z => `
     <div class="card zone-admin-card">
-      <div style="font-weight: 700; color: var(--primary); font-size: 0.95rem; margin-bottom: 0.25rem;">
+      <div class="zone-admin-title">
         ${z.name}
       </div>
-      <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+      <div class="zone-admin-sub">
         ${z.floor} · 4 kệ hoạt động
       </div>
-      <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+      <p class="zone-admin-desc">
         ${z.description}
       </p>
     </div>
@@ -52,14 +65,14 @@ function renderShelves() {
 
     return `
       <tr>
-        <td><strong style="color:var(--primary); font-size:0.95rem;">${s.code}</strong></td>
+        <td><strong class="shelf-code-tag">${s.code}</strong></td>
         <td><strong>${s.zoneCode}</strong></td>
         <td>${s.levelCount} tầng</td>
         <td>${s.maxCapacity} sản phẩm</td>
         <td><strong>${s.currentCount}</strong> sp</td>
         <td>${badgeHtml}</td>
-        <td style="text-align: right;">
-          <button class="btn btn-secondary btn-sm" onclick="toggleShelfStatus('${s.id}')" title="Đổi trạng thái thử nghiệm">
+        <td class="text-right">
+          <button type="button" class="btn btn-secondary btn-sm btn-toggle-shelf" data-id="${s.id}" title="Đổi trạng thái thử nghiệm">
             🔄 Đổi trạng thái
           </button>
         </td>
@@ -79,12 +92,12 @@ function toggleShelfStatus(shelfId) {
 
 function openAddShelfModal() {
   const modal = document.getElementById('shelfModal');
-  if (modal) modal.style.display = 'flex';
+  if (modal) modal.classList.add('active');
 }
 
 function closeShelfModal() {
   const modal = document.getElementById('shelfModal');
-  if (modal) modal.style.display = 'none';
+  if (modal) modal.classList.remove('active');
 }
 
 function handleAddShelf(e) {
@@ -118,5 +131,8 @@ function handleAddShelf(e) {
   renderShelves();
 }
 
-// Window alias for cross-tab auto refresh
+// Window aliases for cross-tab auto refresh or compatibility
 window.renderShelves = renderShelves;
+window.openAddShelfModal = openAddShelfModal;
+window.closeShelfModal = closeShelfModal;
+window.toggleShelfStatus = toggleShelfStatus;

@@ -14,10 +14,10 @@
   <header class="app-header">
     <div class="header-container">
       <a href="../index.html" class="brand-logo">
-        <div class="logo-icon" style="background: linear-gradient(135deg, #0f766e, #14b8a6);">SS</div>
+        <div class="logo-icon check-logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Nhân viên kệ hàng (SV2: Quang Long)</span>
+          <span class="brand-sub-badge">Nhân viên kệ hàng (SV2: Quang Long)</span>
         </div>
       </a>
 
@@ -53,30 +53,30 @@
       </div>
     </div>
 
-    <div class="grid-3" style="align-items: start;">
+    <div class="grid-3 map-layout-grid">
       <!-- LEFT: AUDIT FORM (2 COLS) -->
-      <div style="grid-column: span 2;">
-        <div class="card" style="margin-bottom: 1.5rem;">
+      <div class="map-main-col">
+        <div class="card mb-15">
           <div class="card-header">
             <h2 class="card-title">1. Chọn kệ cần kiểm kê</h2>
             <span class="badge badge-normal" id="auditShelfStatusBadge">Sẵn sàng</span>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-            <div class="form-group" style="margin-bottom: 0;">
+          <div class="audit-grid-2col">
+            <div class="form-group mb-0">
               <label class="form-label" for="shelfSelect">Kệ hàng cần kiểm tra</label>
               <select id="shelfSelect" class="form-control">
                 <!-- Populated via JS -->
               </select>
             </div>
-            <div class="form-group" style="margin-bottom: 0;">
+            <div class="form-group mb-0">
               <label class="form-label">Nhân viên thực hiện kiểm kê</label>
-              <input type="text" id="checkerNameInput" class="form-control" value="Nguyễn Quang Long (SV2)" readonly style="background-color: #f1f5f9;">
+              <input type="text" id="checkerNameInput" class="form-control checker-readonly-input" value="Nguyễn Quang Long (SV2)" readonly>
             </div>
           </div>
 
           <!-- Product Physical Count Table -->
-          <div style="margin-top: 1rem;">
+          <div class="mt-1">
             <label class="form-label">2. Đối soát số lượng hàng thực tế trên kệ</label>
             <div class="table-responsive">
               <table class="table">
@@ -95,27 +95,27 @@
             </div>
           </div>
 
-          <div class="form-group" style="margin-top: 1rem;">
+          <div class="form-group mt-1">
             <label class="form-label" for="auditNoteInput">Ghi chú quan sát tại hiện trường</label>
             <input type="text" id="auditNoteInput" class="form-control" placeholder="Ví dụ: Hàng xếp lộn xộn, khách để nhầm vị trí...">
           </div>
 
           <!-- AI Trigger Alert Box -->
-          <div id="aiAnomalyAlertBox" class="ai-panel" style="display: none; margin-top: 1rem;">
+          <div id="aiAnomalyAlertBox" class="ai-panel ai-anomaly-box">
             <div class="ai-header">
-              <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <div class="d-flex align-center gap-05">
                 <span class="ai-badge">⚠️ AI phát hiện bất thường</span>
                 <span id="aiAnomalyLevelBadge" class="badge badge-empty">Nghiêm trọng</span>
               </div>
             </div>
-            <p id="aiDiagnosisText" style="font-size: 0.85rem; color: #4b5563; margin-bottom: 0.5rem;"></p>
+            <p id="aiDiagnosisText" class="fs-sm mb-05 text-body"></p>
             <div class="ai-reason-box">
-              <strong>Hành động đề xuất từ AI:</strong>
-              <ul id="aiActionsList" style="padding-left: 1.2rem; margin-top: 0.25rem;"></ul>
+              <strong class="text-primary">Hành động đề xuất từ AI:</strong>
+              <ul id="aiActionsList" class="ai-actions-ul"></ul>
             </div>
           </div>
 
-          <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1rem;">
+          <div class="d-flex gap-075 justify-end mt-1">
             <button type="button" id="scanAnomalyAiBtn" class="btn btn-ai btn-sm">
               ✨ Chẩn đoán sai lệch với AI
             </button>
@@ -139,37 +139,38 @@
                   <th>Kệ hàng</th>
                   <th>Hệ thống / Thực tế</th>
                   <th>Chênh lệch</th>
-                  <th>Trạng thái</th>
+                  <th>Người kiểm</th>
                   <th>Thời gian</th>
+                  <th>Ghi chú</th>
                 </tr>
               </thead>
               <tbody id="auditHistoryTbody">
-                <!-- Render from shelfChecks -->
+                <!-- Populated via JS -->
               </tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: SUMMARY GUIDE CARD (1 COL) -->
+      <!-- RIGHT: AI-3 SUMMARY CARD (1 COL) -->
       <div>
         <div class="card">
           <div class="card-header">
-            <h2 class="card-title">📖 Quy chuẩn kiểm kê</h2>
+            <h3 class="card-title">🤖 Tiêu chuẩn AI-3</h3>
+            <span class="ai-badge">Giải trình</span>
           </div>
-          <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
-            <p style="margin-bottom: 0.75rem;">
-              <strong>Quy trình thực hiện:</strong><br>
-              1. Đến tận vị trí kệ được phân công.<br>
-              2. Đếm số lượng thực tế từng tầng.<br>
-              3. Nhập số lượng vào bảng đối chiếu.<br>
-              4. Nếu chênh lệch &gt; 15%, hệ thống tự động kích hoạt <strong>AI Shelf Anomaly Insight</strong> để phân tích nguyên nhân.<br>
-              5. Bấm <em>Lưu biên bản</em> để đồng bộ vào cơ sở dữ liệu.
-            </p>
-            <div style="background: #f8fafc; padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-              <span style="font-weight: 700; color: var(--danger);">Lưu ý quan trọng:</span>
-              Kệ có phát hiện sai lệch nghiêm trọng sẽ lập tức được gắn nhãn <code>BẤT THƯỜNG</code> và chuyển thông báo đến Bảng điều khiển Quản lý (SV3).
-            </div>
+          <p class="fs-sm text-muted mb-075">
+            Mô hình <strong>Shelf Anomaly Insight</strong> phát hiện các trường hợp lệch dữ liệu bằng cách:
+          </p>
+          <ul class="fs-sm text-muted ai-actions-ul mb-1">
+            <li>So khớp chênh lệch số lượng thực đếm với doanh số bán ra gần nhất.</li>
+            <li>Đánh giá xác suất hàng bị xếp nhầm sang kệ liền kề.</li>
+            <li>Đưa ra mức độ rủi ro (Nghiêm trọng, Cảnh báo, An toàn).</li>
+          </ul>
+
+          <div class="ai-reason-box">
+            <strong class="text-primary">💡 Quy trình chuẩn Barem:</strong><br>
+            Nhân viên nhập số đếm &rarr; Bấm chẩn đoán AI &rarr; AI tính toán xác suất &rarr; Lưu biên bản &rarr; Đồng bộ sang Quản lý cửa hàng.
           </div>
         </div>
       </div>
@@ -178,7 +179,7 @@
 
   <footer class="app-footer">
     <div class="footer-content">
-      <div>SmartShelf - Phân hệ kiểm kê & phát hiện bất thường (Phụ trách: SV2 Nguyễn Quang Long)</div>
+      <div>SmartShelf - Phân hệ kiểm kê kệ hàng (Phụ trách: SV2 Nguyễn Quang Long)</div>
       <div>Học phần CSE122 - Đại học Thủy Lợi</div>
     </div>
   </footer>

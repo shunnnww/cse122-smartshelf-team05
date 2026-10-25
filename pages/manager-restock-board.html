@@ -14,10 +14,10 @@
   <header class="app-header">
     <div class="header-container">
       <a href="../index.html" class="brand-logo">
-        <div class="logo-icon" style="background: linear-gradient(135deg, #b45309, #d97706);">SS</div>
+        <div class="logo-icon mgr-logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.75rem; display: block; font-weight: normal; color: var(--text-muted);">Quản lý cửa hàng (SV3: Văn Hân)</span>
+          <span class="brand-sub-badge">Quản lý cửa hàng (SV3: Văn Hân)</span>
         </div>
       </a>
 
@@ -52,7 +52,7 @@
         <p class="page-subtitle">Theo dõi quy trình luân chuyển hàng từ kho lên kệ: Chờ xử lý &rarr; Đang thực hiện &rarr; Chờ duyệt &rarr; Hoàn tất.</p>
       </div>
       <div>
-        <button class="btn btn-primary btn-sm" onclick="openCreateModal()">+ Thêm nhiệm vụ mới</button>
+        <button class="btn btn-primary btn-sm" id="openCreateTaskModalBtn">+ Thêm nhiệm vụ mới</button>
       </div>
     </div>
 
@@ -62,7 +62,7 @@
       <!-- Col 1: Pending -->
       <div class="kanban-col">
         <div class="kanban-col-header">
-          <strong style="color: #92400e;">⏳ Chờ phân công</strong>
+          <strong class="kanban-title-pending">⏳ Chờ điều phối ca</strong>
           <span class="badge badge-pending" id="countPending">0</span>
         </div>
         <div id="colPending"></div>
@@ -71,7 +71,7 @@
       <!-- Col 2: In-Progress -->
       <div class="kanban-col">
         <div class="kanban-col-header">
-          <strong style="color: #0369a1;">🏃 Đang thực hiện</strong>
+          <strong class="kanban-title-inprogress">🏃 Đang thực hiện</strong>
           <span class="badge badge-in-progress" id="countInProgress">0</span>
         </div>
         <div id="colInProgress"></div>
@@ -80,8 +80,8 @@
       <!-- Col 3: Review -->
       <div class="kanban-col">
         <div class="kanban-col-header">
-          <strong style="color: #6d28d9;">🔍 Chờ quản lý duyệt</strong>
-          <span class="badge" style="background:#ede9fe; color:#6d28d9;" id="countReview">0</span>
+          <strong class="kanban-title-review">🔍 Chờ quản lý duyệt</strong>
+          <span class="badge badge-review-purple" id="countReview">0</span>
         </div>
         <div id="colReview"></div>
       </div>
@@ -89,7 +89,7 @@
       <!-- Col 4: Completed -->
       <div class="kanban-col">
         <div class="kanban-col-header">
-          <strong style="color: #166534;">✅ Đã hoàn tất</strong>
+          <strong class="kanban-title-completed">✅ Đã hoàn tất</strong>
           <span class="badge badge-completed" id="countCompleted">0</span>
         </div>
         <div id="colCompleted"></div>
@@ -98,11 +98,11 @@
     </div>
 
     <!-- MODAL CREATE TASK -->
-    <div id="createTaskModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem;">
-      <div class="card" style="max-width: 500px; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-lg);">
+    <div id="createTaskModal" class="kanban-modal-overlay">
+      <div class="card kanban-modal-card">
         <div class="card-header">
           <h2 class="card-title">Tạo nhiệm vụ bổ sung kệ</h2>
-          <button class="btn btn-secondary btn-sm" onclick="closeCreateModal()">✕</button>
+          <button class="btn btn-secondary btn-sm" id="closeModalBtn">✕</button>
         </div>
 
         <form id="createTaskForm" novalidate>
@@ -135,8 +135,8 @@
             </select>
           </div>
 
-          <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1.5rem;">
-            <button type="button" class="btn btn-secondary" onclick="closeCreateModal()">Hủy</button>
+          <div class="d-flex gap-05 justify-end mt-15">
+            <button type="button" class="btn btn-secondary" id="cancelModalBtn">Hủy</button>
             <button type="submit" class="btn btn-primary">Xác nhận tạo việc</button>
           </div>
         </form>
@@ -146,7 +146,7 @@
 
   <footer class="app-footer">
     <div class="footer-content">
-      <div>SmartShelf - Phân hệ Kanban điều phối (Phụ trách: SV3 Nguyễn Văn Hân)</div>
+      <div>SmartShelf - Bảng điều phối Kanban (Phụ trách: SV3 Nguyễn Văn Hân)</div>
       <div>Học phần CSE122 - Đại học Thủy Lợi</div>
     </div>
   </footer>

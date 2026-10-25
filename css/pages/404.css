@@ -1,7 +1,16 @@
 /* ===================================================================
    SmartShelf - Màn hình 404 Không tìm thấy (404.html)
    Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
+
+.error-404-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--bg-page);
+}
 
 .error-404-card {
   max-width: 500px;
@@ -17,4 +26,15 @@
   color: var(--primary);
   line-height: 1;
   margin-bottom: 0.5rem;
+}
+
+.error-404-title {
+  font-size: 1.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.error-404-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
 }

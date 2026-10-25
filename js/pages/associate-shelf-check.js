@@ -1,7 +1,8 @@
 /**
  * SmartShelf - Logic Kiểm kê kệ & Phát hiện sai lệch (associate-shelf-check.html)
- * Phụ trách bởi: SV2 Nguyễn Quang Long (MSV: 2551170915)
+ * Phụ trách bởi: SV2 Nguyễn Quang Long (MSV: 2551170859)
  * Tính năng AI: AI-3 Shelf Anomaly Insight (Đối soát tồn máy tính & thực đếm hiện trường)
+ * Tách biệt 3 tầng kiến trúc: 100% JS nằm trong file này
  */
 
 let activeShelfProducts = [];
@@ -58,7 +59,7 @@ function loadShelfProducts() {
   if (!tbody) return;
 
   if (activeShelfProducts.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:1.5rem; color:var(--text-muted);">Kệ này hiện chưa được gán sản phẩm nào.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" class="empty-shelf-msg">Kệ này hiện chưa được gán sản phẩm nào.</td></tr>`;
     return;
   }
 
@@ -72,13 +73,13 @@ function loadShelfProducts() {
       <tr data-prod-id="${p.id}">
         <td>
           <strong>${p.name}</strong>
-          <div style="font-size:0.75rem; color:var(--text-muted);">${p.sku} · ${p.shelfLevel || 'Tầng 2'}</div>
+          <div class="fs-xs text-muted">${p.sku} · ${p.shelfLevel || 'Tầng 2'}</div>
         </td>
         <td>
-          <span class="expected-stock-val" style="font-weight:700; font-size:1rem;">${p.stockQty}</span> sp
+          <span class="expected-stock-val expected-stock-num">${p.stockQty}</span> sp
         </td>
         <td>
-          <input type="number" class="form-control actual-stock-input" value="${defaultActual}" min="0" max="200" style="width: 100px;" oninput="recalcDiscrepancy(this)">
+          <input type="number" class="form-control actual-stock-input audit-prod-input" value="${defaultActual}" min="0" max="200">
         </td>
         <td>
           <span class="diff-badge badge ${defaultActual - p.stockQty === 0 ? 'badge-normal' : 'badge-empty'}">
@@ -88,6 +89,11 @@ function loadShelfProducts() {
       </tr>
     `;
   }).join('');
+
+  // Bind input events to actual stock inputs cleanly
+  tbody.querySelectorAll('.actual-stock-input').forEach(input => {
+    input.addEventListener('input', () => recalcDiscrepancy(input));
+  });
 }
 
 function recalcDiscrepancy(input) {
@@ -100,6 +106,9 @@ function recalcDiscrepancy(input) {
   badge.textContent = `${diff > 0 ? '+' : ''}${diff} sp`;
   badge.className = `diff-badge badge ${diff === 0 ? 'badge-normal' : (diff < -5 ? 'badge-empty' : 'badge-low')}`;
 }
+
+// Window export
+window.recalcDiscrepancy = recalcDiscrepancy;
 
 async function triggerAiDiagnosis() {
   const shelfSelect = document.getElementById('shelfSelect');
@@ -126,6 +135,9 @@ async function triggerAiDiagnosis() {
   }
 }
 
+// Window export
+window.triggerAiDiagnosis = triggerAiDiagnosis;
+
 function handleSaveCheck() {
   const shelfSelect = document.getElementById('shelfSelect');
   if (!shelfSelect) return;
@@ -143,54 +155,70 @@ function handleSaveCheck() {
     totalAct += act;
   });
 
-  const discrepancy = totalAct - totalSys;
-  const status = Math.abs(discrepancy) >= 10 ? 'anomaly' : (totalAct <= 5 ? 'empty' : (totalAct <= 15 ? 'low' : 'normal'));
+  const diff = totalAct - totalSys;
 
-  const checkRecord = {
-    shelfId: shelf.id,
-    shelfCode: shelf.code,
-    zoneCode: shelf.zoneCode,
-    checkerName: checkerName,
-    systemStock: totalSys,
-    actualStock: totalAct,
-    discrepancy: discrepancy,
-    status: status,
-    note: note || (status === 'anomaly' ? 'Phát hiện sai số kiểm đếm cao' : 'Kiểm kê định kỳ bình thường')
+  const newAudit = {
+    id: 'AUD-' + Date.now().toString().slice(-4),
+    shelfId: shelf.code,
+    systemCount: totalSys,
+    actualCount: totalAct,
+    discrepancy: diff,
+    auditor: checkerName || 'Nguyễn Quang Long',
+    date: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' hôm nay',
+    note: note || (diff !== 0 ? 'Phát hiện chênh lệch' : 'Khớp 100% định mức')
   };
 
-  addShelfCheck(checkRecord);
-  updateShelf(shelf.id, { currentCount: totalAct, lastChecked: new Date().toISOString().substring(0, 16).replace('T', ' ') });
+  addShelfCheck(newAudit);
+
+  // Update shelf capacity
+  updateShelf(shelf.id, {
+    currentCount: totalAct,
+    status: diff < -10 ? 'empty' : (diff < 0 ? 'low' : (diff > 10 ? 'anomaly' : 'normal')),
+    lastChecked: 'Vừa kiểm tra xong'
+  });
 
   showToast(`Đã lưu biên bản kiểm kê cho ${shelf.code}!`, 'success');
   renderAuditHistory();
+  document.getElementById('auditNoteInput').value = '';
 }
 
+// Window export
+window.handleSaveCheck = handleSaveCheck;
+
 function renderAuditHistory() {
-  const checks = getShelfChecks();
-  const tbody = document.getElementById('auditHistoryTbody');
+  const audits = getShelfChecks();
   const countBadge = document.getElementById('auditHistoryCount');
-  if (countBadge) countBadge.textContent = `${checks.length} biên bản`;
+  if (countBadge) countBadge.textContent = `${audits.length} biên bản`;
+
+  const tbody = document.getElementById('auditHistoryTbody');
   if (!tbody) return;
 
-  tbody.innerHTML = checks.map(c => {
-    let badgeHtml = '<span class="badge badge-normal">Khớp số liệu</span>';
-    if (c.status === 'anomaly') badgeHtml = '<span class="badge badge-anomaly">Bất thường</span>';
-    else if (c.status === 'empty') badgeHtml = '<span class="badge badge-empty">Kệ rỗng</span>';
-    else if (c.status === 'low') badgeHtml = '<span class="badge badge-low">Sắp hết</span>';
+  if (audits.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-shelf-msg">Chưa có lịch sử kiểm kê nào.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = audits.map(a => {
+    let diffBadge = `<span class="badge badge-normal">Khớp (0)</span>`;
+    if (a.discrepancy < 0) {
+      diffBadge = `<span class="badge badge-empty">${a.discrepancy} sp</span>`;
+    } else if (a.discrepancy > 0) {
+      diffBadge = `<span class="badge badge-low">+${a.discrepancy} sp</span>`;
+    }
 
     return `
       <tr>
-        <td><strong>${c.id}</strong></td>
-        <td><strong>${c.shelfCode}</strong></td>
-        <td>${c.systemStock} / <strong>${c.actualStock}</strong> sp</td>
-        <td>
-          <span style="font-weight:700; color: ${c.discrepancy < 0 ? 'var(--danger)' : 'var(--success)'};">
-            ${c.discrepancy > 0 ? '+' : ''}${c.discrepancy}
-          </span>
-        </td>
-        <td>${badgeHtml}</td>
-        <td style="font-size:0.75rem; color:var(--text-muted);">${c.checkedAt || 'Vừa xong'}</td>
+        <td><strong>${a.id}</strong></td>
+        <td><strong class="text-primary">${a.shelfId}</strong></td>
+        <td>${a.systemCount} / <strong>${a.actualCount}</strong> sp</td>
+        <td>${diffBadge}</td>
+        <td>${a.auditor}</td>
+        <td class="fs-xs text-muted">${a.date}</td>
+        <td class="fs-xs text-muted">${a.note}</td>
       </tr>
     `;
   }).join('');
 }
+
+// Window alias for cross-tab auto refresh
+window.renderAuditHistory = renderAuditHistory;

@@ -2,16 +2,40 @@
  * SmartShelf - Logic Đăng nhập phân quyền (login.html)
  * Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
  * Vertical Slice: Cổng xác thực người dùng & điều hướng vai trò
+ * Tách biệt 3 tầng kiến trúc: 100% JS nằm trong file này
  */
 
 function quickFill(user, role) {
-  document.getElementById('usernameInput').value = user;
-  document.getElementById('passwordInput').value = '123456';
-  document.getElementById('targetRoleSelect').value = role;
-  document.getElementById('usernameInput').classList.remove('is-invalid');
+  const userInput = document.getElementById('usernameInput');
+  const passInput = document.getElementById('passwordInput');
+  const roleSelect = document.getElementById('targetRoleSelect');
+
+  if (userInput) {
+    userInput.value = user;
+    userInput.classList.remove('is-invalid');
+  }
+  if (passInput) {
+    passInput.value = '123456';
+    passInput.classList.remove('is-invalid');
+  }
+  if (roleSelect) {
+    roleSelect.value = role;
+  }
 }
 
+// Window export for backward compatibility
+window.quickFill = quickFill;
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Bind quick role pickers
+  document.querySelectorAll('.btn-quick-role').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const u = btn.getAttribute('data-user');
+      const r = btn.getAttribute('data-role');
+      if (u && r) quickFill(u, r);
+    });
+  });
+
   const form = document.getElementById('loginForm');
   if (!form) return;
 

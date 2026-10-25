@@ -1,6 +1,7 @@
 /* ===================================================================
    SmartShelf - Bảng Kanban điều phối bổ sung kệ (manager-restock-board.html)
    Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
 
 .kanban-board {
@@ -27,6 +28,16 @@
   border-bottom: 2px solid var(--border);
 }
 
+.kanban-title-pending { color: #92400e; }
+.kanban-title-inprogress { color: #0369a1; }
+.kanban-title-review { color: #6d28d9; }
+.kanban-title-completed { color: #166534; }
+
+.badge-review-purple {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
 .kanban-card {
   background: var(--bg-card);
   border-radius: var(--radius-sm);
@@ -42,6 +53,87 @@
   transform: translateY(-2px);
 }
 
+.border-priority-high { border-left-color: var(--danger) !important; }
+.border-priority-medium { border-left-color: var(--warning) !important; }
+.border-priority-normal { border-left-color: var(--primary) !important; }
+
+.kanban-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.4rem;
+}
+
+.kanban-id {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.kanban-badge-priority {
+  font-size: 0.65rem;
+}
+
+.kanban-prod-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.kanban-shelf-info {
+  font-size: 0.8rem;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.kanban-ai-note {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: var(--accent-ai-light);
+  padding: 4px 6px;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  border-left: 2px solid var(--accent-ai);
+}
+
+.kanban-assignee {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.kanban-actions-row {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: flex-end;
+  border-top: 1px solid var(--border-light);
+  padding-top: 0.4rem;
+}
+
+.btn-kanban-sm {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+}
+
+.kanban-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.kanban-modal-card {
+  max-width: 500px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
 [data-theme="dark"] .kanban-col {
   background: #0f172a;
   border-color: #334155;
@@ -53,7 +145,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .kanban-board {
     grid-template-columns: 1fr;
   }

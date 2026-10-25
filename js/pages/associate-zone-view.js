@@ -1,7 +1,8 @@
 /**
  * SmartShelf - Logic Giám sát kệ theo khu vực (associate-zone-view.html)
- * Phụ trách bởi: SV2 Nguyễn Quang Long (MSV: 2551170915)
+ * Phụ trách bởi: SV2 Nguyễn Quang Long (MSV: 2551170859)
  * Vertical Slice: Giám sát 14 kệ, bộ lọc khu vực & trạng thái tồn, cập nhật thanh tỷ lệ lấp đầy
+ * Tách biệt 3 tầng kiến trúc: 100% JS nằm trong file này
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,22 +48,22 @@ function renderZoneView() {
   if (!tbody) return;
 
   if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-muted);">Không tìm thấy kệ hàng nào theo bộ lọc.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-filter-msg">Không tìm thấy kệ hàng nào theo bộ lọc.</td></tr>`;
     return;
   }
 
   tbody.innerHTML = filtered.map(s => {
     let statusBadge = '<span class="badge badge-normal">Đủ</span>';
-    let barColor = 'var(--success)';
+    let fillClass = 'progress-fill-normal';
     if (s.status === 'low') {
       statusBadge = '<span class="badge badge-low">Sắp hết</span>';
-      barColor = 'var(--warning)';
+      fillClass = 'progress-fill-low';
     } else if (s.status === 'empty') {
       statusBadge = '<span class="badge badge-empty">Trống</span>';
-      barColor = 'var(--danger)';
+      fillClass = 'progress-fill-empty';
     } else if (s.status === 'anomaly') {
       statusBadge = '<span class="badge badge-anomaly">Lệch</span>';
-      barColor = '#db2777';
+      fillClass = 'progress-fill-anomaly';
     }
 
     const pct = Math.round((s.currentCount / s.maxCapacity) * 100);
@@ -70,8 +71,8 @@ function renderZoneView() {
     return `
       <tr>
         <td>
-          <strong style="color: var(--primary); font-size: 0.95rem;">${s.code}</strong>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">${s.levelCount} tầng</div>
+          <strong class="shelf-code-tag">${s.code}</strong>
+          <div class="shelf-level-tag">${s.levelCount} tầng</div>
         </td>
         <td>
           <strong>${s.zoneCode}</strong>
@@ -79,16 +80,16 @@ function renderZoneView() {
         <td>
           <strong>${s.currentCount}</strong> / ${s.maxCapacity} sp
         </td>
-        <td style="min-width: 130px;">
+        <td class="shelf-col-progress">
           <div class="shelf-progress-bar">
-            <div class="shelf-progress-fill" style="width: ${pct}%; background-color: ${barColor};"></div>
+            <div class="shelf-progress-fill ${fillClass}" data-pct="${pct}"></div>
           </div>
-          <small style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">${pct}%</small>
+          <small class="shelf-pct-label">${pct}%</small>
         </td>
         <td>${statusBadge}</td>
-        <td style="font-size: 0.8rem; color: var(--text-muted);">${s.lastChecked || 'Chưa kiểm'}</td>
-        <td style="text-align: right;">
-          <div style="display: inline-flex; gap: 0.4rem;">
+        <td class="fs-xs text-muted">${s.lastChecked || 'Chưa kiểm'}</td>
+        <td class="text-right">
+          <div class="shelf-actions-group">
             <a href="associate-shelf-check.html?shelf=${s.id}" class="btn btn-secondary btn-sm">
               🔍 Kiểm kê
             </a>
@@ -100,6 +101,11 @@ function renderZoneView() {
       </tr>
     `;
   }).join('');
+
+  tbody.querySelectorAll('.shelf-progress-fill').forEach(fill => {
+    const pct = fill.getAttribute('data-pct');
+    if (pct) fill.style.width = pct + '%';
+  });
 }
 
 // Window alias for cross-tab auto refresh

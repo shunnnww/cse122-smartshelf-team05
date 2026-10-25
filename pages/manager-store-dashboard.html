@@ -14,10 +14,10 @@
   <header class="app-header">
     <div class="header-container">
       <a href="../index.html" class="brand-logo">
-        <div class="logo-icon" style="background: linear-gradient(135deg, #d97706, #f59e0b);">SS</div>
+        <div class="logo-icon mgr-logo-icon">SS</div>
         <div>
           <span>SmartShelf</span>
-          <span style="font-size: 0.72rem; display: block; font-weight: 500; color: var(--text-muted);">Quản lý cửa hàng (SV3: Văn Hân)</span>
+          <span class="brand-sub-badge">Quản lý cửa hàng (SV3: Văn Hân)</span>
         </div>
       </a>
 
@@ -51,63 +51,63 @@
         </h1>
         <p class="page-subtitle">Theo dõi tổng thể tỷ lệ lấp đầy kệ, cảnh báo cạn hàng và điều phối nhân sự.</p>
       </div>
-      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-        <div class="btn-group" style="display: inline-flex; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;">
-          <button type="button" class="btn btn-primary btn-sm" id="timeFilterToday" style="border-radius: 0; padding: 0.35rem 0.65rem;">Hôm nay</button>
-          <button type="button" class="btn btn-secondary btn-sm" id="timeFilterWeek" style="border-radius: 0; padding: 0.35rem 0.65rem;">7 ngày</button>
-          <button type="button" class="btn btn-secondary btn-sm" id="timeFilterMonth" style="border-radius: 0; padding: 0.35rem 0.65rem;">Tháng này</button>
+      <div class="dash-header-actions">
+        <div class="time-filter-group">
+          <button type="button" class="btn btn-primary btn-sm btn-time-filter" id="timeFilterToday">Hôm nay</button>
+          <button type="button" class="btn btn-secondary btn-sm btn-time-filter" id="timeFilterWeek">7 ngày</button>
+          <button type="button" class="btn btn-secondary btn-sm btn-time-filter" id="timeFilterMonth">Tháng này</button>
         </div>
         <button type="button" class="btn btn-secondary btn-sm" id="exportDashboardCsvBtn" title="Xuất dữ liệu CSV (Mở rộng Bonus)">📥 CSV</button>
         <button type="button" class="btn btn-secondary btn-sm" id="exportDashboardJsonBtn" title="Xuất dữ liệu JSON (Mở rộng Bonus)">📥 JSON</button>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()" title="In báo cáo (@media print)">🖨️ In</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="printReportBtn" title="In báo cáo (@media print)">🖨️ In</button>
         <a href="manager-restock-board.html" class="btn btn-primary btn-sm">📋 Điều phối Kanban</a>
         <a href="manager-retail-insights.html" class="btn btn-ai btn-sm">✨ AI phân tích bất thường</a>
       </div>
     </div>
 
     <!-- 4 KPI CARDS -->
-    <div class="grid-4" style="margin-bottom: 1.5rem;">
-      <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">Doanh thu ước tính hôm nay</div>
-        <div style="font-size: 1.75rem; font-weight: 800; color: var(--primary); margin: 2px 0;">14.850.000đ</div>
-        <div style="font-size: 0.75rem; color: var(--success); font-weight: 700;">↑ 12.5% so với hôm qua</div>
+    <div class="grid-4 mb-15">
+      <div class="card kpi-stat-card">
+        <div class="kpi-label">Doanh thu ước tính hôm nay</div>
+        <div class="kpi-val text-primary">14.850.000đ</div>
+        <div class="kpi-sub text-success fw-bold">↑ 12.5% so với hôm qua</div>
       </div>
 
-      <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">Tỷ lệ sẵn sàng của kệ</div>
-        <div style="font-size: 1.75rem; font-weight: 800; color: var(--success); margin: 2px 0;">82.4%</div>
-        <div style="font-size: 0.75rem; color: var(--text-muted);">Mục tiêu tiêu chuẩn &ge; 80%</div>
+      <div class="card kpi-stat-card">
+        <div class="kpi-label">Tỷ lệ sẵn sàng của kệ</div>
+        <div class="kpi-val text-success">82.4%</div>
+        <div class="kpi-sub text-muted">Mục tiêu tiêu chuẩn &ge; 80%</div>
       </div>
 
-      <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">Kệ cần xếp hàng gấp</div>
-        <div style="font-size: 1.75rem; font-weight: 800; color: var(--danger); margin: 2px 0;">2 kệ rỗng</div>
-        <div style="font-size: 0.75rem; color: var(--danger); font-weight: 700;">Kệ A03 & Kệ C03</div>
+      <div class="card kpi-stat-card">
+        <div class="kpi-label">Kệ cần xếp hàng gấp</div>
+        <div class="kpi-val text-danger">2 kệ rỗng</div>
+        <div class="kpi-sub text-danger fw-bold">Kệ A03 & Kệ C03</div>
       </div>
 
-      <div class="card" style="padding: 1.15rem;">
-        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">Cảnh báo lệch kho</div>
-        <div style="font-size: 1.75rem; font-weight: 800; color: #db2777; margin: 2px 0;">1 điểm nóng</div>
-        <div style="font-size: 0.75rem; color: #db2777; font-weight: 700;">Kệ B02 lệch -20 sp</div>
+      <div class="card kpi-stat-card">
+        <div class="kpi-label">Cảnh báo lệch kho</div>
+        <div class="kpi-val text-anomaly-pink">1 điểm nóng</div>
+        <div class="kpi-sub text-anomaly-pink fw-bold">Kệ B02 lệch -20 sp</div>
       </div>
     </div>
 
     <!-- MAIN DASHBOARD CONTENT -->
-    <div class="grid-3" style="align-items: start;">
+    <div class="grid-3 map-layout-grid">
       <!-- LEFT: ZONE HEALTH (2 COLS) -->
-      <div style="grid-column: span 2;">
+      <div class="map-main-col">
         
-        <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
-          <div class="card-header" style="margin-bottom: 0.75rem;">
+        <div class="card zone-health-card">
+          <div class="card-header zone-table-header">
             <h2 class="card-title">Mức độ đầy hàng theo 4 khu vực</h2>
             <span class="badge badge-normal">Cập nhật trực tiếp</span>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 0.85rem;" id="zoneHealthBars"></div>
+          <div class="zone-health-list" id="zoneHealthBars"></div>
         </div>
 
         <!-- URGENT ALERTS TABLE -->
-        <div class="card" style="padding: 1.25rem;">
-          <div class="card-header" style="margin-bottom: 0.75rem;">
+        <div class="card hotspot-card">
+          <div class="card-header zone-table-header">
             <h2 class="card-title">Điểm nóng cần xử lý ngay</h2>
             <span class="badge badge-empty">3 sự cố ưu tiên</span>
           </div>
@@ -120,34 +120,34 @@
                   <th>Sự cố</th>
                   <th>Mức độ</th>
                   <th>Phụ trách</th>
-                  <th style="text-align: right;">Thao tác</th>
+                  <th class="text-right">Thao tác</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong style="color: var(--danger);">Kệ A03 (Đồ uống)</strong></td>
+                  <td><strong class="text-danger">Kệ A03 (Đồ uống)</strong></td>
                   <td>Cạn 100% Coca-Cola Zero</td>
                   <td><span class="badge badge-empty">Rất cao</span></td>
                   <td>Nguyễn Quang Long (SV2)</td>
-                  <td style="text-align: right;">
+                  <td class="text-right">
                     <a href="manager-restock-board.html" class="btn btn-primary btn-sm">Xem Kanban</a>
                   </td>
                 </tr>
                 <tr>
-                  <td><strong style="color: var(--danger);">Kệ C03 (Snack tầng 2)</strong></td>
+                  <td><strong class="text-danger">Kệ C03 (Snack tầng 2)</strong></td>
                   <td>Trống hàng Snack Lay's</td>
                   <td><span class="badge badge-empty">Rất cao</span></td>
                   <td>Nguyễn Quang Long (SV2)</td>
-                  <td style="text-align: right;">
+                  <td class="text-right">
                     <a href="manager-restock-board.html" class="btn btn-primary btn-sm">Xem Kanban</a>
                   </td>
                 </tr>
                 <tr>
-                  <td><strong style="color: #db2777;">Kệ B02 (Thực phẩm)</strong></td>
+                  <td><strong class="text-anomaly-pink">Kệ B02 (Thực phẩm)</strong></td>
                   <td>Lệch kiểm kê -20 gói Omachi</td>
                   <td><span class="badge badge-anomaly">Bất thường</span></td>
                   <td>Trần Trọng Hoàng Anh (SV1)</td>
-                  <td style="text-align: right;">
+                  <td class="text-right">
                     <a href="manager-retail-insights.html" class="btn btn-ai btn-sm">AI chẩn đoán</a>
                   </td>
                 </tr>
@@ -160,35 +160,35 @@
 
       <!-- RIGHT: STAFF & AI SUMMARY (1 COL) -->
       <div>
-        <div class="card" style="margin-bottom: 1.5rem; padding: 1.25rem;">
-          <div class="card-header" style="margin-bottom: 0.75rem;">
+        <div class="card staff-card">
+          <div class="card-header zone-table-header">
             <h2 class="card-title">Nhân sự ca trực</h2>
             <span class="badge badge-normal">3 thành viên</span>
           </div>
           
-          <div style="display: flex; flex-direction: column; gap: 0.65rem;">
-            <div style="background: var(--bg-page); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
-              <div style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">Trần Trọng Hoàng Anh (SV1)</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted);">Khách hàng & gợi ý thay thế AI</div>
+          <div class="staff-list">
+            <div class="staff-item">
+              <div class="staff-name">Trần Trọng Hoàng Anh (SV1)</div>
+              <div class="staff-role">Khách hàng & gợi ý thay thế AI</div>
             </div>
 
-            <div style="background: var(--bg-page); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
-              <div style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">Nguyễn Quang Long (SV2)</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted);">Kiểm kê & bổ sung hàng cấp bách</div>
+            <div class="staff-item">
+              <div class="staff-name">Nguyễn Quang Long (SV2)</div>
+              <div class="staff-role">Kiểm kê & bổ sung hàng cấp bách</div>
             </div>
 
-            <div style="background: var(--bg-page); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
-              <div style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">Nguyễn Văn Hân (SV3)</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted);">Điều phối ca & quản lý thất thoát</div>
+            <div class="staff-item">
+              <div class="staff-name">Nguyễn Văn Hân (SV3)</div>
+              <div class="staff-role">Điều phối ca & quản lý thất thoát</div>
             </div>
           </div>
         </div>
 
-        <div class="ai-panel" style="padding: 1.15rem;">
-          <div class="ai-header" style="margin-bottom: 0.5rem;">
+        <div class="ai-panel ai-summary-panel">
+          <div class="ai-header mb-05">
             <span class="ai-badge">Tóm tắt từ AI vận hành</span>
           </div>
-          <p style="font-size: 0.82rem; color: var(--text-body); line-height: 1.45;">
+          <p class="ai-summary-text">
             Sức mua tại Khu vực A đang tăng nhanh hơn 35% so với mức trung bình. Đề xuất chuẩn bị sẵn 5 thùng Coca-Cola và Pepsi tại kho đệm trước giờ cao điểm trưa.
           </p>
         </div>

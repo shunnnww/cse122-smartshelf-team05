@@ -1,15 +1,99 @@
 /* ===================================================================
    SmartShelf - Giám sát kệ theo khu vực (associate-zone-view.html)
    Phụ trách bởi: SV2 Nguyễn Quang Long (MSV: 2551170915)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
+
+.zone-logo-icon {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
 
 .zone-filter-card {
   margin-bottom: 1.5rem;
-  padding: 1.25rem;
+  padding: 1rem 1.25rem;
+}
+
+.zone-filter-inner {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.zone-filter-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-main);
+}
+
+.zone-filter-select {
+  width: auto;
 }
 
 .zone-stat-counter {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 800;
-  margin-top: 0.25rem;
+  margin: 2px 0;
+}
+
+.zone-stat-card {
+  padding: 1.15rem;
+}
+
+.zone-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.zone-stat-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.text-anomaly-pink {
+  color: #db2777 !important;
+}
+
+.text-anomaly-sub {
+  color: #be185d !important;
+}
+
+.zone-table-card {
+  padding: 1.25rem;
+}
+
+.zone-table-header {
+  margin-bottom: 0.75rem;
+}
+
+.shelf-code-tag {
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+.shelf-level-tag {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.shelf-col-progress {
+  min-width: 130px;
+}
+
+.shelf-pct-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.shelf-actions-group {
+  display: inline-flex;
+  gap: 0.4rem;
+}
+
+.empty-filter-msg {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
 }

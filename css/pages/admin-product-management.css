@@ -1,17 +1,54 @@
 /* ===================================================================
    SmartShelf - Quản trị danh mục sản phẩm (admin-product-management.html)
    Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
+   Tách biệt 3 tầng kiến trúc: 100% CSS nằm trong file này
    =================================================================== */
 
-.admin-filter-bar {
-  display: flex;
+.admin-logo-icon {
+  background: linear-gradient(135deg, #6b21a8, #9333ea);
+}
+
+.admin-filter-card {
+  margin-bottom: 1.5rem;
+  padding: 1.15rem;
+}
+
+.admin-filter-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 0.75rem;
-  margin-bottom: 1.25rem;
-  flex-wrap: wrap;
+}
+
+.admin-table-card {
+  padding: 1.25rem;
 }
 
 .product-code-tag {
   font-family: monospace;
   font-weight: 700;
   color: var(--primary);
+}
+
+.admin-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.admin-modal-overlay.active {
+  display: flex;
+}
+
+.admin-modal-card {
+  max-width: 580px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  max-height: 90vh;
+  overflow-y: auto;
 }
