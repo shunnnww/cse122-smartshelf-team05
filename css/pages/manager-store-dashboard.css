@@ -1,0 +1,17 @@
+/* ===================================================================
+   SmartShelf - Bảng điều hành cửa hàng (manager-store-dashboard.html)
+   Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
+   =================================================================== */
+
+.kpi-stat-card {
+  padding: 1.15rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.kpi-val {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 2px 0;
+}

@@ -1,0 +1,15 @@
+/* ===================================================================
+   SmartShelf - Giám sát kệ theo khu vực (associate-zone-view.html)
+   Phụ trách bởi: SV2 Nguyễn Quang Long (MSV: 2551170915)
+   =================================================================== */
+
+.zone-filter-card {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+}
+
+.zone-stat-counter {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: 0.25rem;
+}

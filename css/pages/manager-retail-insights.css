@@ -1,0 +1,21 @@
+/* ===================================================================
+   SmartShelf - Chẩn đoán sai lệch & Tốc độ bán (manager-retail-insights.html)
+   Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
+   Tính năng AI: AI-3 Deep Shelf Anomaly Matrix
+   =================================================================== */
+
+.anomaly-spotlight-card {
+  border-left: 4px solid #db2777;
+  background: var(--bg-card);
+  padding: 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+}
+
+.velocity-rank-badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  font-size: 0.75rem;
+}

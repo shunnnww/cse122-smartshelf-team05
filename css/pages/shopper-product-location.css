@@ -1,0 +1,26 @@
+/* ===================================================================
+   SmartShelf - Bản đồ vị trí kệ hàng (shopper-product-location.html)
+   Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
+   =================================================================== */
+
+.store-floor-layout {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.zone-block {
+  background: var(--bg-page);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.15rem;
+  margin-bottom: 1.25rem;
+}
+
+.active-shelf-target {
+  border: 2px solid var(--primary) !important;
+  background: var(--primary-light) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2) !important;
+}

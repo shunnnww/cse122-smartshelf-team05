@@ -6,6 +6,7 @@
   <title>Quản trị người dùng và phân quyền - SmartShelf</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/pages/admin-user-management.css">
 </head>
 <body>
 
@@ -135,76 +136,6 @@
 
   <script src="../js/api.js"></script>
   <script src="../js/main.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      renderUsers();
-      document.getElementById('userForm').addEventListener('submit', handleAddUser);
-    });
-
-    function renderUsers() {
-      const users = getUsers();
-      const tbody = document.getElementById('usersTableBody');
-      document.getElementById('usersCountBadge').textContent = `${users.length} tài khoản`;
-
-      tbody.innerHTML = users.map(u => {
-        let roleBadge = '<span class="role-badge-tag role-shopper">Khách hàng</span>';
-        if (u.role === 'staff') roleBadge = '<span class="role-badge-tag role-associate">Nhân viên</span>';
-        else if (u.role === 'manager') roleBadge = '<span class="role-badge-tag role-manager">Quản lý</span>';
-        else if (u.role === 'admin') roleBadge = '<span class="role-badge-tag role-admin">Quản trị</span>';
-
-        return `
-          <tr>
-            <td><code>${u.id}</code></td>
-            <td><strong style="color:var(--text-main); font-size:0.95rem;">${u.fullName}</strong></td>
-            <td><code>${u.username}</code></td>
-            <td>${roleBadge}</td>
-            <td>${u.email || 'Chưa cập nhật'}</td>
-            <td><span class="badge badge-normal">${u.badge || 'Tài khoản thường'}</span></td>
-            <td style="text-align: right;">
-              <div style="display: inline-flex; gap: 0.3rem;">
-                <button class="btn btn-secondary btn-sm" onclick="showToast('Đã cấp lại mật khẩu mặc định 123456 cho ${u.username}!', 'info')">
-                  🔑 Đặt lại mật khẩu
-                </button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function openAddUserModal() {
-      document.getElementById('userForm').reset();
-      document.getElementById('userModal').style.display = 'flex';
-    }
-
-    function closeUserModal() {
-      document.getElementById('userModal').style.display = 'none';
-    }
-
-    function handleAddUser(e) {
-      e.preventDefault();
-      const name = document.getElementById('userNameInput').value.trim();
-      const login = document.getElementById('userLoginInput').value.trim();
-      const role = document.getElementById('userRoleSelect').value;
-      const email = document.getElementById('userEmailInput').value.trim();
-
-      if (!name || !login) {
-        showToast('Vui lòng điền đầy đủ họ tên và tên đăng nhập!', 'error');
-        return;
-      }
-
-      addUser({
-        fullName: name,
-        username: login,
-        role: role,
-        email: email || `${login}@smartshelf.vn`,
-        badge: 'Thành viên mới'
-      });
-
-      showToast(`Đã thêm mới tài khoản ${login} thành công!`, 'success');
-      closeUserModal();
-      renderUsers();
-    }
-  </script>
+  <script src="../js/pages/admin-user-management.js"></script>
 </body>
 </html>

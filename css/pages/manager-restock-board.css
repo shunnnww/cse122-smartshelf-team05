@@ -1,0 +1,60 @@
+/* ===================================================================
+   SmartShelf - Bảng Kanban điều phối bổ sung kệ (manager-restock-board.html)
+   Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
+   =================================================================== */
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.kanban-col {
+  background: #f1f5f9;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  min-height: 520px;
+  border: 1px solid var(--border);
+}
+
+.kanban-col-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.kanban-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+  margin-bottom: 0.75rem;
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--primary);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kanban-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .kanban-col {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+@media (max-width: 1024px) {
+  .kanban-board {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .kanban-board {
+    grid-template-columns: 1fr;
+  }
+}

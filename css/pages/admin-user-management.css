@@ -1,0 +1,15 @@
+/* ===================================================================
+   SmartShelf - Quản trị người dùng & phân quyền (admin-user-management.html)
+   Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
+   =================================================================== */
+
+.user-avatar-tag {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,13 @@
+/* ===================================================================
+   SmartShelf - Quản trị khu vực & kệ hàng (admin-zone-management.html)
+   Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
+   =================================================================== */
+
+.zone-admin-card {
+  border-top: 3px solid var(--primary);
+  padding: 1.15rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  border-top-width: 3px;
+}

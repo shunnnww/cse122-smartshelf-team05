@@ -1,0 +1,31 @@
+/* ===================================================================
+   SmartShelf - Màn hình Tìm kiếm sản phẩm (shopper-product-search.html)
+   Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
+   =================================================================== */
+
+.search-box-card {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+}
+
+.product-item-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.product-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.shelf-location-chip {
+  background-color: #f8fafc;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+}

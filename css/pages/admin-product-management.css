@@ -1,0 +1,17 @@
+/* ===================================================================
+   SmartShelf - Quản trị danh mục sản phẩm (admin-product-management.html)
+   Phụ trách bởi: SV3 Nguyễn Văn Hân (MSV: 2551170885)
+   =================================================================== */
+
+.admin-filter-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.product-code-tag {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--primary);
+}

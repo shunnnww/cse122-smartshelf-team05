@@ -1,0 +1,20 @@
+/* ===================================================================
+   SmartShelf - Gợi ý sản phẩm thay thế AI (shopper-product-alternatives.html)
+   Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
+   Tính năng AI: AI-2 Product Alternative AI
+   =================================================================== */
+
+.ai-reason-box {
+  background: var(--accent-ai-light);
+  border: 1px solid var(--accent-ai-border);
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  color: var(--text-body);
+  line-height: 1.45;
+}
+
+.alternative-card-highlight {
+  border: 2px solid var(--accent-ai) !important;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15) !important;
+}

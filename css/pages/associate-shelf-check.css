@@ -1,0 +1,17 @@
+/* ===================================================================
+   SmartShelf - Màn hình Kiểm kê kệ hàng (associate-shelf-check.html)
+   Phụ trách bởi: SV2 Nguyễn Quang Long (MSV: 2551170915)
+   Tính năng AI: AI-3 Shelf Anomaly Insight (Hiện trường)
+   =================================================================== */
+
+.audit-form-card {
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.diff-badge-highlight {
+  font-weight: 700;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,19 @@
+/* ===================================================================
+   SmartShelf - Màn hình Đăng nhập phân quyền (login.html)
+   Phụ trách bởi: SV1 Trần Trọng Hoàng Anh (MSV: 2551170859)
+   =================================================================== */
+
+.login-card {
+  max-width: 440px;
+  width: 100%;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  background: var(--bg-card);
+}
+
+.quick-roles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
